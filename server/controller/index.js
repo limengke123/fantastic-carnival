@@ -5,5 +5,5 @@
 
 const article = require('./article.js')
 module.exports.init = async router => {
-
+    article.init(router)
 }

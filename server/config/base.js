@@ -25,6 +25,15 @@ module.exports = {
         server:path.resolve(__dirname),
         upload:path.resolve(path.dirname(__dirname),'runtime')
     },
+    routerName:{
+        articles:'articles',
+        drafts:'drafts',
+        tags:'tags',
+        publications:'publications',
+        tokens:'tokens',
+        comments:'comments',
+        me:'me'
+    },
     cache:{
         size:5,
         maxAge:20 * 60 * 1000
