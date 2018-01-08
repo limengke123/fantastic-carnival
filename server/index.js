@@ -10,4 +10,4 @@ const router = reuqire('koa-router')({
 const onerror = require('koa-onerror')
 
 const mongoose = require('mongoose')
-const controllers = reuqire('./controller/index.js')
+const controllers = require('./controller/index.js')
