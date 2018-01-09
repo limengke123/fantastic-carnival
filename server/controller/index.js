@@ -4,6 +4,8 @@
 
 
 const article = require('./article.js')
-module.exports.init = async router => {
+const home = require('./home')
+module.exports.init = router => {
+    home.init(router)
     article.init(router)
 }

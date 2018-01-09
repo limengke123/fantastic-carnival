@@ -11,7 +11,6 @@ class BaseAop {
         const mainFun = this[main]
         const after = this[__after]
         const that = this
-
         if(before || after){
             return async function(ctx, next) {
                 const boundAfter = after ?

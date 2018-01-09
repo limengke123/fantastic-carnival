@@ -12,8 +12,7 @@ module.exports = {
     mongoConfig : {
         url:'mongodb://127.0.0.1:27017/testdb1',
         opts: {
-            user:'',
-            pass:''
+            useMongoClient:true,
         }
     },
     jwt :{
