@@ -46,7 +46,9 @@ mongoose.Promise = global.Promise
     app.use(router.routes())
     app.use(router.allowedMethods())
     app.listen(config.app.port, () => {
-        utils.print('app is listening on port' + config.app.port)
+        utils.print('app is listening on port' + config.app.port
+            + ";" + "mongo url is " + config.mongoConfig.url
+        )
     })
 })().catch(err => {
     utils.print(err.stack)

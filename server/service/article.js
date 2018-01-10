@@ -1,4 +1,4 @@
-const {logger} = require('../util')
+const {logger} = require('../util/index')
 
 const Article = require('../model/article')
 
@@ -14,7 +14,7 @@ class ArticleService {
                 .skip(skip)
                 .exec()
         } catch (e) {
-            logger(e)
+            logger.error(e)
             throw e
         }
         return result && result.map(item => item.toObject())
@@ -24,7 +24,7 @@ class ArticleService {
         try {
             result = await Article.count().exec()
         } catch (e) {
-            logger(e)
+            logger.error(e)
             throw e
         }
         return result
