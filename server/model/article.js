@@ -20,7 +20,7 @@ const articleSchema = new Schema({
         type:Date,
         default:Date.now()
     },
-    lastEidtTime:{
+    lastEditTime:{
         type:Date,
         default:Date.now()
     },
@@ -45,3 +45,8 @@ const articleSchema = new Schema({
     }
 })
 
+articleSchema.path('createTime').get(v => utils.formatDate(new Date(v),'yyyy-MM-dd hh:mm:ss'))
+articleSchema.path('lastEditTime').get(v => utils.formatDate(new Date(v),'yyyy-MM-dd hh:mm:ss'))
+
+const article = mongoose.model('article',articleSchema)
+module.exports = article

@@ -58,9 +58,24 @@ class ActionList extends BaseAop {
             skip = page === 0 ? 0 : limit * (page - 1)
             try{
                 const [articleArr, totalNumber] = await Promise.all([
-
+                    ArticleService.find({},limit,skip),
+                    ArticleService.count()
                 ])
+                ctx.status = 200
+                ctx.body = {
+                    success:true,
+                    data:{
+                        articles:articleArr,
+                        total:totalNumber
+                    }
+                }
+            } catch (e){
+                utils.print(e)
+                ctx.throw(500,
+                    errorList.storageError.name,
+                    {message:errorList.storageError.message})
             }
         }
+        return next()
     }
 }
