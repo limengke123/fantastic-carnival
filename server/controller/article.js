@@ -11,36 +11,56 @@ const {
     BaseAop
 } = require('../util/aop.js')
 const joi = require('joi')
+
+const errorList = require('../error')
 const {
     articles: ROUTER_NAME
 } = require('../config').routerName
-
+const ArticleService = require('../service/article')
 module.exports.init = async router => {
     router.get(`/${ROUTER_NAME}`, new ActionList().getAOPMiddleWare())
 }
 
 class ActionList extends BaseAop {
-    /*static schema = joi.object().keys({
-        tag: joi.string().optional()
-    })
+    static schema = joi.object().keys({
+        tag: joi.string().optional(),
+        limit: joi.number().optional(),
+        page: joi.number().optional()
+    }).without('tag', 'page')
 
     async [__before](ctx, next) {
         const query = ctx.query
         const {error} = joi.validate({
-            tag: query.tag
+            tag: query.tag,
+            //少见的去小数的方法
+            limit:~~query.limit,
+            page:query.page
         }, this.constructor.schema)
         if (error) {
-            return ctx.throw(400, 'wrong list')
+            const reason = error.details.map(val => val.message).join(';')
+            return ctx.throw(400, errorList.validationError.name,{
+                message: errorList.validationError.message,
+                'parameter-name': error.details.map(detail => detail.path).join(','),
+                reason
+            })
         }
         return next()
-    }*/
-    static a = "das"
+    }
 
     async [main](ctx, next) {
-        console.log('main')
         const tag = ctx.query.tag
-        ctx.body = 'hello'
-        return next()
+        if(tag === void 0){
+
+        } else {
+            const limit = ~~ctx.query.limit || 10
+            const page = ~~ctx.query.page
+            let skip
+            skip = page === 0 ? 0 : limit * (page - 1)
+            try{
+                const [articleArr, totalNumber] = await Promise.all([
+
+                ])
+            }
+        }
     }
 }
-console.log(ActionList.a)
