@@ -19,8 +19,68 @@ const {
 const ArticleService = require('../service/article')
 module.exports.init = async router => {
     router.get(`/${ROUTER_NAME}`, new ActionList().getAOPMiddleWare())
+    router.post(`/${ROUTER_NAME}`,new ActionCreate().getAOPMiddleWare())
+    router.post('/test',new Test().getAOPMiddleWare())
 }
-
+class ActionCreate extends BaseAop{
+    static schema = joi.object().keys({
+        title:joi.string().required(),
+        tags : joi.array().items(joi.number()).unique().allow(null),
+        excerpt:joi.string().required(),
+        content:joi.string().required()
+    })
+    async [__before](ctx,next){
+        const body = ctx.request.body
+        const {error} = joi.validate(body,this.constructor.schema,{
+            allowUnknown:true
+        })
+        if(error){
+            const reason = error.details.map(val => val.message).join(',')
+            return ctx.throw(400,errorList.validationError.name,{
+                message:errorList.validationError.message,
+                'parameter-name':error.details.map(detail => detail.path).join(','),
+                reason
+            })
+        }
+        return next()
+    }
+    async [main](ctx,next){
+        console.log('收到post请求')
+        const {
+            title,
+            visits=0,
+            createTime=new Date(),
+            lastEditTime = new Date(),
+            excerpt,
+            content,
+            comments =[]
+        } = ctx.request.body
+        let result = null
+        try {
+            result = await ArticleService.create({
+                title,
+                visits,
+                createTime,
+                lastEditTime,
+                excerpt,
+                content,
+                comments
+            })
+        } catch (e) {
+            ctx.throw(500,errorList.storageError.name,{
+                message:errorList.storageError.message
+            })
+        }
+        ctx.status = 200
+        ctx.body = {
+            success:true,
+            data:{
+                id:result._id
+            }
+        }
+        return next()
+    }
+}
 class ActionList extends BaseAop {
     static schema = joi.object().keys({
         tag: joi.string().optional(),
@@ -50,7 +110,7 @@ class ActionList extends BaseAop {
     async [main](ctx, next) {
         const tag = ctx.query.tag
         if(tag === void 0){
-
+            ctx.body = 'tag is required'
         } else {
             const limit = ~~ctx.query.limit || 10
             const page = ~~ctx.query.page
@@ -77,5 +137,13 @@ class ActionList extends BaseAop {
             }
         }
         return next()
+    }
+}
+
+class Test extends BaseAop{
+    async[main](ctx,next){
+        ctx.body = {
+            data:ctx.request.body
+        }
     }
 }

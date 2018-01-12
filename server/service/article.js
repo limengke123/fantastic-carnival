@@ -3,6 +3,17 @@ const {logger} = require('../util/index')
 const Article = require('../model/article')
 
 class ArticleService {
+    async create (option){
+        const article = new Article(option)
+        let result = null
+        try {
+            result = await article.save()
+        } catch (e) {
+            logger.error(e)
+            throw e
+        }
+        return result
+    }
     async find(sort = null, limit = null, skip = null) {
         let result
         try {
