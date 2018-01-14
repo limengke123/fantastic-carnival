@@ -142,8 +142,17 @@ class ActionList extends BaseAop {
 
 class Test extends BaseAop{
     async[main](ctx,next){
-        ctx.body = {
-            data:ctx.request.body
+        console.log('test is posted')
+        if(ctx.request.body){
+            ctx.body = {
+                data:ctx.request.body,
+                fk:123
+            }
+        } else{
+            ctx.body = {
+                data:ctx.request
+            }
         }
+
     }
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>homePage</title>
+</head>
+<body>
+<h2>
+    post 请求用例
+</h2>
+<span>title</span><input type="text" id="title">
+<span>content</span><input type="text" id="content">
+<input type="button" id="submit" value="提交">
+<script>
+    window.onload = ()=>{
+        const btn = document.querySelectorAll('#submit')[0]
+        const title = document.querySelectorAll('#title')[0]
+        const content = document.querySelectorAll('#content')[0]
+        btn.onclick = async() => {
+            console.log(title,content)
+            const result = await post('./test',{
+                title:'你好',
+                content:'这是一个内容'
+            })
+            console.log(result)
+        }
+        const post = async function(url,data){
+            try {
+                return await window.fetch(url,{
+                    method:'POST',
+                    headers:{
+                        'Accept':'application/json',
+                        'Content-Type':'application/json',
+                    },
+                    body:JSON.stringify(data)
+                })
+            } catch (e) {
+                console.log(e)
+                throw e
+            }
+        }
+    }
+</script>
+</body>
+</html>
