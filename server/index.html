@@ -9,20 +9,49 @@
     post 请求用例
 </h2>
 <span>title</span><input type="text" id="title">
+<span>excerpt</span><input type="text" id="excerpt">
 <span>content</span><input type="text" id="content">
 <input type="button" id="submit" value="提交">
+<input type="button" id="query" value="查询">
 <script>
     window.onload = ()=>{
         const btn = document.querySelectorAll('#submit')[0]
-        const title = document.querySelectorAll('#title')[0]
-        const content = document.querySelectorAll('#content')[0]
-        btn.onclick = async() => {
+        const query = document.querySelectorAll('#query')[0]
+        const titleField = document.querySelectorAll('#title')[0]
+        const excerptField = document.querySelectorAll('#excerpt')[0]
+        const contentField = document.querySelectorAll('#content')[0]
+        /*btn.onclick = async() => {
             console.log(title,content)
             const result = await post('./test',{
                 title:'你好',
                 content:'这是一个内容'
             })
             console.log(result)
+        }*/
+        btn.onclick = async () =>{
+            const title = titleField.value
+            const content = contentField.value
+            const excerpt = excerptField.value
+            try {
+                const result = await post('./articles', {
+                    title,
+                    content,
+                    excerpt
+                })
+                console.log(result)
+            } catch (e) {
+                console.log(e)
+                throw e
+            }
+        }
+        query.onclick = async ()=> {
+            try {
+                const result = await get('./articles?tag=1')
+                console.log(result)
+            } catch (e) {
+                console.log(e)
+                throw e
+            }
         }
         const post = async function(url,data){
             try {
@@ -33,8 +62,16 @@
                         'Content-Type':'application/json',
                     },
                     body:JSON.stringify(data)
-                })
+                }).then(res => res.json())
             } catch (e) {
+                console.log(e)
+                throw e
+            }
+        }
+        const get = async (url) => {
+            try{
+                return await window.fetch(url).then(response => response.json())
+            } catch (e){
                 console.log(e)
                 throw e
             }

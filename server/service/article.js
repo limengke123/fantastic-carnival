@@ -6,9 +6,12 @@ class ArticleService {
     async create (option){
         const article = new Article(option)
         let result = null
+        console.log('保存前')
         try {
+            console.log("准备保存",article)
             result = await article.save()
         } catch (e) {
+            console.log(e)
             logger.error(e)
             throw e
         }

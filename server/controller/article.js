@@ -110,7 +110,9 @@ class ActionList extends BaseAop {
     async [main](ctx, next) {
         const tag = ctx.query.tag
         if(tag === void 0){
-            ctx.body = 'tag is required'
+            ctx.body = {
+                data:"tag is required"
+            }
         } else {
             const limit = ~~ctx.query.limit || 10
             const page = ~~ctx.query.page
@@ -150,7 +152,8 @@ class Test extends BaseAop{
             }
         } else{
             ctx.body = {
-                data:ctx.request
+                data:ctx.request,
+                fk:456
             }
         }
 
