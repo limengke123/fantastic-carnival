@@ -8,6 +8,10 @@
 <h2>
     post 请求用例
 </h2>
+<select name="fields" id="fields">
+    <option value="articles">文章测试</option>
+    <option value="tags">tag测试</option>
+</select>
 <span>title</span><input type="text" id="title">
 <span>excerpt</span><input type="text" id="excerpt">
 <span>content</span><input type="text" id="content">
@@ -20,6 +24,7 @@
         const titleField = document.querySelectorAll('#title')[0]
         const excerptField = document.querySelectorAll('#excerpt')[0]
         const contentField = document.querySelectorAll('#content')[0]
+        const selectField = document.querySelectorAll('#fields')[0]
         /*btn.onclick = async() => {
             console.log(title,content)
             const result = await post('./test',{
@@ -32,11 +37,12 @@
             const title = titleField.value
             const content = contentField.value
             const excerpt = excerptField.value
+            const field = selectField.value
             try {
-                const result = await post('./articles', {
-                    title,
-                    content,
-                    excerpt
+                const result = await post(`./${field}`, {
+                    name:title,
+                    content:content,
+                    excerpt:excerpt
                 })
                 console.log(result)
             } catch (e) {
@@ -45,8 +51,9 @@
             }
         }
         query.onclick = async ()=> {
+            const field = selectField.value
             try {
-                const result = await get('./articles?tag=1')
+                const result = await get(`./${field}?tag=1`)
                 console.log(result)
             } catch (e) {
                 console.log(e)
