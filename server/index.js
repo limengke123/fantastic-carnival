@@ -3,7 +3,7 @@
  */
 //mongo objectId validate
 const joi = require('joi')
-joi.objectid = require('joi-objectid')(joi)
+joi.objectId = require('joi-objectid')(joi)
 
 const Koa = require('koa')
 const app = new Koa()

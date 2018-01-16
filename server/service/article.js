@@ -17,6 +17,7 @@ class ArticleService {
         }
         return result
     }
+
     async find(sort = null, limit = null, skip = null) {
         let result
         try {
@@ -33,6 +34,92 @@ class ArticleService {
         }
         return result && result.map(item => item.toObject())
     }
+
+    async findOne(id,sort=null,limit=null,skip=null){
+        let searchParam = {
+            _id:id
+        }
+        let result = null
+        try{
+            result = await Article.findOne(searchParam)
+                .populate('tags')
+                .select('title visits tags createTime lastEditTime excerpt')
+                .sort({
+                    createTime:-1,
+                    ...sort
+                })
+                .limit(limit)
+                .skip(skip)
+                .exec()
+        } catch(e){
+            logger.error(e)
+            throw e
+        }
+        return result && result.toObject()
+    }
+
+    async update (id,modifyParam){
+        let result = null
+        try{
+            result = await Article.findOneAndUpdate(id,{
+                $set:modifyParam
+            },{
+                new :true
+            }).exec()
+        }catch (e){
+            logger.error(e)
+            throw e
+        }
+        return result && result.toObject()
+    }
+
+    async findPrev(id){
+        let result = null
+        try{
+            result = Article.findOne({
+                _id:{
+                    $gt:id
+                }
+            },"title _id")
+                .sort({
+                    _id:1
+                })
+                .exec()
+        } catch (e){
+            logger.error(e)
+            throw e
+        }
+        return result && result.toObject()
+    }
+    async findNext (id){
+        let result = null
+        try{
+            result = Article.findOne({
+                _id:{
+                    $gt:id
+                }
+            },"title _id")
+                .exec()
+        } catch (e){
+            logger.error(e)
+            throw e
+        }
+        return result && result.toObject()
+    }
+
+    async deleteTag (tagId){
+        try {
+            await Article.update({},{
+                $pull:{
+                    tags:tagId
+                }
+            })
+                .exec()
+        }catch (e){
+            logger.error(e)
+        }
+    }
+
     async count (){
         let result
         try {

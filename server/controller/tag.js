@@ -20,10 +20,13 @@ const {
 module.exports.init = async router => {
     router.post(`/${ROUTER_NAME}`, new ActionCreate().getAOPMiddleWare())
     router.get(`/${ROUTER_NAME}`,new ActionList().getAOPMiddleWare())
+    router.patch(`/${ROUTER_NAME}`,new ActionModify().getAOPMiddleWare())
+    router.delete(`/${ROUTER_NAME}`,new ActionDelete().getAOPMiddleWare())
 }
+
 class ActionList extends BaseAop{
     static schema = joi.object().keys({
-        startWidth:joi.string().optional()
+        startWith:joi.string().optional()
     })
     async [__before](ctx,next){
         const queryStartWith = ctx.query['start-with']
@@ -33,6 +36,7 @@ class ActionList extends BaseAop{
         },this.constructor.schema)
 
         if(error){
+            console.log(error)
             const reason = error.details.map(val => val.message).join(';')
             return ctx.throw(400,errorList.validationError.name,{
                 message:errorList.validationError.message,
@@ -60,6 +64,7 @@ class ActionList extends BaseAop{
         return next()
     }
 }
+
 class ActionCreate extends BaseAop {
     static schema = joi.object().keys({
         name: joi.string().min(1).required()
@@ -123,5 +128,122 @@ class ActionCreate extends BaseAop {
         return next()
     }
 }
+
+class ActionModify extends BaseAop{
+    static schema = joi.object().keys({
+        name:joi.string().min(1).required(),
+        id:joi.objectId().required()
+    })
+    async [__before](ctx,next){
+        const name = ctx.query.body.name
+        const id = ctx.params.id
+        const {error} = joi.validate({
+            name,
+            id
+        },this.constructor.schema)
+        if(error){
+            const reason = error.details.map(val => val.message).join(';')
+            return ctx.throw(400,errorList.validationError.name,{
+                message:errorList.validationError.message,
+                'parameter-name':error.details.map(detail => detail.path).join(','),
+                reason
+            })
+        }
+        return next()
+    }
+    async [main](ctx,next){
+        const tagName = ctx.query.body.name
+        const tagId = ctx.params.id
+        let tag = null
+        try{
+            tag = await TagService.findOne(tagId,tagName)
+        } catch (e){
+            ctx.throw(500,errorList.storageError.name,{
+                message:errorList.storageError.message
+            })
+        }
+        utils.print(tag)
+        if(tag !== null){
+            ctx.status = 200
+            ctx.body = {
+                success:false,
+                data:{
+                    id:tag.id
+                }
+            }
+        } else {
+            await TagService.update(tagId,tagName)
+            ctx.status = 200
+            ctx.body = {
+                success:true
+            }
+        }
+        return next()
+    }
+}
+
+class ActionDelete extends BaseAop{
+    static schema = joi.object().keys({
+        id:joi.objectId().required()
+    })
+    async[__before](ctx,next){
+        const id = ctx.params.id
+
+        const {error} = joi.validate({
+            id
+        },this.constructor.schema)
+        if(error){
+            const reason = error.details.map(val => val.message).join(';')
+            return ctx.throw(500,errorList.validationError.name,{
+                message:errorList.validationError.message,
+                'parameter-name':error.details.map(detail => detail.path).join(','),
+                reason
+            })
+        }
+        return next()
+    }
+    async [main](ctx,next){
+        const id = ctx.params.id
+        try{
+            await Promise.all([
+                ArticleService.delete(id),
+                TagService.delete(id)
+            ])
+        } catch (e){
+            ctx.throw(500,errorList.storageError.name,{
+                message:errorList.storageError.message
+            })
+        }
+        ctx.status = 200
+        ctx.body = {
+            success:true
+        }
+        return next()
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

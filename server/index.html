@@ -60,8 +60,13 @@
         }
         query.onclick = async ()=> {
             const field = selectField.value
+            let result = null
             try {
-                const result = await get(`./${field}?tag=1`)
+                if(field === "articles"){
+                    result = await get(`./${field}?tag=1`)
+                } else {
+                    result = await get(`./${field}`)
+                }
                 console.log(result)
             } catch (e) {
                 console.log(e)

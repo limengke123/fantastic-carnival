@@ -29,6 +29,7 @@ class TagService {
                 .skip(skip)
                 .exec()
         } catch (e){
+            console.log(e)
             logger.error(e)
             throw e
         }

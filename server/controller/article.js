@@ -22,6 +22,7 @@ module.exports.init = async router => {
     router.post(`/${ROUTER_NAME}`,new ActionCreate().getAOPMiddleWare())
     router.post('/test',new Test().getAOPMiddleWare())
 }
+
 class ActionCreate extends BaseAop{
     static schema = joi.object().keys({
         title:joi.string().required(),
@@ -81,6 +82,7 @@ class ActionCreate extends BaseAop{
         return next()
     }
 }
+
 class ActionList extends BaseAop {
     static schema = joi.object().keys({
         tag: joi.string().optional(),
@@ -139,6 +141,37 @@ class ActionList extends BaseAop {
             }
         }
         return next()
+    }
+}
+
+class ActionDetail extends BaseAop{
+    static schema = joi.object().keys({
+        id:joi.objectId().required()
+    })
+    async [__before](ctx,next){
+        const id = ctx.params.id
+
+        const {error} = joi.validate({
+            id
+        },this.constructor.schema)
+
+
+        if(error){
+            const reason = error.detals.map(val => val.message).join(';')
+            return ctx.throw(400,errorList.validationError.name,{
+                message:errorList.validationError.message,
+                'parameter-name':error.details.map(detail => detail.path).join(','),
+                reason
+            })
+        }
+        return next()
+    }
+    async [main](ctx,next){
+        const id = ctx.params.id
+        let article = null
+        try{
+            result = await ArticleService
+        }
     }
 }
 
