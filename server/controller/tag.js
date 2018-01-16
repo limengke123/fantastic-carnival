@@ -36,7 +36,7 @@ class ActionList extends BaseAop{
             const reason = error.details.map(val => val.message).join(';')
             return ctx.throw(400,errorList.validationError.name,{
                 message:errorList.validationError.message,
-                'parameter-name':error.details.map(detail => detail.path).join(',')
+                'parameter-name':error.details.map(detail => detail.path).join(','),
                 reason
             })
         }
