@@ -18,11 +18,13 @@
 </h2>
 <select name="fields" id="fields">
     <option value="articles">文章测试</option>
+    <option value="articlesId">文章测试id</option>
     <option value="tags">tag测试</option>
 </select>
 <span>title</span><input type="text" id="title">
 <span>excerpt</span><input type="text" id="excerpt">
 <span>content</span><input type="text" id="content">
+<span>id</span><input type="text" id="id">
 <input type="button" id="submit" value="提交">
 <input type="button" id="query" value="查询">
 <script>
@@ -33,6 +35,7 @@
         const excerptField = document.querySelectorAll('#excerpt')[0]
         const contentField = document.querySelectorAll('#content')[0]
         const selectField = document.querySelectorAll('#fields')[0]
+        const idField = document.querySelectorAll('#id')[0]
         /*btn.onclick = async() => {
             console.log(title,content)
             const result = await post('./test',{
@@ -62,10 +65,17 @@
             const field = selectField.value
             let result = null
             try {
-                if(field === "articles"){
-                    result = await get(`./${field}?tag=1`)
-                } else {
-                    result = await get(`./${field}`)
+                switch (field){
+                    case "articles":
+                        result = await get(`./${field}?tag=1`)
+                        break;
+                    case "articlesId":
+                        const id = idField.value
+                        result = await get(`./${"articles"}/${id}`)
+                        break;
+                    case "tags":
+                        result = await get(`./${field}`)
+                        break;
                 }
                 console.log(result)
             } catch (e) {

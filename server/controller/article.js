@@ -19,6 +19,7 @@ const {
 const ArticleService = require('../service/article')
 module.exports.init = async router => {
     router.get(`/${ROUTER_NAME}`, new ActionList().getAOPMiddleWare())
+    router.get(`/${ROUTER_NAME}/:id`,new ActionDetail().getAOPMiddleWare())
     router.post(`/${ROUTER_NAME}`,new ActionCreate().getAOPMiddleWare())
     router.post('/test',new Test().getAOPMiddleWare())
 }
@@ -150,7 +151,6 @@ class ActionDetail extends BaseAop{
     })
     async [__before](ctx,next){
         const id = ctx.params.id
-
         const {error} = joi.validate({
             id
         },this.constructor.schema)
@@ -170,8 +170,45 @@ class ActionDetail extends BaseAop{
         const id = ctx.params.id
         let article = null
         try{
-            result = await ArticleService
+            article = await ArticleService.findOne(id)
+        } catch (e){
+            ctx.throw(500,errorList.storageError.name,{
+                message:errorList.storageError.message
+            })
         }
+        ctx.status = 200
+        if(article){
+            try{
+                [article.nextArticle,article.prevArticle] = await Promise.all([
+                    ArticleService.findNext(id),
+                    ArticleService.findPrev(id)
+                ])
+            } catch (e){
+                ctx.throw(500,errorList.storageError.name,{
+                    message:errorList.storageError.message
+                })
+            }
+        }
+        
+        ctx.body = {
+            success:true,
+            data:article
+        }
+        ctx.state.article = article
+        return next()
+    }
+    async [__after](ctx,next){
+        const id = ctx.params.id
+        try {
+            console.log(ctx.state.article)
+            await ArticleService.incVisits(id)
+        } catch (e){
+            console.log("after",e)
+            ctx.throw(500,errorList.storageError.name,{
+                message:errorList.storageError.message
+            })
+        }
+        return next()
     }
 }
 

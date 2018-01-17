@@ -89,8 +89,10 @@ class ArticleService {
             logger.error(e)
             throw e
         }
-        return result && result.toObject()
+        //return result && result.toObject()
+        return result
     }
+
     async findNext (id){
         let result = null
         try{
@@ -104,7 +106,8 @@ class ArticleService {
             logger.error(e)
             throw e
         }
-        return result && result.toObject()
+        return result
+        // return result && result.toObject()
     }
 
     async deleteTag (tagId){
@@ -118,6 +121,22 @@ class ArticleService {
         }catch (e){
             logger.error(e)
         }
+    }
+
+    async incVisits(id){
+        /*if(article){
+            try{
+                await article.update({
+                    $inc:{
+                        visits:1
+                    }
+                }).exec()
+            } catch (e){
+                console.log(e)
+                logger.error(e)
+                throw e
+            }
+        }*/
     }
 
     async count (){
