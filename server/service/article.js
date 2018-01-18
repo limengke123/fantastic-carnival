@@ -78,7 +78,7 @@ class ArticleService {
         try{
             result = Article.findOne({
                 _id:{
-                    $gt:id
+                    $lt:id
                 }
             },"title _id")
                 .sort({

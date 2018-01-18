@@ -27,10 +27,14 @@
 <span>id</span><input type="text" id="id">
 <input type="button" id="submit" value="提交">
 <input type="button" id="query" value="查询">
+<input type="button" id="delete" value="删除">
+<input type="button" id="update" value="更新">
 <script>
     window.onload = ()=>{
         const btn = document.querySelectorAll('#submit')[0]
         const query = document.querySelectorAll('#query')[0]
+        const del = document.querySelectorAll('#delete')[0]
+        const upd = document.querySelectorAll('#update')[0]
         const titleField = document.querySelectorAll('#title')[0]
         const excerptField = document.querySelectorAll('#excerpt')[0]
         const contentField = document.querySelectorAll('#content')[0]
@@ -49,12 +53,29 @@
             const content = contentField.value
             const excerpt = excerptField.value
             const field = selectField.value
+            let result
             try {
-                const result = await post(`./${field}`, {
-                    name:title,
-                    content:content,
-                    excerpt:excerpt
-                })
+                switch (field){
+                    case "articles":
+                        result = await post(`./${field}`, {
+                            title:title,
+                            tags:[],
+                            content:content,
+                            excerpt:excerpt
+                        })
+                        break;
+                    case "articlesId":
+                        const id = idField.value
+                        result = await get(`./${"articles"}/${id}`)
+                        break;
+                    case "tags":
+                        result = await post(`./${field}`, {
+                            name:title,
+                            content:content,
+                            excerpt:excerpt
+                        })
+                        break;
+                }
                 console.log(result)
             } catch (e) {
                 console.log(e)
@@ -79,6 +100,48 @@
                 }
                 console.log(result)
             } catch (e) {
+                console.log(e)
+                throw e
+            }
+        }
+        del.onclick = async ()=> {
+            const title = titleField.value
+            const content = contentField.value
+            const excerpt = excerptField.value
+            const id = idField.value
+            const field = selectField.value
+            let result
+            try{
+                switch (field){
+                    case "articles":
+                        break;
+                    case "tags":
+                        break;
+                    default:
+                        break;
+                }
+            }catch (e){
+                console.log(e)
+                throw e
+            }
+        }
+        upd.onclick = async () => {
+            const title = titleField.value
+            const content = contentField.value
+            const excerpt = excerptField.value
+            const id = idField.value
+            const field = selectField.value
+            let result
+            try{
+                switch (field){
+                    case "articles":
+                        break;
+                    case "tags":
+                        break;
+                    default:
+                        break;
+                }
+            }catch (e){
                 console.log(e)
                 throw e
             }
