@@ -21,6 +21,11 @@
     <option value="articlesId">文章测试id</option>
     <option value="tags">tag测试</option>
 </select>
+<select name="fields" id="fields2">
+    <option value="content">content</option>
+    <option value="tags">tags</option>
+    <option value="excerpt">excerpt</option>
+</select>
 <span>title</span><input type="text" id="title">
 <span>excerpt</span><input type="text" id="excerpt">
 <span>content</span><input type="text" id="content">
@@ -135,12 +140,14 @@
             try{
                 switch (field){
                     case "articles":
+                        result = await patch(`./articles/${id}`,{content})
                         break;
                     case "tags":
                         break;
                     default:
                         break;
                 }
+                console.log(result)
             }catch (e){
                 console.log(e)
                 throw e
@@ -169,7 +176,7 @@
                 throw e
             }
         }
-        const patch =async (url, param = {}, headers = {}, host = process.env.api) => {
+        const patch =async (url, param = {}) => {
             let reqHeaders = new Headers()
             reqHeaders.append('Content-Type', 'application/json')
             reqHeaders.append('Accept', 'application/json')
@@ -181,9 +188,7 @@
                 body: JSON.stringify(param)
             }
 
-            return fetch(url, init)
-                .then(parseResponse)
-                .then(checkStatus)
+            return await window.fetch(url, init).then(res => res.json())
         }
     }
 </script>

@@ -21,7 +21,7 @@ module.exports.init = async router => {
     router.get(`/${ROUTER_NAME}`, new ActionList().getAOPMiddleWare())
     router.get(`/${ROUTER_NAME}/:id`,new ActionDetail().getAOPMiddleWare())
     router.post(`/${ROUTER_NAME}`,new ActionCreate().getAOPMiddleWare())
-    router.patch(`/${ROUTER_NAME}`,new ActionModify().getAOPMiddleWare())
+    router.patch(`/${ROUTER_NAME}/:id`,new ActionModify().getAOPMiddleWare())
     router.post('/test',new Test().getAOPMiddleWare())
 }
 

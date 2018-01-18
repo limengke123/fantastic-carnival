@@ -40,7 +40,7 @@ class ArticleService {
         try{
             result = await Article.findOne(searchParam)
                 .populate('tags')
-                .select('title visits tags createTime lastEditTime excerpt')
+                .select('title visits tags createTime lastEditTime excerpt content')
                 .sort({
                     createTime:-1,
                     ...sort
