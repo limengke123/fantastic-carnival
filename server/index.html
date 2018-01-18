@@ -169,6 +169,22 @@
                 throw e
             }
         }
+        const patch =async (url, param = {}, headers = {}, host = process.env.api) => {
+            let reqHeaders = new Headers()
+            reqHeaders.append('Content-Type', 'application/json')
+            reqHeaders.append('Accept', 'application/json')
+            var init = {
+                method: 'PATCH',
+                headers: reqHeaders,
+                credentials:"include",
+                mode:'cors',
+                body: JSON.stringify(param)
+            }
+
+            return fetch(url, init)
+                .then(parseResponse)
+                .then(checkStatus)
+        }
     }
 </script>
 </body>

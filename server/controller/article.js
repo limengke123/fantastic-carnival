@@ -21,6 +21,7 @@ module.exports.init = async router => {
     router.get(`/${ROUTER_NAME}`, new ActionList().getAOPMiddleWare())
     router.get(`/${ROUTER_NAME}/:id`,new ActionDetail().getAOPMiddleWare())
     router.post(`/${ROUTER_NAME}`,new ActionCreate().getAOPMiddleWare())
+    router.patch(`/${ROUTER_NAME}`,new ActionModify().getAOPMiddleWare())
     router.post('/test',new Test().getAOPMiddleWare())
 }
 
@@ -47,7 +48,6 @@ class ActionCreate extends BaseAop{
         return next()
     }
     async [main](ctx,next){
-        console.log('收到post请求')
         const {
             title,
             visits=0,
@@ -177,6 +177,8 @@ class ActionDetail extends BaseAop{
             })
         }
         ctx.status = 200
+        ctx.state.article = article
+        article = article.toObject()
         if(article){
             try{
                 [article.nextArticle,article.prevArticle] = await Promise.all([
@@ -189,21 +191,20 @@ class ActionDetail extends BaseAop{
                 })
             }
         }
-        
+
         ctx.body = {
             success:true,
             data:article
         }
-        ctx.state.article = article
+
         return next()
     }
     async [__after](ctx,next){
-        const id = ctx.params.id
+        const article = ctx.state.article
+        console.log(article)
         try {
-            console.log(ctx.state.article)
-            await ArticleService.incVisits(id)
+            await ArticleService.incVisits(article)
         } catch (e){
-            console.log("after",e)
             ctx.throw(500,errorList.storageError.name,{
                 message:errorList.storageError.message
             })
@@ -212,9 +213,58 @@ class ActionDetail extends BaseAop{
     }
 }
 
+class ActionModify extends BaseAop{
+    static schema = joi.object().keys({
+        id:joi.objectId(),
+        body:joi.object()
+    })
+
+    async [__before](ctx,next){
+        const id = ctx.params.id
+        const body = ctx.request.body
+
+        const {error} = joi.validate({
+            id,
+            body
+        },this.constructor.schema)
+        if(error){
+            const reason = errorList.validationError.map(val => val.message).join(';')
+            return ctx.throw(400,errorList.validationError.name,{
+                message:errorList.validationError.message,
+                'parameter-name':error.details.map(detail => detail.path).join(','),
+                reason
+            })
+        }
+        return next()
+    }
+    async [main](ctx,next){
+        const id = ctx.params.id
+        const body = ctx.request.body
+
+        let article = null
+        try{
+            article = await ArticleService.update(id, body)
+        }catch (e){
+            if(e.name === 'CastError'){
+                ctx.throw(400,errorList.idNotExistError.name,{
+                    message:errorList.idNotExistError.message
+                })
+            }
+            ctx.throw(500,errorList.storageError.name,{
+                message:errorList.storageError.message
+            })
+        }
+        ctx.status = 200
+        utils.print(article)
+        ctx.body = {
+            success:true,
+            data:article
+        }
+    }
+}
+
 class Test extends BaseAop{
     async[main](ctx,next){
-        console.log('test is posted')
         if(ctx.request.body){
             ctx.body = {
                 data:ctx.request.body,

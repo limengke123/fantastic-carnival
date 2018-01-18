@@ -36,7 +36,6 @@ class ActionList extends BaseAop{
         },this.constructor.schema)
 
         if(error){
-            console.log(error)
             const reason = error.details.map(val => val.message).join(';')
             return ctx.throw(400,errorList.validationError.name,{
                 message:errorList.validationError.message,
@@ -111,9 +110,7 @@ class ActionCreate extends BaseAop {
             tag = await TagService.create({
                 name: tagName
             })
-            console.log("creating")
         } catch (e) {
-            console.log("create wrong in e")
             ctx.throw(500, errorList.storageError.name, {
                 message: errorList.storageError.message
             })
