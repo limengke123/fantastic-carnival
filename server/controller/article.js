@@ -3,7 +3,7 @@
  */
 
 const utils = require('../util/index')
-
+const mw = require('../middleware/index')
 const {
     __before,
     __after,
@@ -19,43 +19,45 @@ const {
 const ArticleService = require('../service/article')
 module.exports.init = async router => {
     router.get(`/${ROUTER_NAME}`, new ActionList().getAOPMiddleWare())
-    router.get(`/${ROUTER_NAME}/:id`,new ActionDetail().getAOPMiddleWare())
-    router.post(`/${ROUTER_NAME}`,new ActionCreate().getAOPMiddleWare())
-    router.patch(`/${ROUTER_NAME}/:id`,new ActionModify().getAOPMiddleWare())
-    router.post('/test',new Test().getAOPMiddleWare())
+    router.get(`/${ROUTER_NAME}/:id`, new ActionDetail().getAOPMiddleWare())
+    router.post(`/${ROUTER_NAME}`, mw.verifyToken,new ActionCreate().getAOPMiddleWare())
+    router.patch(`/${ROUTER_NAME}/:id`, new ActionModify().getAOPMiddleWare())
+    router.post('/test', new Test().getAOPMiddleWare())
 }
 
-class ActionCreate extends BaseAop{
+class ActionCreate extends BaseAop {
     static schema = joi.object().keys({
-        title:joi.string().required(),
-        tags : joi.array().items(joi.number()).unique().allow(null),
-        excerpt:joi.string().required(),
-        content:joi.string().required()
+        title: joi.string().required(),
+        tags: joi.array().items(joi.number()).unique().allow(null),
+        excerpt: joi.string().required(),
+        content: joi.string().required()
     })
-    async [__before](ctx,next){
+
+    async [__before](ctx, next) {
         const body = ctx.request.body
-        const {error} = joi.validate(body,this.constructor.schema,{
-            allowUnknown:true
+        const {error} = joi.validate(body, this.constructor.schema, {
+            allowUnknown: true
         })
-        if(error){
+        if (error) {
             const reason = error.details.map(val => val.message).join(',')
-            return ctx.throw(400,errorList.validationError.name,{
-                message:errorList.validationError.message,
-                'parameter-name':error.details.map(detail => detail.path).join(','),
+            return ctx.throw(400, errorList.validationError.name, {
+                message: errorList.validationError.message,
+                'parameter-name': error.details.map(detail => detail.path).join(','),
                 reason
             })
         }
         return next()
     }
-    async [main](ctx,next){
+
+    async [main](ctx, next) {
         const {
             title,
-            visits=0,
-            createTime=new Date(),
+            visits = 0,
+            createTime = new Date(),
             lastEditTime = new Date(),
             excerpt,
             content,
-            comments =[]
+            comments = []
         } = ctx.request.body
         let result = null
         try {
@@ -69,15 +71,15 @@ class ActionCreate extends BaseAop{
                 comments
             })
         } catch (e) {
-            ctx.throw(500,errorList.storageError.name,{
-                message:errorList.storageError.message
+            ctx.throw(500, errorList.storageError.name, {
+                message: errorList.storageError.message
             })
         }
         ctx.status = 200
         ctx.body = {
-            success:true,
-            data:{
-                id:result._id
+            success: true,
+            data: {
+                id: result._id
             }
         }
         return next()
@@ -96,12 +98,12 @@ class ActionList extends BaseAop {
         const {error} = joi.validate({
             tag: query.tag,
             //少见的去小数的方法
-            limit:~~query.limit,
-            page:query.page
+            limit: ~~query.limit,
+            page: query.page
         }, this.constructor.schema)
         if (error) {
             const reason = error.details.map(val => val.message).join(';')
-            return ctx.throw(400, errorList.validationError.name,{
+            return ctx.throw(400, errorList.validationError.name, {
                 message: errorList.validationError.message,
                 'parameter-name': error.details.map(detail => detail.path).join(','),
                 reason
@@ -112,168 +114,172 @@ class ActionList extends BaseAop {
 
     async [main](ctx, next) {
         const tag = ctx.query.tag
-        if(tag === void 0){
+        if (tag === void 0) {
             ctx.body = {
-                data:"tag is required"
+                data: "tag is required"
             }
         } else {
             const limit = ~~ctx.query.limit || 10
             const page = ~~ctx.query.page
             let skip
             skip = page === 0 ? 0 : limit * (page - 1)
-            try{
+            try {
                 const [articleArr, totalNumber] = await Promise.all([
-                    ArticleService.find({},limit,skip),
+                    ArticleService.find({}, limit, skip),
                     ArticleService.count()
                 ])
                 ctx.status = 200
                 ctx.body = {
-                    success:true,
-                    data:{
-                        articles:articleArr,
-                        total:totalNumber
+                    success: true,
+                    data: {
+                        articles: articleArr,
+                        total: totalNumber
                     }
                 }
-            } catch (e){
+            } catch (e) {
                 utils.print(e)
                 ctx.throw(500,
                     errorList.storageError.name,
-                    {message:errorList.storageError.message})
+                    {message: errorList.storageError.message})
             }
         }
         return next()
     }
 }
 
-class ActionDetail extends BaseAop{
+class ActionDetail extends BaseAop {
     static schema = joi.object().keys({
-        id:joi.objectId().required()
+        id: joi.objectId().required()
     })
-    async [__before](ctx,next){
+
+    async [__before](ctx, next) {
         const id = ctx.params.id
         const {error} = joi.validate({
             id
-        },this.constructor.schema)
+        }, this.constructor.schema)
 
 
-        if(error){
+        if (error) {
             const reason = error.detals.map(val => val.message).join(';')
-            return ctx.throw(400,errorList.validationError.name,{
-                message:errorList.validationError.message,
-                'parameter-name':error.details.map(detail => detail.path).join(','),
+            return ctx.throw(400, errorList.validationError.name, {
+                message: errorList.validationError.message,
+                'parameter-name': error.details.map(detail => detail.path).join(','),
                 reason
             })
         }
         return next()
     }
-    async [main](ctx,next){
+
+    async [main](ctx, next) {
         const id = ctx.params.id
         let article = null
-        try{
+        try {
             article = await ArticleService.findOne(id)
-        } catch (e){
-            ctx.throw(500,errorList.storageError.name,{
-                message:errorList.storageError.message
+        } catch (e) {
+            ctx.throw(500, errorList.storageError.name, {
+                message: errorList.storageError.message
             })
         }
         ctx.status = 200
         ctx.state.article = article
         article = article.toObject()
-        if(article){
-            try{
-                [article.nextArticle,article.prevArticle] = await Promise.all([
+        if (article) {
+            try {
+                [article.nextArticle, article.prevArticle] = await Promise.all([
                     ArticleService.findNext(id),
                     ArticleService.findPrev(id)
                 ])
-            } catch (e){
-                ctx.throw(500,errorList.storageError.name,{
-                    message:errorList.storageError.message
+            } catch (e) {
+                ctx.throw(500, errorList.storageError.name, {
+                    message: errorList.storageError.message
                 })
             }
         }
 
         ctx.body = {
-            success:true,
-            data:article
+            success: true,
+            data: article
         }
 
         return next()
     }
-    async [__after](ctx,next){
+
+    async [__after](ctx, next) {
         const article = ctx.state.article
         console.log(article)
         try {
             await ArticleService.incVisits(article)
-        } catch (e){
-            ctx.throw(500,errorList.storageError.name,{
-                message:errorList.storageError.message
+        } catch (e) {
+            ctx.throw(500, errorList.storageError.name, {
+                message: errorList.storageError.message
             })
         }
         return next()
     }
 }
 
-class ActionModify extends BaseAop{
+class ActionModify extends BaseAop {
     static schema = joi.object().keys({
-        id:joi.objectId(),
-        body:joi.object()
+        id: joi.objectId(),
+        body: joi.object()
     })
 
-    async [__before](ctx,next){
+    async [__before](ctx, next) {
         const id = ctx.params.id
         const body = ctx.request.body
 
         const {error} = joi.validate({
             id,
             body
-        },this.constructor.schema)
-        if(error){
+        }, this.constructor.schema)
+        if (error) {
             const reason = errorList.validationError.map(val => val.message).join(';')
-            return ctx.throw(400,errorList.validationError.name,{
-                message:errorList.validationError.message,
-                'parameter-name':error.details.map(detail => detail.path).join(','),
+            return ctx.throw(400, errorList.validationError.name, {
+                message: errorList.validationError.message,
+                'parameter-name': error.details.map(detail => detail.path).join(','),
                 reason
             })
         }
         return next()
     }
-    async [main](ctx,next){
+
+    async [main](ctx, next) {
         const id = ctx.params.id
         const body = ctx.request.body
 
         let article = null
-        try{
+        try {
             article = await ArticleService.update(id, body)
-        }catch (e){
-            if(e.name === 'CastError'){
-                ctx.throw(400,errorList.idNotExistError.name,{
-                    message:errorList.idNotExistError.message
+        } catch (e) {
+            if (e.name === 'CastError') {
+                ctx.throw(400, errorList.idNotExistError.name, {
+                    message: errorList.idNotExistError.message
                 })
             }
-            ctx.throw(500,errorList.storageError.name,{
-                message:errorList.storageError.message
+            ctx.throw(500, errorList.storageError.name, {
+                message: errorList.storageError.message
             })
         }
         ctx.status = 200
         utils.print(article)
         ctx.body = {
-            success:true,
-            data:article
+            success: true,
+            data: article
         }
     }
 }
 
-class Test extends BaseAop{
-    async[main](ctx,next){
-        if(ctx.request.body){
+class Test extends BaseAop {
+    async[main](ctx, next) {
+        if (ctx.request.body) {
             ctx.body = {
-                data:ctx.request.body,
-                fk:123
+                data: ctx.request.body,
+                fk: 123
             }
-        } else{
+        } else {
             ctx.body = {
-                data:ctx.request,
-                fk:456
+                data: ctx.request,
+                fk: 456
             }
         }
 

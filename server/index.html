@@ -20,6 +20,7 @@
     <option value="articles">文章测试</option>
     <option value="articlesId">文章测试id</option>
     <option value="tags">tag测试</option>
+    <option value="user">用戶信息</option>
 </select>
 <select name="fields" id="fields2">
     <option value="content">content</option>
@@ -78,6 +79,12 @@
                             name:title,
                             content:content,
                             excerpt:excerpt
+                        })
+                        break;
+                    case 'user':
+                        result = await post (`./tokens`,{
+                            username:title,
+                            password:excerpt
                         })
                         break;
                 }
