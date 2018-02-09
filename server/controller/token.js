@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 
 const configs = require('../config/index')
 const {logger, print} = require('../util/index')
+const chalk = require('chalk')
 
 const mw = require('../middleware/index')
 const md5 = require('md5')
@@ -28,8 +29,9 @@ const {
 
 module.exports.init = async router => {
     await seed()
-    router.post(`./${ROUTER_NAME}`,new ActionCreate().getAOPMiddleWare())
-    router.get(`./${ROUTER_NAME}/check`,mw.verifyToken,check)
+    router.post(`/${ROUTER_NAME}`,new ActionCreate().getAOPMiddleWare())
+    router.get(`/${ROUTER_NAME}/check`,mw.verifyToken,check)
+    console.log(chalk.blue(`router of ${ROUTER_NAME} has been injected` ))
 }
 async function seed() {
     let user = null

@@ -3,6 +3,7 @@ const utils = require('../util/index')
 
 const TagService = require('../service/tag.js')
 const ArticleService = require('../service/article')
+const chalk = require('chalk')
 
 const {
     __before,
@@ -22,6 +23,7 @@ module.exports.init = async router => {
     router.get(`/${ROUTER_NAME}`,new ActionList().getAOPMiddleWare())
     router.patch(`/${ROUTER_NAME}`,new ActionModify().getAOPMiddleWare())
     router.delete(`/${ROUTER_NAME}`,new ActionDelete().getAOPMiddleWare())
+    console.log(chalk.blue(`router of ${ROUTER_NAME} has been injected` ))
 }
 
 class ActionList extends BaseAop{

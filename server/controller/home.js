@@ -20,7 +20,6 @@ const a = async ctx => {
 class HomePage extends BaseAop{
     async [main](ctx,next){
         const rs = fs.createReadStream(htmlPath)
-        //console.log(__dirname)
         ctx.type = 'text/html'
         ctx.body = rs
     }

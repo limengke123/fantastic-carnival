@@ -6,6 +6,7 @@ const config = require('../config/index')
 const util = require('util')
 const jwt = require('jsonwebtoken')
 const verify = util.promisify(jwt.verify)
+const chalk = require('chalk')
 const {
     BaseAop,
     __before,
@@ -19,6 +20,7 @@ const timeRecorder = new WeakMap()
 
 class VerifyToken extends BaseAop {
     async [__before](ctx, next) {
+        console.log(chalk.blue('is before verifyToken'))
         timeRecorder.set(ctx, Date.now())
         return next()
     }

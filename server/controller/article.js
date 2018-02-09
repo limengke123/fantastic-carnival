@@ -4,6 +4,7 @@
 
 const utils = require('../util/index')
 const mw = require('../middleware/index')
+const chalk = require('chalk')
 const {
     __before,
     __after,
@@ -23,6 +24,7 @@ module.exports.init = async router => {
     router.post(`/${ROUTER_NAME}`, mw.verifyToken,new ActionCreate().getAOPMiddleWare())
     router.patch(`/${ROUTER_NAME}/:id`, new ActionModify().getAOPMiddleWare())
     router.post('/test', new Test().getAOPMiddleWare())
+    console.log(chalk.blue(`router of ${ROUTER_NAME} has been injected` ))
 }
 
 class ActionCreate extends BaseAop {
