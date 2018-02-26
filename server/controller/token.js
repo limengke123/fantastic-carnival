@@ -87,7 +87,8 @@ class ActionCreate extends BaseAop{
             })
         }
         if(user !== null){
-            if(user.password === password){
+            //这里暂时先后端加密 密码明文传
+            if(user.password === md5(password).toUpperCase()){
                 const token = jwt.sign({
                     uid:user._id,
                     name:user.name,

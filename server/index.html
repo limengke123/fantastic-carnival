@@ -46,14 +46,6 @@
         const contentField = document.querySelectorAll('#content')[0]
         const selectField = document.querySelectorAll('#fields')[0]
         const idField = document.querySelectorAll('#id')[0]
-        /*btn.onclick = async() => {
-            console.log(title,content)
-            const result = await post('./test',{
-                title:'你好',
-                content:'这是一个内容'
-            })
-            console.log(result)
-        }*/
         btn.onclick = async () =>{
             const title = titleField.value
             const content = contentField.value
@@ -82,10 +74,15 @@
                         })
                         break;
                     case 'user':
-                        result = await post (`./tokens`,{
-                            username:title,
-                            password:excerpt
-                        })
+                        try {
+                            result = await post(`./tokens`, {
+                                username: title,
+                                password: excerpt
+                            })
+                        } catch (e) {
+                            console.log(e)
+                        }
+                        sessionManger.set(result.data.token)
                         break;
                 }
                 console.log(result)
@@ -108,6 +105,9 @@
                         break;
                     case "tags":
                         result = await get(`./${field}`)
+                        break;
+                    case "user":
+                        result = await get(`./tokens/check`)
                         break;
                 }
                 console.log(result)
@@ -161,13 +161,17 @@
             }
         }
         const post = async function(url,data){
+            let options = {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+            }
+            if(sessionManger.get() !== void 0){
+                options["Authorization"] = "Bearer " + sessionManger.get()
+            }
             try {
                 return await window.fetch(url,{
                     method:'POST',
-                    headers:{
-                        'Accept':'application/json',
-                        'Content-Type':'application/json',
-                    },
+                    headers:options,
                     body:JSON.stringify(data)
                 }).then(res => res.json())
             } catch (e) {
@@ -176,8 +180,19 @@
             }
         }
         const get = async (url) => {
+            let reqHeaders = new Headers()
+            reqHeaders.append('Accept', 'application/json')
+            if(sessionManger.get() !== void 0){
+                reqHeaders.append('Authorization', 'Bearer ' + sessionManger.get())
+            }
+            let init = {
+                method: 'GET',
+                headers: reqHeaders,
+                credentials:"include",
+                mode:'cors',
+            }
             try{
-                return await window.fetch(url).then(response => response.json())
+                return await window.fetch(url,init).then(response => response.json())
             } catch (e){
                 console.log(e)
                 throw e
@@ -194,8 +209,15 @@
                 mode:'cors',
                 body: JSON.stringify(param)
             }
-
             return await window.fetch(url, init).then(res => res.json())
+        }
+        const sessionManger = {
+            set(token){
+                sessionStorage.setItem('token',token)
+            },
+            get(){
+                return sessionStorage.getItem('token')
+            }
         }
     }
 </script>
