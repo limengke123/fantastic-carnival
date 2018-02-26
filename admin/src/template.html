@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/highlight.js/9.7.0/styles/atom-one-dark.min.css" rel="stylesheet">
+</head>
+<body>
+<script>
+    document.onreadystatechange = function () {
+        const waitingDom = document.querySelector('#waiting')
+        if(!waitingDom){
+            const wait = document.createElement('h1')
+            wait.setAttribute('id','waiting')
+            wait.innerText = "please waiting before loaded"
+            document.body.appendChild(wait)
+        }
+        if(document.readyState === 'complete'){
+            document.body.removeChild(waitingDom)
+        }
+    }
+</script>
+</body>
+</html>

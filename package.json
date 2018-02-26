@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-server": "cross-env NODE_ENV=development DEBUG=li-blog nodemon ./server/register.js",
-    "log": "./node_modules/.bin/bunyan -L --color"
+    "log": "./node_modules/.bin/bunyan -L --color",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./admin/build/webpack.dev.config.js",
+    "build": "cross-env NODE_ENV=production node ./admin/build/build.js"
   },
   "repository": {
     "type": "git",
@@ -20,12 +22,18 @@
   },
   "homepage": "https://github.com/limengke123/fantastic-carnival#readme",
   "dependencies": {
+    "autoprefixer": "^8.0.0",
     "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.3",
     "babel-register": "^6.26.0",
     "bunyan": "^1.8.12",
     "chalk": "^2.3.0",
     "cross-env": "^5.1.3",
+    "css-loader": "^0.28.10",
     "debug": "^3.1.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.9",
+    "html-webpack-plugin": "^2.30.1",
     "joi": "^13.1.0",
     "joi-objectid": "^2.0.0",
     "jsonwebtoken": "^8.1.0",
@@ -35,7 +43,20 @@
     "koa-router": "^7.3.0",
     "lodash": "^4.17.4",
     "md5": "^2.2.1",
-    "mongoose": "^4.13.9"
+    "mongoose": "^4.13.9",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
+    "ora": "^2.0.0",
+    "postcss-loader": "^2.1.1",
+    "pug": "^2.0.0-rc.4",
+    "rimraf": "^2.6.2",
+    "style-loader": "^0.20.2",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "url-loader": "^0.6.2",
+    "vue": "^2.5.13",
+    "vue-loader": "^14.1.1",
+    "vue-template-compiler": "^2.5.13",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -44,6 +65,9 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "nodemon": "^1.14.8"
+    "nodemon": "^1.14.8",
+    "webpack": "^4.0.0",
+    "webpack-dev-server": "^3.0.0",
+    "webpack-merge": "^4.1.2"
   }
 }
