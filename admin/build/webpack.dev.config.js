@@ -47,7 +47,7 @@ const config = webpackMerge(baseConfig,{
         historyApiFallback:true,
         proxy:{
             '/api': {
-                target: 'https://cnodejs.org/api/v1',
+                target: 'http://localhost:3333/api',
                 pathRewrite: {'^/api' : '/'},
                 changeOrigin: true,
                 secure:true

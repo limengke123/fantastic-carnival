@@ -1,13 +1,12 @@
 <template lang="pug">
-    div hello!
+    router-view
 </template>
 
 <script>
+    import './styl/reset.styl'
     export default {
-
     }
 </script>
 
-<style lang="stylus" scoped>
-
+<style lang="stylus">
 </style>

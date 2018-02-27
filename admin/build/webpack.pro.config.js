@@ -50,10 +50,10 @@ const config = webpackMerge(baseConfig,{
                 NODE_ENV:'"production"'
             }
         }),
-        new webpack.optimize.SplitChunksPlugin({
+        new webpack.optimize.CommonsChunkPlugin({
             name:'vendor'
         }),
-        new webpack.optimize.SplitChunksPlugin({
+        new webpack.optimize.CommonsChunkPlugin({
             name:'runtime'
         }),
         new ExtractPlugin('css/styles.[contentHash:8].css'),
