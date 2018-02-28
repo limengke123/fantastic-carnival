@@ -10,12 +10,31 @@ Vue.use(Router)
 const routes = [
     {
         path:"/",
+        name:"login",
         component:login
     },
     {
         path:'/article',
-        component:article
+        component:article,
+        name:"article",
+        meta:{
+            requireAuth:true
+        }
     }
 ]
 
-export default new Router({routes})
+const router = new Router({
+    routes
+})
+
+router.beforeEach((to,from,next) => {
+    if(to.matched.some(record => record.meta.requireAuth)){
+        next()
+    } else {
+        next()
+    }
+})
+
+
+
+export default router

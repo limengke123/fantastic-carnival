@@ -7,9 +7,38 @@ import store from './store/index'
 import resource from 'vue-resource'
 import router from './router'
 
+//axios初始化
+import axios from 'axios'
+
 import installComponent from './components/general/index'
 import {session} from './util/session'
 import filters from './util/filter'
+
+axios.interceptors.request.use(config=>{
+    if(sessionStorage.getItem('token')){
+        config.headers.Authorization = sessionStorage.getItem('token')
+    }
+    return config
+},err =>{
+    return Promise.reject(err)
+})
+axios.interceptors.response.use(response => {
+    return response
+},err =>{
+    if(err.response){
+        switch (err.response.status){
+            case 401:
+                router.replace({
+                    path:'/',
+                    query:{
+                        redirect:router.currentRoute.fullPath
+                    }
+                })
+        }
+    }
+    return Promise.reject(err)
+})
+
 //注入自定义组件
 Vue.use(installComponent)
 
