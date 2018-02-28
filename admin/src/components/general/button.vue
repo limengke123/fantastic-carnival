@@ -1,12 +1,18 @@
 <template lang="pug">
-    button(@click="_handler" v-text="text")
+    button(@click="_handler" ,v-text="text" ,:class="classes")
 </template>
 
 <script>
+    /**
+     * typeMap:
+     * 1. inherit
+     * 2. normal
+     * 3. danger
+     * */
     export default {
+        name:"Button",
         data(){
           return {
-              isClicked:false
           }
         },
         props:{
@@ -15,7 +21,15 @@
             },
             handler:{
                 type:Function
+            },
+            type:{
+                type:String
             }
+        },
+        computed:{
+          classes(){
+              return this.type ? this.type : ""
+          }
         },
         methods:{
             _handler(){
@@ -29,7 +43,7 @@
 
 <style lang="stylus" scoped>
     button
-        line-height 1.5
+        line-height 32px
         font-weight 400
         text-align center
         background-image none
@@ -59,5 +73,37 @@
             border-color #40a9ff;
             background-color #ecf5ff
             outline none
+    .normal
+        background-color #1890ff
+        border-color #1890ff
+        color #fff
+        &:hover
+            background-color #40a9ff
+            border-color #40a9ff
+            color #fff
+        &:focus
+            background-color #40a9ff
+            border-color #40a9ff
+            color #fff
+        &:active
+            background-color #096dd9
+            border-color #096dd9
+            color #fff
+    .danger
+        color #f5222d
+        background-color #f5f5f5
+        border-color #d9d9d9
+        &:hover
+            background-color #ff4d4f
+            border-color #ff4d4f
+            color #fff
+        &:focus
+            background-color #ff4d4f
+            border-color #ff4d4f
+            color #fff
+        &:active
+            background-color #cf1322
+            border-color #cf1322
+            color #fff
 
 </style>
