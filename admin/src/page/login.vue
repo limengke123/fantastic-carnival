@@ -22,7 +22,7 @@
             }
         },
         created(){
-          console.log(this)
+          //console.log(this)
         },
         methods:{
             login(){
@@ -37,13 +37,13 @@
                             type:"success"
                         })
                         //保存session到本地sessionStorage
-                        this.$session.set({
-                            key:"token",
-                            value:resp.data.data.token
-                        })
-                        this.$router.push('/article')
+                        console.log(this)
+                        console.log(resp.data.data.token)
+                        this.$freshSession(resp.data.data.token)
+                        this.$router.push('/posts')
                     }
                 }).catch(e => {
+                    console.log(e)
                     if(e.response){
                         this.$message({
                             type:'error',
