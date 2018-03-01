@@ -5,14 +5,14 @@
             ul.aside-nav-list
                 li.aside-nav-item(title="文章"): router-link.aside-nav-button(to="/posts"): i.fa.fa-file-text-o
                 li.aside-nav-item(title="标签"): router-link.aside-nav-button(to="/tags"): i.fa.fa-tags
-        nav.aside-menu: .aside-nav-item(title="退出"): a.aside-nav-button(@click="deleteToken"): i.fa.fa-arrow-circle-o-left
+        nav.aside-menu: .aside-nav-item(title="退出"): a.aside-nav-button(@click="deleteToken"): i.fa.fa-arrow-left
 </template>
 
 <script>
     export default {
         methods:{
             deleteToken(){
-                console.log(1)
+               this.$router.push('/')
             }
         }
     }
@@ -41,6 +41,7 @@
         .aside-nav-item
             padding 20px 0
         .aside-nav-button
+            transition $transition
             box-sizing border-box
             display inline-block
             width w=45px

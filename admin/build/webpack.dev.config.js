@@ -42,7 +42,7 @@ const config = webpackMerge(baseConfig,{
         },
         hot:true,
         open:false,
-        progress:true,
+        progress:false,
         // openPage:'public/',
         historyApiFallback:true,
         proxy:{

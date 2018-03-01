@@ -4,7 +4,7 @@
         section.post-list-wrapper
             h3.page-title
                 i.fa.fa-file-text-o
-                i 文章列表
+                |  文章列表
                 i.fa.fa-plus.post-add
             post-list
 </template>
@@ -33,9 +33,16 @@
             overflow-y auto
             border-right 1px solid $border
             .page-title
-                display flex
+                padding-left 25px
+                color $light
+                cursor default
                 .post-add
+                    transition $transition
                     cursor pointer
-                    align-self flex-end
+                    float right
+                    margin-right 10px
+                    margin-top 2px
+                    &:hover
+                        color $green
 
 </style>

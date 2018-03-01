@@ -1,5 +1,12 @@
 <template lang="pug">
-    .tags-wrapper this is tag
+    .tags-wrapper
+        nav-side
+        section.post-list-wrapper
+            h3.page-title
+                i.fa.fa-file-text-o
+                |  标签列表
+                i.fa.fa-plus.post-add
+            post-list
 </template>
 
 <script>
