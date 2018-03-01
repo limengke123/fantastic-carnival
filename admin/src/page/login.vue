@@ -22,7 +22,7 @@
             }
         },
         created(){
-            console.log(this)
+          console.log(this)
         },
         methods:{
             login(){
@@ -30,7 +30,8 @@
                     username:this.username,
                     password:md5(this.password).toUpperCase()
                 }).then(resp => {
-                    if(resp.ok === true){
+                    console.log(resp)
+                    if(resp.status === 200){
                         this.$message({
                             message:"登录成功",
                             type:"success"
@@ -43,10 +44,10 @@
                         this.$router.push('/article')
                     }
                 }).catch(e => {
-                    if(e.body){
+                    if(e.response){
                         this.$message({
                             type:'error',
-                            message:e.body.message
+                            message:e.response.data.message
                         })
                     } else {
                         this.$message({

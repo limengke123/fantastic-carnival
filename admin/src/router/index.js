@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import Vue from 'vue'
 import login from '../page/login.vue'
 import article from '../page/article.vue'
+import axios from 'axios'
 Vue.use(Router)
 
 const routes = [
@@ -29,7 +30,12 @@ const router = new Router({
 
 router.beforeEach((to,from,next) => {
     if(to.matched.some(record => record.meta.requireAuth)){
-        next()
+        axios.get('/api/tokens/check')
+            .then(resp => {
+                if(resp.statusText === "OK"){
+                    next()
+                }
+            })
     } else {
         next()
     }

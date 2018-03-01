@@ -1,9 +1,11 @@
 <template lang="pug">
-    router-view
+    transition(name="slide-fade")
+        router-view
 </template>
 
 <script>
     import './styl/reset.styl'
+    import './styl/transition.styl'
     export default {
     }
 </script>
