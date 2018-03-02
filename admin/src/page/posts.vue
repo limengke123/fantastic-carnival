@@ -7,15 +7,19 @@
                 |  文章列表
                 i.fa.fa-plus.post-add
             post-list
+        .post-edit
+            article-editor
 </template>
 
 <script>
     import NavAside from '../components/navAside.vue'
     import PostList from '../components/postList.vue'
+    import ArticleEditor from '../components/articleEditor.vue'
     export default {
         components:{
             ["nav-side"]:NavAside,
             ["post-list"]:PostList,
+            ["article-editor"]:ArticleEditor,
         },
         methods:{
         }
@@ -32,10 +36,12 @@
             height 100%
             overflow-y auto
             border-right 1px solid $border
+            flex-shrink 0
             .page-title
                 padding-left 25px
                 color $light
                 cursor default
+                font-weight 400
                 .post-add
                     transition $transition
                     cursor pointer
@@ -44,5 +50,7 @@
                     margin-top 2px
                     &:hover
                         color $green
-
+        .post-edit
+            height 100%
+            flex-grow 1
 </style>
