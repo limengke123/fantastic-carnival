@@ -3,17 +3,17 @@
         div: input.form-control.big.only-border-bottom(type="text")
         .header-wrapper
             .half-container
-                i.fa.fa-tags(style="margin-right:5px;")
+                i.fa.fa-tags.tag-icon
                 span.tag(v-for="tag in tags")
                     | {{tag['name']}}
                     i.delete-tag.fa.fa-close
                 .tag.active
-                    span +
-                    input.tag-input(type="text",placeholder="使用回车键提交")
-                    ul.search-list.reset-list: li.search-item(v-for="tag in tags") {{tag['name']}}
-            .half-container.btns
-                button.btn.btn-save.r 发布文章
-                button.btn.btn-border.r 删除草稿
+                    span(v-show="!tagInput") +
+                    input.tag-input(type="text",v-show="tagInput",placeholder="使用回车键提交")
+                    ul.search-list.reset-list(v-if="tagInput"): li.search-item(v-for="tag in tags") {{tag['name']}}
+            .half-container.btn-group
+                button.btn.btn-border 删除草稿
+                button.btn.btn-save 发布文章
         textarea#editor(style="opacity:1")
 </template>
 
@@ -34,7 +34,8 @@
                   },{
                       name:"tags222"
                   },
-              ]
+              ],
+              tagInput:true
           }
         },
         mounted(){
@@ -83,6 +84,13 @@
     .half-container
         display flex
         flex-grow 1
+        .tag-icon
+            align-self center
+            position relative
+            top 5px
+            color #4a4a4a
+            margin-right 6px
+            //margin-top 5px
         .tag
             padding 3px 0
             font-size 14px
@@ -90,6 +98,7 @@
             border-bottom 2px solid $light
             margin-top 5px
             margin-right 20px
+            position relative
             .delete-tag
                 display none
             &:hover
@@ -97,9 +106,62 @@
                 border-bottom 2px solid $green
                 .delete-tag
                     display inline
-    .btns
+            &.active
+                color $green
+                border-bottom 2px solid $green
+                position relative
+            .search-list
+                position absolute
+                top 25px
+                left -6px
+                z-index 100
+                width 100%
+                padding 5px
+                background #fff
+                border 1px solid $border
+                border-radius 4px
+                box-shadow 0 6px 12px rgba(0,0,0,0.03)
+                .search-item
+                    color $light
+                    padding-left 4px
+                    &:hover
+                        color $green
+                    &+&
+                        padding-top 10px
+            .delete-tag
+                display none
+                position absolute
+                right -8px
+                top -3px
+                font-size 12px
+                cursor pointer
+            .tag-input
+                border none
+                background transparent
+                color $green
+                font-style 14px
+                outline 0
+    .btn-group
         display flex
         justify-content flex-end
+        .btn
+            cursor pointer
+            border 1px solid #c4c4c4
+            color #2c3e50
+            border-radius 3px
+            padding 6px 10px
+            text-align center
+            outline 0
+            background #fff
+        .btn-border:hover
+            border-color $green
+        .btn-save
+            color #fff
+            background-color $green
+            border-color $green
+            margin-left 20px
+
+
 
 
 </style>
