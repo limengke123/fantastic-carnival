@@ -160,6 +160,25 @@
             background-color $green
             border-color $green
             margin-left 20px
+    .editot-toolbar
+        border-left 0
+    .editor-active
+        .CodeMirror
+            border 1px solid $yellow
+    .CodeMirror
+        transition border 0.5s
+        border-left 1px solid transparent
+    .codeMirror-sided
+        box-sizing border-box
+    .editor-preview,
+    .editor-preview-side
+        background white
+        padding: 0.2em 1.4em 0;
+        font-family $body-font
+        font-size $body-font-size
+        -webkit-font-smoothing antialiased
+        -moz-osx-font-smoothing grayscale
+        color $medium
 
 
 
