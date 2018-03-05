@@ -3,6 +3,6 @@
  */
 export default{
     postList(state){
-        return state.post.all
+        return state.all
     },
 }

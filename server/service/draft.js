@@ -80,6 +80,17 @@ class DraftService {
         }
         return result && result.toObject()
     }
+    async delete(id){
+        let result = null
+        try{
+            result = await Draft.remove({
+                _id:id
+            }).exec()
+        } catch (e){
+            logger.error(e)
+        }
+        return result
+    }
     async deleteTag (tagId){
         try{
             await Draft.update({},{

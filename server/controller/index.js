@@ -5,9 +5,11 @@ const article = require('./article.js')
 const tag = require('./tag')
 const home = require('./home')
 const token = require('./token')
+const draft = require('./draft')
 module.exports.init = async router => {
     tag.init(router)
     article.init(router)
     home.init(router)
     token.init(router)
+    draft.init(router)
 }
