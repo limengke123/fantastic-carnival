@@ -8,56 +8,64 @@
 </template>
 
 <script>
+    import {mapState, mapGetters} from 'vuex'
     export default {
         data(){
             return {
-                postList:[
+                /*postList: [
                     {
-                        title:"这是标题",
-                        lastEditTime:"2018/3/1",
-                        excerpt:"摘要",
-                    },{
-                        title:"这是标题2",
-                        lastEditTime:"2018/3/1",
-                        excerpt:"摘要2",
-                    },{
-                        title:"这是标题3",
-                        lastEditTime:"2018/3/1",
-                        excerpt:"摘要3",
-                    },{
-                        title:"这是标题3",
-                        lastEditTime:"2018/3/1",
-                        excerpt:"摘要3",
-                    },{
-                        title:"这是标题3",
-                        lastEditTime:"2018/3/1",
-                        excerpt:"摘要3",
-                    },{
-                        title:"这是标题3",
-                        lastEditTime:"2018/3/1",
-                        excerpt:"摘要3",
-                    },{
-                        title:"这是标题3",
-                        lastEditTime:"2018/3/1",
-                        excerpt:"摘要3",
-                    },{
-                        title:"这是标题3",
-                        lastEditTime:"2018/3/1",
-                        excerpt:"摘要3",
-                    },{
-                        title:"这是标题3",
-                        lastEditTime:"2018/3/1",
-                        excerpt:"摘要3",
-                    },{
-                        title:"这是标题3",
-                        lastEditTime:"2018/3/1",
-                        excerpt:"摘要3",
+                        title: "这是标题",
+                        lastEditTime: "2018/3/1",
+                        excerpt: "摘要",
+                    }, {
+                        title: "这是标题2",
+                        lastEditTime: "2018/3/1",
+                        excerpt: "摘要2",
+                    }, {
+                        title: "这是标题3",
+                        lastEditTime: "2018/3/1",
+                        excerpt: "摘要3",
+                    }, {
+                        title: "这是标题3",
+                        lastEditTime: "2018/3/1",
+                        excerpt: "摘要3",
+                    }, {
+                        title: "这是标题3",
+                        lastEditTime: "2018/3/1",
+                        excerpt: "摘要3",
+                    }, {
+                        title: "这是标题3",
+                        lastEditTime: "2018/3/1",
+                        excerpt: "摘要3",
+                    }, {
+                        title: "这是标题3",
+                        lastEditTime: "2018/3/1",
+                        excerpt: "摘要3",
+                    }, {
+                        title: "这是标题3",
+                        lastEditTime: "2018/3/1",
+                        excerpt: "摘要3",
+                    }, {
+                        title: "这是标题3",
+                        lastEditTime: "2018/3/1",
+                        excerpt: "摘要3",
+                    }, {
+                        title: "这是标题3",
+                        lastEditTime: "2018/3/1",
+                        excerpt: "摘要3",
                     },
-                ]
+                ]*/
             }
         },
+        computed: {
+            ...mapState({}),
+            ...mapGetters([
+                    'postList'
+                ]
+            )
+        },
         created(){
-            return this
+            console.log(this.postList)
         }
     }
 </script>
@@ -67,11 +75,13 @@
     @import '../styl/variable.styl'
     .post-list
         border-top 1px solid $border
+
     .post-list-item
         margin 0 25px
         padding 20px 0
         border-bottom 1px solid $border
         cursor pointer
+
     .post-thumb
         padding-left 5px
         &.published
@@ -105,6 +115,7 @@
         .post-time
             color $light
             margin 0 0 6px
+
     .post-thumb-content
         white-space nowrap
         overflow hidden

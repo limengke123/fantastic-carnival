@@ -4,7 +4,11 @@
 import axios from 'axios'
 import router from '../router/index'
 
-//请求前的拦截
+/**
+ * 请求前的拦截
+ * 如果sessionStorage里面有token
+ * 请求头里面加authorization字段
+ * */
 axios.interceptors.request.use(config=>{
     console.log(1111)
     if(sessionStorage.getItem('token')){
@@ -15,7 +19,10 @@ axios.interceptors.request.use(config=>{
     return Promise.reject(err)
 })
 
-//请求后的拦截
+/**
+ * 请求后的拦截
+ * 如果后端返回状态码是401,返回到登录页面
+ * */
 axios.interceptors.response.use(response => {
     return response
 },err =>{
@@ -37,7 +44,7 @@ axios.interceptors.response.use(response => {
 const http = axios.create({
     timeout:10000
 })
-
+exports.http = http
 exports.httpInstall = function(Vue,option={}){
     Vue.prototype.$http = http
 }
