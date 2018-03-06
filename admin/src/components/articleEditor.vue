@@ -1,6 +1,6 @@
 <template lang="pug">
-    section(:class="postSaved ? 'editor-active': ''")
-        div(:class="postTitleSaved ? 'title-active': ''"): input.form-control.big.only-border-bottom(type="text",:value="postTitle",@input="updateTitle")
+    section(:class="postSaved ? '': 'editor-active'")
+        div(:class="postTitleSaved ? '': 'title-active'"): input.form-control.big.only-border-bottom(type="text",:value="postTitle",@input="updateTitle")
         .header-wrapper
             .half-container
                 i.fa.fa-tags.tag-icon
@@ -22,6 +22,14 @@
     import _ from 'lodash'
     import marked from '../util/marked'
     import {mapActions,mapGetters} from 'vuex'
+    const updateTitleDebounce = _.debounce((title)=>{
+        this.submitPostTitle(title)
+            .then(() => {
+                this.savePostTitle()
+            }).catch(e => {
+            console.log(e)
+        })
+    },500)
     export default {
         data(){
           return {
@@ -54,10 +62,10 @@
                 'submitPostTitle',
                 'savePostTitle'
             ]),
-            updateTitle:_.debounce(function(e){
-                console.log(e)
+            updateTitle:function(e){
                 this.editPostTitle()
-            },500)
+                updateTitleDebounce.call(this,e.target.value)
+            }
         },
         mounted(){
             const simpleMDE = new SimpleMDE({
@@ -67,6 +75,10 @@
                     return marked(plainText)
                 },
                 spellChecker:false
+            })
+            let postDraft = () => {console.log('post draft')}
+            simpleMDE.codemirror.on('change',() => {
+                postDraft()
             })
         }
     }

@@ -37,8 +37,9 @@ export default {
         state.title = state.all[index].title
     },
     [POST_TITLE_EDIT](state){
-        if(!state.postTitleSaved){
-            state.postTitleSaved = true
+        if(state.postTitleSaved){
+            state.all[state.currentPostIndex].draftPublished = false,
+            state.postTitleSaved = false
         }
     },
     [POST_TITLE_UPDATE](state,title){
@@ -47,5 +48,10 @@ export default {
     },
     [POST_LAST_EDIT_TIME](state,time){
         state.all[state.currentPostIndex].lastEditTime = time
+    },
+    [POST_TITLE_SAVE](state){
+        if(!state.postTitleSaved){
+            state.postTitleSaved = true
+        }
     }
 }

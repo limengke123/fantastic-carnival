@@ -28,6 +28,10 @@ export default {
         }).then(resp => {
             if(resp.status === 200){
                 commit(RECEIVE_ALL_POSTS,resp.data.data)
+                if(resp.data.data.length > 0){
+                    //进来默认点击第一条
+                    commit(POST_FOCUS,0)
+                }
             } else {
             }
         })
@@ -67,13 +71,15 @@ export default {
                 if(resp.status === 200){
                     commit(POST_TITLE_UPDATE,title)
                     commit(POST_LAST_EDIT_TIME,resp.data.data.lastEditTime)
+                    resolve()
                 } else {
                     console.log('修改题目失败')
+                    reject()
                 }
             })
         })
     },
     savePostTitle({commit}){
-
+        commit(POST_TITLE_SAVE)
     }
 }
