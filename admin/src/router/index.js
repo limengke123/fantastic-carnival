@@ -3,7 +3,7 @@
  */
 import Router from 'vue-router'
 import Vue from 'vue'
-import axios from 'axios'
+import {http} from '../util/http'
 
 //引入自定义组件
 import login from '../page/login.vue'
@@ -43,7 +43,7 @@ const router = new Router({
 
 router.beforeEach((to,from,next) => {
     if(to.matched.some(record => record.meta.requireAuth)){
-        axios.get('/api/tokens/check')
+        http.get('/api/tokens/check')
             .then(resp => {
                 if(resp.statusText === "OK"){
                     next()

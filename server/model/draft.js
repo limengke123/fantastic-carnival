@@ -13,7 +13,7 @@ const draftSchema = new Schema({
     createTime:Date,
     lastEditTime:{
         type:Date,
-        default:Date.now()
+        default:Date.now
     },
     excerpt:String,
     content:String,

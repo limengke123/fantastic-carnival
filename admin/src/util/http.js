@@ -4,13 +4,16 @@
 import axios from 'axios'
 import router from '../router/index'
 
+const http = axios.create({
+    timeout:10000
+})
+
 /**
  * 请求前的拦截
  * 如果sessionStorage里面有token
  * 请求头里面加authorization字段
  * */
-axios.interceptors.request.use(config=>{
-    console.log(1111)
+http.interceptors.request.use(config=>{
     if(sessionStorage.getItem('token')){
         config.headers.Authorization = "Bearer " + sessionStorage.getItem('token')
     }
@@ -23,7 +26,7 @@ axios.interceptors.request.use(config=>{
  * 请求后的拦截
  * 如果后端返回状态码是401,返回到登录页面
  * */
-axios.interceptors.response.use(response => {
+http.interceptors.response.use(response => {
     return response
 },err =>{
     if(err.response){
@@ -36,15 +39,17 @@ axios.interceptors.response.use(response => {
                         redirect:router.currentRoute.fullPath
                     }
                 })
+                console.log('force return to login-page')
+                break;
         }
     }
     return Promise.reject(err)
 })
 
-const http = axios.create({
-    timeout:10000
-})
+
+
 exports.http = http
+
 exports.httpInstall = function(Vue,option={}){
     Vue.prototype.$http = http
 }

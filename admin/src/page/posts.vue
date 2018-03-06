@@ -5,7 +5,7 @@
             h3.page-title
                 i.fa.fa-file-text-o
                 |  文章列表
-                i.fa.fa-plus.post-add
+                i.fa.fa-plus.post-add(@click="createPost")
             post-list
         .post-edit
             article-editor
@@ -15,13 +15,22 @@
     import NavAside from '../components/navAside.vue'
     import PostList from '../components/postList.vue'
     import ArticleEditor from '../components/articleEditor.vue'
+    import {mapActions} from 'vuex'
     export default {
         components:{
             ["nav-side"]:NavAside,
             ["post-list"]:PostList,
             ["article-editor"]:ArticleEditor,
         },
+        mounted(){
+            console.log(this.$store)
+            this.getAllPost()
+        },
         methods:{
+            ...mapActions([
+                "createPost",
+                'getAllPost'
+            ])
         }
     }
 </script>

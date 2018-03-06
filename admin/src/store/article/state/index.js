@@ -4,11 +4,11 @@
 export default{
     all:[],
     tags:[],
-    currentId:null,
-    currentIndex:-1,
+    currentPostId:null,
+    currentPostIndex:-1,
     articleId:null,
     title:"",
     content:'',
-    saved:true,
-    titleSaved:true
+    postSaved:true,
+    postTitleSaved:true
 }

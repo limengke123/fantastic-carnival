@@ -1,6 +1,6 @@
 <template lang="pug">
-    section
-        div: input.form-control.big.only-border-bottom(type="text")
+    section(:class="postSaved ? 'editor-active': ''")
+        div(:class="postTitleSaved ? 'title-active': ''"): input.form-control.big.only-border-bottom(type="text",:value="postTitle",@input="updateTitle")
         .header-wrapper
             .half-container
                 i.fa.fa-tags.tag-icon
@@ -12,14 +12,16 @@
                     input.tag-input(type="text",v-show="tagInput",placeholder="使用回车键提交")
                     ul.search-list.reset-list(v-if="tagInput"): li.search-item(v-for="tag in tags") {{tag['name']}}
             .half-container.btn-group
-                button.btn.btn-border 删除草稿
+                button.btn.btn-border(@click="deletePost") 删除草稿
                 button.btn.btn-save 发布文章
         textarea#editor(style="opacity:1")
 </template>
 
 <script>
     import SimpleMDE from 'simplemde'
+    import _ from 'lodash'
     import marked from '../util/marked'
+    import {mapActions,mapGetters} from 'vuex'
     export default {
         data(){
           return {
@@ -38,11 +40,29 @@
               tagInput:true
           }
         },
+        computed:{
+            ...mapGetters([
+                'postTitle',
+                'postSaved',
+                'postTitleSaved',
+            ])
+        },
+        methods:{
+            ...mapActions([
+                'deletePost',
+                'editPostTitle',
+                'submitPostTitle',
+                'savePostTitle'
+            ]),
+            updateTitle:_.debounce(function(e){
+                console.log(e)
+                this.editPostTitle()
+            },500)
+        },
         mounted(){
             const simpleMDE = new SimpleMDE({
                 autoDownloadFontAwesome:false,
                 element:this.$el.getElementsByTagName('textarea')[0],
-                //element:document.getElementById('editor'),
                 previewRender:function (plainText) {
                     return marked(plainText)
                 },

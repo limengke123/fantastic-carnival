@@ -68,5 +68,6 @@ utils.formatDate = (date, fmt) => {
                 :(('00' + o[k]).substr(('' + o[k]).length)))
         }
     }
+    return fmt
 }
 module.exports = utils

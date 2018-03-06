@@ -56,7 +56,7 @@ class ActionCreate extends BaseAop{
 
         let draft = null
         try{
-            draft = DraftService.create({
+            draft = await DraftService.create({
                 title,
                 createTime,
                 lastEditTime,
@@ -205,7 +205,7 @@ class ActionDelete extends BaseAop{
     async [__before](ctx,next){
         const id = ctx.params.id
 
-        const {error} = Joi.validae({
+        const {error} = Joi.validate({
             id
         },this.constructor.schema)
 
