@@ -21,65 +21,102 @@
     import SimpleMDE from 'simplemde'
     import _ from 'lodash'
     import marked from '../util/marked'
-    import {mapActions,mapGetters} from 'vuex'
-    const updateTitleDebounce = _.debounce((title)=>{
-        this.submitPostTitle(title)
+    import {mapActions, mapGetters} from 'vuex'
+    import {http} from '../util/http'
+    const updateTitleDebounce = _.debounce((context, title) => {
+        context.submitPostTitle(title)
             .then(() => {
-                this.savePostTitle()
+                context.savePostTitle()
             }).catch(e => {
             console.log(e)
         })
-    },500)
+    }, 1000)
     export default {
         data(){
-          return {
-              tagsToAdd:[
-                  {
-                      name:"一条tag"
-                  }
-              ],
-              tags:[
-                  {
-                      name:"tags!!!"
-                  },{
-                      name:"tags222"
-                  },
-              ],
-              tagInput:true
-          }
+            return {
+                tagsToAdd: [],
+                tags: [],
+                tagInput: false,
+                draftPublished:'',
+                tagNew:'',
+                change:true
+            }
         },
-        computed:{
+        computed: {
             ...mapGetters([
                 'postTitle',
                 'postSaved',
                 'postTitleSaved',
+                'currentPostId',
             ])
         },
-        methods:{
+        methods: {
             ...mapActions([
                 'deletePost',
                 'editPostTitle',
                 'submitPostTitle',
-                'savePostTitle'
+                'savePostTitle',
+                'editPost',
+                'modifyContent',
+                'submitPostExcerpt',
+                'savePost',
+                'getDraft'
+
             ]),
-            updateTitle:function(e){
+            updateTitle: function (e) {
                 this.editPostTitle()
-                updateTitleDebounce.call(this,e.target.value)
+                updateTitleDebounce(this, e.target.value)
             }
         },
         mounted(){
+            /**
+             * 挂载这个编辑器
+             * */
             const simpleMDE = new SimpleMDE({
-                autoDownloadFontAwesome:false,
-                element:this.$el.getElementsByTagName('textarea')[0],
-                previewRender:function (plainText) {
+                autoDownloadFontAwesome: false,
+                element: this.$el.getElementsByTagName('textarea')[0],
+                previewRender: function (plainText) {
                     return marked(plainText)
                 },
-                spellChecker:false
+                spellChecker: false
             })
-            let postDraft = () => {console.log('post draft')}
-            simpleMDE.codemirror.on('change',() => {
+            let postDraft = _.debounce(() => {
+                this.modifyContent(simpleMDE.value())
+            }, 1000)
+
+            //修改内容
+            //每次进来的时候都会触发一次change事件，这里的change属性区别
+            //change 为true的时候不给dispatch editPost
+            simpleMDE.codemirror.on('change', () => {
+                if(this.change === true){
+                    this.change = false
+                    return false
+                }
+                if (this.postSaved) {
+                    this.editPost()
+                }
                 postDraft()
             })
+
+            this.change = true
+
+            //赋值
+            if(this.currentPostId){
+                this.getDraft()
+                    .then(resp => {
+                        this.tagNew = ''
+                        this.tagInput = false
+                        this.tags = resp.data.tags
+                        this.$nextTick(() => {
+                            simpleMDE.value(resp.data.content)
+                        })
+                    }).catch(e => {
+                        this.$message({
+                            type:"error",
+                            text:e
+                        })
+                })
+            }
         }
     }
 </script>
@@ -91,6 +128,7 @@
     .title-active
         .big
             border 1px solid $yellow
+
     .form-control
         color $black
         box-sizing border-box
@@ -101,18 +139,22 @@
         border 1px solid $border
         background-color #fff
         outline 0
+
     .big
         transition border 0.5s
         padding 13px 20px 13px 30px
         font-size 26px
+
     .only-border-bottom
         border 1px solid transparent
         border-bottom 1px solid $border
+
     .header-wrapper
         display flex
         //justify-content space-between
         padding 15px
         box-sizing border-box
+
     .half-container
         display flex
         flex-grow 1
@@ -152,13 +194,13 @@
                 background #fff
                 border 1px solid $border
                 border-radius 4px
-                box-shadow 0 6px 12px rgba(0,0,0,0.03)
+                box-shadow 0 6px 12px rgba(0, 0, 0, 0.03)
                 .search-item
                     color $light
                     padding-left 4px
                     &:hover
                         color $green
-                    &+&
+                    & + &
                         padding-top 10px
             .delete-tag
                 display none
@@ -173,6 +215,7 @@
                 color $green
                 font-style 14px
                 outline 0
+
     .btn-group
         display flex
         justify-content flex-end
@@ -192,16 +235,20 @@
             background-color $green
             border-color $green
             margin-left 20px
-    .editot-toolbar
+
+    .editor-toolbar
         border-left 0
-    .editor-active
-        .CodeMirror
-            border 1px solid $yellow
+
+    .editor-active .CodeMirror
+        border 1px solid $yellow
+
     .CodeMirror
         transition border 0.5s
         border-left 1px solid transparent
-    .codeMirror-sided
+
+    .CodeMirror-sided
         box-sizing border-box
+
     .editor-preview,
     .editor-preview-side
         background white
@@ -211,8 +258,4 @@
         -webkit-font-smoothing antialiased
         -moz-osx-font-smoothing grayscale
         color $medium
-
-
-
-
 </style>

@@ -18,6 +18,13 @@
                 'focusOnPost'
             ]),
             focus(index){
+                if(!this.postSaved || !this.postTitleSaved){
+                    this.$message({
+                        type:"warninng",
+                        text:"还没保存完，过一会再点"
+                    })
+                    return false
+                }
                 if (index !== this.currentPostIndex){
                     this.focusOnPost(index)
                 }

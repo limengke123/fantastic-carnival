@@ -19,6 +19,20 @@ const {
     POST_CREATE,
     POST_TAG_UPDATE
 } = mutation_type
+/**
+ * getAllPost @tags 拿到列表 @GET
+ * createPost 创建一条post @POST
+ * deletePost 删除一条Post @DELETE
+ * focusOnPost 点击一条post触发
+ * editPostTitle 修改title时触发，就改一个属性
+ * submitPostTitle 提交title @PATCH
+ * savePostTitle 保存title，修改属性
+ * editPost 编辑保存，修改属性
+ * modifyContent 修改内容 @PATCH
+ * submitPostExcerpt 提交excerpt
+ * savePost 保存状态
+ * getDraft 获得草稿内容 @GET
+ * */
 export default {
     getAllPost({commit},tags){
         http.get('/api/drafts',{
@@ -81,5 +95,44 @@ export default {
     },
     savePostTitle({commit}){
         commit(POST_TITLE_SAVE)
+    },
+    editPost({commit}){
+        commit(POST_EDIT)
+    },
+    modifyContent({state,dispatch},content){
+        return new Promise((resolve,reject) => {
+            http.patch(`/api/drafts/${state.currentPostId}`,{content})
+                .then(resp => {
+                    if(resp.status === 200){
+                        console.log(resp.data.data.lastEditTime)
+                        dispatch('submitPostExcerpt',{
+                            excerpt:resp.data.data.excerpt,
+                            time:resp.data.data.lastEditTime
+                        })
+                        dispatch('savePost')
+                    } else {
+                        reject(resp)
+                    }
+                }).catch(reject)
+        })
+    },
+    submitPostExcerpt({commit},{excerpt,time}){
+        commit(POST_EXCERPT_UPDATE,excerpt)
+        commit(POST_LAST_EDIT_TIME,time)
+    },
+    savePost({commit}){
+        commit(POST_SAVE)
+    },
+    getDraft({state}){
+        return new Promise((resolve,reject) => {
+            http.get(`/api/drafts/${state.currentPostId}`)
+                .then(resp => {
+                    if(resp.status === 200){
+                        resolve(resp.data)
+                    } else {
+                        reject(resp)
+                    }
+                }).catch(reject)
+        })
     }
 }

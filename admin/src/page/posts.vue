@@ -23,7 +23,6 @@
             ["article-editor"]:ArticleEditor,
         },
         mounted(){
-            console.log(this.$store)
             this.getAllPost()
         },
         methods:{

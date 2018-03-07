@@ -30,11 +30,13 @@ export default {
         state.articleId = state.all[0].article
     },
     [POST_FOCUS](state,index){
-        state.currentPostIndex = index
-        state.currentPostId = state.all[index].id
-        state.excerpt = state.all[index].excerpt
-        state.articleId = state.all[index].article
-        state.title = state.all[index].title
+        if(state.postSaved && state.postTitleSaved){
+            state.currentPostIndex = index
+            state.currentPostId = state.all[index].id
+            state.excerpt = state.all[index].excerpt
+            state.articleId = state.all[index].article
+            state.title = state.all[index].title
+        }
     },
     [POST_TITLE_EDIT](state){
         if(state.postTitleSaved){
@@ -52,6 +54,24 @@ export default {
     [POST_TITLE_SAVE](state){
         if(!state.postTitleSaved){
             state.postTitleSaved = true
+        }
+    },
+    [POST_EDIT](state){
+        if(state.postSaved){
+            state.all[state.currentPostIndex].draftPublished = false;
+            state.postSaved = false
+        }
+    },
+    [POST_EXCERPT_UPDATE](state,excerpt){
+        state.all[state.currentPostIndex].excerpt = excerpt
+    },
+    [POST_LAST_EDIT_TIME](state,time){
+        console.log(time,11)
+        state.all[state.currentPostIndex].lastEditTime = time
+    },
+    [POST_SAVE](state){
+        if(!state.postSaved){
+            state.postSaved = true
         }
     }
 }
