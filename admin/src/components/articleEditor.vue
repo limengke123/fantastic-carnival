@@ -13,7 +13,7 @@
                     ul.search-list.reset-list(v-if="tagInput",v-show="tagsToAdd.length"): li.search-item(v-for="tag in tagsToAdd",@click="submitTag(tag['name'])") {{tag['name']}}
             .half-container.btn-group
                 button.btn.btn-border(@click="deletePost") 删除草稿
-                button.btn.btn-save 发布文章
+                button.btn.btn-save(@click="publish") 发布文章
         textarea#editor(style="opacity:1")
 </template>
 
@@ -159,6 +159,19 @@
                         message:"文章保存中，请重试"
                     })
                 }
+                this.publishPost()
+                    .then(resp => {
+                        console.log(resp)
+                        this.$message({
+                            type:'success',
+                            message:"发布成功"
+                        })
+                    }).catch(e=>{
+                        this.$message({
+                            type:'error',
+                            message:"发布失败"
+                        })
+                })
             }
         },
         mounted(){

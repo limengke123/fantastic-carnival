@@ -152,9 +152,17 @@ export default {
             }).catch(reject)
         })
     },
-    publishPost(){
+    publishPost({state}){
         return new Promise((resolve,reject) => {
-            http.post()
+            http.post(`/api/publications`,{
+                draftId:state.currentPostId
+            }).then(resp => {
+                if(resp.status === 200){
+                    resolve(resp.data)
+                } else {
+                    reject(resp)
+                }
+            }).catch(reject)
         })
     }
 }
