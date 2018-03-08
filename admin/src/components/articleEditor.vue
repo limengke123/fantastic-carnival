@@ -81,17 +81,16 @@
                     }
                 }).then(resp => {
                     if(resp.status === 200){
-                        console.log(resp.data.data)
                         this.tagsToAdd = resp.data.data
                     }
                 })
             },
             submitTag(val){
-                //this.tagInput = false
                 /**
                  * 鼠标点击和input回车都是这个函数 val 可能是点击的值也可能是 事件对象
                  * 这里需要判断
                  * */
+                this.tagInput = false
                 let tag = typeof val === 'object' ? this.tagNew : val
                 if(tag === ''){
                     return
@@ -113,35 +112,18 @@
                             })
                             newTagArr.push(id)
                             //数据库更新下草稿的标签id
-                            this.updateDraftTags(newTagArr).then(res => {
-                                console.log(res)
-                                if(res.success === true){
-                                    this.tags = res.data
-                                    this.postTagsModify(res.data.lastEditTime)
-                                } else {
-                                    this.$message({
-                                        type:"error",
-                                        message:"保存tags时内部有问题"
-                                    })
-                                }
-                            }).catch(e => {
-                                this.$message({
-                                    type:'error',
-                                    message:"保存tags时网络有问题"
+                            this.updateDraftTags(newTagArr)
+                                .then(res=>{
+                                    console.log(res)
+                                    if(res.status === 200){
+                                        this.tags = res.data
+                                        console.log(this.tags)
+                                        console.log(res)
+                                        this.postTagsModify(res.data.data.lastEditTime)
+                                    }
                                 })
-                            })
-                        } else {
-                            this.$message({
-                                type:'error',
-                                message:'新建tags内部问题'
-                            })
                         }
-                    }).catch(e => {
-                        this.$message({
-                            type:"error",
-                            message:e
-                        })
-                })
+                    })
             },
             deleteTag(id){
                 let newTagArr = this.tags.filter(tags => tags.id !== id)

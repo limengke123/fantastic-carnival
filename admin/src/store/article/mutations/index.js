@@ -65,9 +65,6 @@ export default {
     [POST_EXCERPT_UPDATE](state,excerpt){
         state.all[state.currentPostIndex].excerpt = excerpt
     },
-    [POST_LAST_EDIT_TIME](state,time){
-        state.all[state.currentPostIndex].lastEditTime = time
-    },
     [POST_SAVE](state){
         if(!state.postSaved){
             state.postSaved = true
