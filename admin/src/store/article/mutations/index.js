@@ -66,12 +66,14 @@ export default {
         state.all[state.currentPostIndex].excerpt = excerpt
     },
     [POST_LAST_EDIT_TIME](state,time){
-        console.log(time,11)
         state.all[state.currentPostIndex].lastEditTime = time
     },
     [POST_SAVE](state){
         if(!state.postSaved){
             state.postSaved = true
         }
+    },
+    [POST_TAG_UPDATE](state){
+        state.all[state.currentPostIndex].draftPublished = false
     }
 }

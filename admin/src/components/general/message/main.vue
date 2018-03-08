@@ -26,7 +26,7 @@
             return {
                 visible: false,
                 message: '',
-                duration: 3000,
+                duration: 1000,
                 type: 'warning',
                 iconClass: '',
                 timer: null,

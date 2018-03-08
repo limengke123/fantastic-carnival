@@ -134,5 +134,27 @@ export default {
                     }
                 }).catch(reject)
         })
+    },
+    postTagsModify({commit},time){
+        commit(POST_TAG_UPDATE)
+        commit(POST_LAST_EDIT_TIME,time)
+    },
+    updateDraftTags({state},newTagArr){
+        return new Promise((resolve,reject) => {
+            http.patch(`/api/drafts/${state.currentPostId}`,{
+                tags:newTagArr
+            }).then(resp => {
+                if(resp.status === 200){
+                    resolve(resp.data)
+                } else {
+                    reject(resp)
+                }
+            }).catch(reject)
+        })
+    },
+    publishPost(){
+        return new Promise((resolve,reject) => {
+            http.post()
+        })
     }
 }

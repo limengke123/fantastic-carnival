@@ -6,11 +6,11 @@
                 i.fa.fa-tags.tag-icon
                 span.tag(v-for="tag in tags")
                     | {{tag['name']}}
-                    i.delete-tag.fa.fa-close
+                    i.delete-tag.fa.fa-close(@click="deleteTag(tag.id)")
                 .tag.active
-                    span(v-show="!tagInput") +
-                    input.tag-input(type="text",v-show="tagInput",placeholder="使用回车键提交")
-                    ul.search-list.reset-list(v-if="tagInput"): li.search-item(v-for="tag in tags") {{tag['name']}}
+                    span(v-show="!tagInput",class="addIcon",@click="addTag") +
+                    input.tag-input(type="text",v-show="tagInput",placeholder="使用回车键提交",v-model="tagNew",@keyup.13="submitTag")
+                    ul.search-list.reset-list(v-if="tagInput",v-show="tagsToAdd.length"): li.search-item(v-for="tag in tagsToAdd",@click="submitTag(tag['name'])") {{tag['name']}}
             .half-container.btn-group
                 button.btn.btn-border(@click="deletePost") 删除草稿
                 button.btn.btn-save 发布文章
@@ -60,12 +60,105 @@
                 'modifyContent',
                 'submitPostExcerpt',
                 'savePost',
-                'getDraft'
-
+                'getDraft',
+                'postTagsModify',
+                'updateDraftTags',
+                'publishPost',
             ]),
-            updateTitle: function (e) {
+            updateTitle(e) {
                 this.editPostTitle()
                 updateTitleDebounce(this, e.target.value)
+            },
+            addTag(){
+                this.tagInput = true
+                this.tagNew = ''
+                this.searchTags()
+            },
+            searchTags(val){
+                http.get('/api/tags',{
+                    params:{
+                       'start-with':val
+                    }
+                }).then(resp => {
+                    if(resp.status === 200){
+                        console.log(resp.data.data)
+                        this.tagsToAdd = resp.data.data
+                    }
+                })
+            },
+            submitTag(val){
+                //this.tagInput = false
+                /**
+                 * 鼠标点击和input回车都是这个函数 val 可能是点击的值也可能是 事件对象
+                 * 这里需要判断
+                 * */
+                let tag = typeof val === 'object' ? this.tagNew : val
+                if(tag === ''){
+                    return
+                }
+                http.post('/api/tags',{name:tag})
+                    .then(resp => {
+                        if(resp.status === 200){
+                            /**
+                             * 先不管有没有成功
+                             * 如果在这篇文章已经有这个tags时候，就不做
+                             * 当然可以在发请求前对文字比较 这里是对tags的id比较
+                            */
+                            const id = resp.data.data.id
+                            if(this.tags.some(item => item.id === id)){
+                                return
+                            }
+                            let newTagArr = this.tags.map(item => {
+                                return item.id
+                            })
+                            newTagArr.push(id)
+                            //数据库更新下草稿的标签id
+                            this.updateDraftTags(newTagArr).then(res => {
+                                console.log(res)
+                                if(res.success === true){
+                                    this.tags = res.data
+                                    this.postTagsModify(res.data.lastEditTime)
+                                } else {
+                                    this.$message({
+                                        type:"error",
+                                        message:"保存tags时内部有问题"
+                                    })
+                                }
+                            }).catch(e => {
+                                this.$message({
+                                    type:'error',
+                                    message:"保存tags时网络有问题"
+                                })
+                            })
+                        } else {
+                            this.$message({
+                                type:'error',
+                                message:'新建tags内部问题'
+                            })
+                        }
+                    }).catch(e => {
+                        this.$message({
+                            type:"error",
+                            message:e
+                        })
+                })
+            },
+            deleteTag(id){
+                let newTagArr = this.tags.filter(tags => tags.id !== id)
+                this.updateDraftTags(newTagArr).then(res => {
+                    if(res.success === true){
+                        this.tags = res.data
+                        this.postTagsModify(res.data.lastEditTime)
+                    }
+                })
+            },
+            publish(){
+                if(!this.postSaved || !this.postTitleSaved){
+                    this.$message({
+                        type:'warning',
+                        message:"文章保存中，请重试"
+                    })
+                }
             }
         },
         mounted(){
@@ -158,6 +251,8 @@
     .half-container
         display flex
         flex-grow 1
+        .addIcon
+            cursor pointer
         .tag-icon
             align-self center
             position relative
@@ -198,8 +293,10 @@
                 .search-item
                     color $light
                     padding-left 4px
+                    cursor pointer
                     &:hover
                         color $green
+                        background-color $codebg
                     & + &
                         padding-top 10px
             .delete-tag

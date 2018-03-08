@@ -20,8 +20,8 @@
             focus(index){
                 if(!this.postSaved || !this.postTitleSaved){
                     this.$message({
-                        type:"warninng",
-                        text:"还没保存完，过一会再点"
+                        type:"warning",
+                        message:"还没保存完，过一会再点"
                     })
                     return false
                 }
@@ -34,7 +34,9 @@
             ...mapGetters([
                 'postList',
                 'currentPostId',
-                'currentPostIndex'
+                'currentPostIndex',
+                'postSaved',
+                'postTitleSaved'
                 ]
             )
         },

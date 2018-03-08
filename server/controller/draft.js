@@ -23,7 +23,7 @@ module.exports.init = async router => {
     router.patch(`/${ROUTER_NAME}/:id`,mw.verifyToken,new ActionModify().getAOPMiddleWare())
     router.get(`/${ROUTER_NAME}/:id`,mw.verifyToken,new ActionDetail().getAOPMiddleWare())
     router.delete(`/${ROUTER_NAME}/:id`,mw.verifyToken,new ActionDelete().getAOPMiddleWare())
-    console.log(chalk.blue('router of draft has been injected\n'))
+    console.log(chalk.blue(`router of ${ROUTER_NAME} has been injected\n`))
 }
 
 class ActionCreate extends BaseAop{

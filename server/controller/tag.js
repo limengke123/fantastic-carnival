@@ -32,7 +32,7 @@ class ActionList extends BaseAop{
     })
     async [__before](ctx,next){
         const queryStartWith = ctx.query['start-with']
-
+        console.log('queryStartWith',queryStartWith)
         const {error} = joi.validate({
             startWith:queryStartWith
         },this.constructor.schema)
