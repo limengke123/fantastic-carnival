@@ -23,6 +23,7 @@
     import marked from '../util/marked'
     import {mapActions, mapGetters} from 'vuex'
     import {http} from '../util/http'
+    let simpleMDE
     const updateTitleDebounce = _.debounce((context, title) => {
         context.submitPostTitle(title)
             .then(() => {
@@ -115,12 +116,11 @@
                             this.updateDraftTags(newTagArr)
                                 .then(res=>{
                                     console.log(res)
-                                    if(res.status === 200){
-                                        this.tags = res.data
-                                        console.log(this.tags)
-                                        console.log(res)
-                                        this.postTagsModify(res.data.data.lastEditTime)
-                                    }
+                                    this.tags = res.data.tags
+                                    console.log(this.data.tags)
+                                    console.log(res)
+                                    this.postTagsModify(res.data.data.lastEditTime)
+
                                 })
                         }
                     })
@@ -160,7 +160,7 @@
             /**
              * 挂载这个编辑器
              * */
-            const simpleMDE = new SimpleMDE({
+             simpleMDE = new SimpleMDE({
                 autoDownloadFontAwesome: false,
                 element: this.$el.getElementsByTagName('textarea')[0],
                 previewRender: function (plainText) {
@@ -192,6 +192,7 @@
             if(this.currentPostId){
                 this.getDraft()
                     .then(resp => {
+                        console.log('-----',resp)
                         this.tagNew = ''
                         this.tagInput = false
                         this.tags = resp.data.tags
@@ -204,6 +205,28 @@
                             text:e
                         })
                 })
+            }
+        },
+        beforeDestroy(){
+            simpleMDE.toTextArea()
+            let editor = document.getElementById('editor')
+            editor.outerHTML = editor.outerHTML
+        },
+        watch:{
+            currentPostId(val,oldVal){
+                this.change = true
+                if(val != null){
+                    this.getDraft(val).then(res => {
+                        if(res.success === true){
+                            this.tagNew = ''
+                            this.tagInput = false
+                            this.tags = res.data.tags
+                            this.$nextTick(() => {
+                                simpleMDE.value(res.data.content)
+                            })
+                        }
+                    })
+                }
             }
         }
     }
