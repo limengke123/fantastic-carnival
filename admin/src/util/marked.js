@@ -41,6 +41,4 @@ marked.setOptions({
         return highlight.highlight(lang,code).value;
     }
 });
-export default{
-    marked
-}
+exports.marked = marked

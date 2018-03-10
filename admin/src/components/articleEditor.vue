@@ -20,7 +20,7 @@
 <script>
     import SimpleMDE from 'simplemde'
     import _ from 'lodash'
-    import marked from '../util/marked'
+    import {marked} from '../util/marked'
     import {mapActions, mapGetters} from 'vuex'
     import {http} from '../util/http'
     let simpleMDE
@@ -115,11 +115,8 @@
                             //数据库更新下草稿的标签id
                             this.updateDraftTags(newTagArr)
                                 .then(res=>{
-                                    console.log(res)
                                     this.tags = res.data.tags
-                                    console.log(this.data.tags)
-                                    console.log(res)
-                                    this.postTagsModify(res.data.data.lastEditTime)
+                                    this.postTagsModify(res.data.lastEditTime)
 
                                 })
                         }
@@ -160,7 +157,9 @@
             /**
              * 挂载这个编辑器
              * */
+            console.log(marked)
              simpleMDE = new SimpleMDE({
+                //toolbar: ["bold", "italic", "heading", "|", "quote"],
                 autoDownloadFontAwesome: false,
                 element: this.$el.getElementsByTagName('textarea')[0],
                 previewRender: function (plainText) {
