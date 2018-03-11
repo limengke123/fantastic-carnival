@@ -152,12 +152,14 @@ export default {
             }).catch(reject)
         })
     },
-    publishPost({state}){
+    publishPost({state,commit}){
         return new Promise((resolve,reject) => {
             http.post(`/api/publications`,{
                 draftId:state.currentPostId
             }).then(resp => {
                 if(resp.status === 200){
+                    console.log()
+                    commit(POST_PUBLISH,resp.data.data.article.id)
                     resolve(resp.data)
                 } else {
                     reject(resp)

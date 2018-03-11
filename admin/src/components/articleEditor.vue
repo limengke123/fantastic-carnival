@@ -12,9 +12,9 @@
                     input.tag-input(type="text",v-show="tagInput",placeholder="使用回车键提交",v-model="tagNew",@keyup.13="submitTag")
                     ul.search-list.reset-list(v-if="tagInput",v-show="tagsToAdd.length"): li.search-item(v-for="tag in tagsToAdd",@click="submitTag(tag['name'])") {{tag['name']}}
             .half-container.btn-group
-                button.btn.btn-border(@click="deletePost") 删除草稿
+                button.btn.btn-border(@click="deletePost",v-show="!articleIdOfPost") 删除草稿
                 button.btn.btn-save(@click="publish") 发布文章
-        textarea#editor(style="opacity:1")
+        textarea#editor(style="opacity:0")
 </template>
 
 <script>
@@ -49,6 +49,7 @@
                 'postSaved',
                 'postTitleSaved',
                 'currentPostId',
+                'articleIdOfPost',
             ])
         },
         methods: {
@@ -137,10 +138,10 @@
                         type:'warning',
                         message:"文章保存中，请重试"
                     })
+                    return
                 }
                 this.publishPost()
                     .then(resp => {
-                        console.log(resp)
                         this.$message({
                             type:'success',
                             message:"发布成功"
@@ -221,6 +222,7 @@
                             this.tagInput = false
                             this.tags = res.data.tags
                             this.$nextTick(() => {
+                                console.log(res.data.content)
                                 simpleMDE.value(res.data.content)
                             })
                         }
@@ -232,9 +234,10 @@
 </script>
 
 <style lang="stylus" scoped>
-    @import '../styl/code.styl'
+    //@import '../styl/code.styl'
     @import '../styl/list.styl'
     @import '../styl/variable.styl'
+    @import '../styl/syntax.styl'
     .title-active
         .big
             border 1px solid $yellow

@@ -62,6 +62,8 @@ class DraftService {
             logger.error(e)
             throw e
         }
+        console.log('--result',result)
+        console.log('--result.toobject',result.toObject())
         return result && result.toObject()
     }
     async update(id,modifyParam ){

@@ -72,5 +72,8 @@ export default {
     },
     [POST_TAG_UPDATE](state){
         state.all[state.currentPostIndex].draftPublished = false
+    },
+    [POST_PUBLISH](state,id){
+        state.all[state.currentPostIndex].articleId = id
     }
 }

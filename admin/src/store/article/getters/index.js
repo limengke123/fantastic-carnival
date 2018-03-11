@@ -19,5 +19,8 @@ export default{
     },
     currentPostIndex(state){
         return state.currentPostIndex
+    },
+    articleIdOfPost(state){
+        return state.articleId
     }
 }

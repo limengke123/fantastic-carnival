@@ -122,9 +122,8 @@ class ActionCreate extends BaseAop{
                     message:errorList.storageError.message
                 })
             }
-
             draft.article = article._id
-
+            delete draft.createTime
             try{
                 draft = await DraftService.update(id,draft)
             } catch (e){

@@ -10,7 +10,9 @@ const draftSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:'tag'
     }],
-    createTime:Date,
+    createTime:{
+        type:Date
+    },
     lastEditTime:{
         type:Date,
         default:Date.now
