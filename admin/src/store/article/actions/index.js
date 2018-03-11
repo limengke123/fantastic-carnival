@@ -158,7 +158,6 @@ export default {
                 draftId:state.currentPostId
             }).then(resp => {
                 if(resp.status === 200){
-                    console.log()
                     commit(POST_PUBLISH,resp.data.data.article.id)
                     resolve(resp.data)
                 } else {
