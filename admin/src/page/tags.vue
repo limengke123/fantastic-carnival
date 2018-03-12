@@ -7,15 +7,16 @@
                 |  根据标签搜索文章
             ul.rest-list.tag-list(v-if="tagActive !== null")
                 li.tag.active
-                    span(v-show="!tagActive['editing']")
-                    | {{tagActive['name']}}
-                    i.hover-icon.fa.fa-close(title="清除", @click="blurTag", v-show="!tagActive['editing']")
-                    i.hover-icon.fa.fa-edit(title="编辑",  @click="modifyTag", v-show="!tagActive['editing']")
-                    i.hover-icon.fa.fa-trash-o(title="删除", @click="deleteTags", v-show="!tagActive['editing']")
-                    input.tag-input(type="text", v-if="tagActive['editing']", v-model="tagActive['newName']", placeholder="使用回车提交", @keyup.13="saveTag(tagActive)")
+                    span(v-show="!flag") {{tagActive['name']}}
+                    i.hover-icon.fa.fa-close(title="清除", @click="blurTag", v-show="!flag")
+                    i.hover-icon.fa.fa-edit(title="编辑",  @click="modifyTag", v-show="!flag")
+                    i.hover-icon.fa.fa-trash-o(title="删除", @click="deleteTags", v-show="!flag")
+                    input.tag-input(type="text", v-if="flag", v-model="tagActive['newName']", placeholder="使用回车提交", @keyup.13="saveTag")
+                    i.fa.fa-check.sure(v-show="flag", title="确认", @click="saveTag")
+                    i.fa.fa-arrow-left.back(v-show="flag", title="返回", @click="back")
             ul.reset-list.tag-list(v-show="tags.length !==1 || tagActive==null")
                 li.tag(v-for="tag in tags", v-show="tag !== tagActive")
-                    span(@click="searchTag(tag)", v-show="!tag['editing']") {{tag['name']}}
+                    span(@click="searchTag(tag)") {{tag['name']}}
             post-list
         .post-edit
             article-editor(v-if="currentPostId !== null")
@@ -36,6 +37,7 @@
         data(){
             return {
                 tagActive:null,
+                flag:false,
                 tags:[]
             }
         },
@@ -44,16 +46,17 @@
                 'getAllPost',
                 'getAllTags',
                 'deleteTag',
+                'updateTag',
             ]),
             blurTag(){
                 this.tagActive = null
+                this.flag = false
                 this.getAllPost()
             },
-            modifyTag(tag){
-                console.log(this.tagActive)
-                console.log(this.tags)
-                this.tagActive.newName = tag.name
+            modifyTag(){
+                this.tagActive.newName = this.tagActive.name
                 this.tagActive.editing = true
+                this.flag = true
             },
             deleteTags(){
                 this.deleteTag(this.tagActive.id)
@@ -62,6 +65,7 @@
                         const position = this.tags.indexOf(this.tagActive)
                         this.tags.splice(position,1)
                         this.tagActive = null
+                        this.flag = false
                     }).catch(e => {
                         console.log(e)
                         this.$message({
@@ -73,6 +77,39 @@
             searchTag(tag){
                 this.tagActive = tag
                 this.getAllPost(tag.id)
+            },
+            back(){
+                this.flag = false
+            },
+            saveTag(){
+                if(this.tagActive.newName === "" || this.tagActive.newName === this.tagActive.name){
+                    return false
+                } else {
+                    this.updateTag({
+                        id:this.tagActive.id,
+                        name:this.tagActive.newName
+                    }).then(resp => {
+                        if(resp.success === true){
+                            this.tagActive.name = this.tagActive.newName
+                            this.$message({
+                                type:"success",
+                                message:"修改tag成功！"
+                            })
+                            this.flag = false
+                        } else {
+                            this.$message({
+                                type:'error',
+                                message:"标签重名"
+                            })
+                        }
+                    }).catch(e => {
+                        this.$message({
+                            type:"error",
+                            message:"保存失败"
+                        })
+                    })
+                }
+
             }
         },
         computed:{
@@ -150,6 +187,12 @@
                         color $green
                         font-size 14px
                         outline 0
+                    .back
+                        cursor pointer
+                        margin-right 10px
+                    .sure
+                        cursor pointer
+                        margin-right 5px
         .post-edit
             height 100%
             flex-grow 1

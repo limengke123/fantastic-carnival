@@ -189,5 +189,18 @@ export default {
                 }
             }).catch(reject)
         })
+    },
+    updateTag({},{id,name}){
+        return new Promise((resolve,reject) => {
+            http.patch(`/api/tags/${id}`,{
+                name
+            }).then(resp => {
+                if(resp.status === 200){
+                    resolve(resp.data)
+                } else {
+                    reject(resp)
+                }
+            }).catch(reject)
+        })
     }
 }

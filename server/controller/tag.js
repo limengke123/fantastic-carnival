@@ -133,8 +133,10 @@ class ActionModify extends BaseAop{
         id:joi.objectId().required()
     })
     async [__before](ctx,next){
-        const name = ctx.query.body.name
+        //console.log(ctx.request.body)
+        const name = ctx.request.body.name
         const id = ctx.params.id
+        console.log(name,id)
         const {error} = joi.validate({
             name,
             id
@@ -150,7 +152,7 @@ class ActionModify extends BaseAop{
         return next()
     }
     async [main](ctx,next){
-        const tagName = ctx.query.body.name
+        const tagName = ctx.request.body.name
         const tagId = ctx.params.id
         let tag = null
         try{
