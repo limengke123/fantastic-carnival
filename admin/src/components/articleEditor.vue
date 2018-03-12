@@ -1,6 +1,7 @@
 <template lang="pug">
     section(:class="postSaved ? '': 'editor-active'")
-        div(:class="postTitleSaved ? '': 'title-active'"): input.form-control.big.only-border-bottom(type="text",:value="postTitle",@input="updateTitle")
+        div(:class="postTitleSaved ? '': 'title-active'")
+            input.form-control.big.only-border-bottom(type="text", :value="postTitle", @input="updateTitle")
         .header-wrapper
             .half-container
                 i.fa.fa-tags.tag-icon
@@ -8,11 +9,16 @@
                     | {{tag['name']}}
                     i.delete-tag.fa.fa-close(@click="deleteTag(tag.id)")
                 .tag.active
-                    span(v-show="!tagInput",class="addIcon",@click="addTag") +
-                    input.tag-input(type="text",v-show="tagInput",placeholder="使用回车键提交",v-model="tagNew",@keyup.13="submitTag")
-                    ul.search-list.reset-list(v-if="tagInput",v-show="tagsToAdd.length"): li.search-item(v-for="tag in tagsToAdd",@click="submitTag(tag['name'])") {{tag['name']}}
+                    span(v-show="!tagInput", class="addIcon", @click="addTag") +
+                    input.tag-input(type="text",
+                                    v-show="tagInput",
+                                    placeholder="使用回车键提交",
+                                    v-model="tagNew",
+                                    @keyup.13="submitTag")
+                    ul.search-list.reset-list(v-if="tagInput", v-show="tagsToAdd.length")
+                        li.search-item(v-for="tag in tagsToAdd", @click="submitTag(tag['name'])") {{tag['name']}}
             .half-container.btn-group
-                button.btn.btn-border(@click="deletePost",v-show="!articleIdOfPost") 删除草稿
+                button.btn.btn-border(@click="deletePost", v-show="!articleIdOfPost") 删除草稿
                 button.btn.btn-save(@click="publish") 发布文章
         textarea#editor(style="opacity:0")
 </template>
@@ -66,6 +72,7 @@
                 'postTagsModify',
                 'updateDraftTags',
                 'publishPost',
+                'getAllTags',
             ]),
             updateTitle(e) {
                 this.editPostTitle()
@@ -77,7 +84,11 @@
                 this.searchTags()
             },
             searchTags(val){
-                http.get('/api/tags',{
+                this.getAllTags({'start-with':val})
+                    .then(resp => {
+                        this.tagsToAdd = resp.data
+                    })
+                /*http.get('/api/tags',{
                     params:{
                        'start-with':val
                     }
@@ -85,7 +96,7 @@
                     if(resp.status === 200){
                         this.tagsToAdd = resp.data.data
                     }
-                })
+                })*/
             },
             submitTag(val){
                 /**
@@ -158,7 +169,6 @@
             /**
              * 挂载这个编辑器
              * */
-            console.log(marked)
              simpleMDE = new SimpleMDE({
                 //toolbar: ["bold", "italic", "heading", "|", "quote"],
                 autoDownloadFontAwesome: false,
@@ -192,7 +202,6 @@
             if(this.currentPostId){
                 this.getDraft()
                     .then(resp => {
-                        console.log('-----',resp)
                         this.tagNew = ''
                         this.tagInput = false
                         this.tags = resp.data.tags
@@ -222,7 +231,6 @@
                             this.tagInput = false
                             this.tags = res.data.tags
                             this.$nextTick(() => {
-                                console.log(res.data.content)
                                 simpleMDE.value(res.data.content)
                             })
                         }
@@ -288,8 +296,7 @@
             margin-top 5px
             margin-right 20px
             position relative
-            .delete-tag
-                display none
+            transition all 0.2s ease
             &:hover
                 color $green
                 border-bottom 2px solid $green

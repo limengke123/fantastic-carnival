@@ -128,9 +128,7 @@ class ArticleService {
                         visits:1
                     }
                 }).exec()
-                console.log("after",article)
             } catch (e){
-                console.log(e)
                 logger.error(e)
                 throw e
             }

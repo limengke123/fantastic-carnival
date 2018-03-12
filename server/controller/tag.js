@@ -21,8 +21,8 @@ const {
 module.exports.init = async router => {
     router.post(`/${ROUTER_NAME}`, new ActionCreate().getAOPMiddleWare())
     router.get(`/${ROUTER_NAME}`,new ActionList().getAOPMiddleWare())
-    router.patch(`/${ROUTER_NAME}`,new ActionModify().getAOPMiddleWare())
-    router.delete(`/${ROUTER_NAME}`,new ActionDelete().getAOPMiddleWare())
+    router.patch(`/${ROUTER_NAME}/:id`,new ActionModify().getAOPMiddleWare())
+    router.delete(`/${ROUTER_NAME}/:id`,new ActionDelete().getAOPMiddleWare())
     console.log(chalk.blue(`router of ${ROUTER_NAME} has been injected` ))
 }
 
@@ -32,7 +32,6 @@ class ActionList extends BaseAop{
     })
     async [__before](ctx,next){
         const queryStartWith = ctx.query['start-with']
-        console.log('queryStartWith',queryStartWith)
         const {error} = joi.validate({
             startWith:queryStartWith
         },this.constructor.schema)
@@ -205,7 +204,7 @@ class ActionDelete extends BaseAop{
         const id = ctx.params.id
         try{
             await Promise.all([
-                ArticleService.delete(id),
+                ArticleService.deleteTag(id),
                 TagService.delete(id)
             ])
         } catch (e){
@@ -220,29 +219,3 @@ class ActionDelete extends BaseAop{
         return next()
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -208,7 +208,6 @@ class ActionDetail extends BaseAop {
 
     async [__after](ctx, next) {
         const article = ctx.state.article
-        console.log(article)
         try {
             await ArticleService.incVisits(article)
         } catch (e) {

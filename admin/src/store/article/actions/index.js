@@ -165,5 +165,29 @@ export default {
                 }
             }).catch(reject)
         })
+    },
+    getAllTags({},query={}){
+        return new Promise((resolve,reject) => {
+            http.get(`/api/tags`,{
+                params:query
+            }).then(resp => {
+                    if(resp.status === 200){
+                        resolve(resp.data)
+                    } else {
+                        reject(resp)
+                    }
+                }).catch(reject)
+        })
+    },
+    deleteTag({},id){
+        return new Promise((resolve,reject) => {
+            http.delete(`/api/tags/${id}`).then(resp => {
+                if(resp.status === 200){
+                    resolve(resp.data)
+                } else {
+                    reject(resp)
+                }
+            }).catch(reject)
+        })
     }
 }
