@@ -18,7 +18,7 @@
                     span(@click="searchTag(tag)", v-show="!tag['editing']") {{tag['name']}}
             post-list
         .post-edit
-            article-editor
+            article-editor(v-if="currentPostId !== null")
 </template>
 
 <script>
@@ -51,6 +51,7 @@
             },
             modifyTag(tag){
                 console.log(this.tagActive)
+                console.log(this.tags)
                 this.tagActive.newName = tag.name
                 this.tagActive.editing = true
             },
@@ -58,6 +59,8 @@
                 this.deleteTag(this.tagActive.id)
                     .then(resp => {
                         this.getAllPost()
+                        const position = this.tags.indexOf(this.tagActive)
+                        this.tags.splice(position,1)
                         this.tagActive = null
                     }).catch(e => {
                         console.log(e)
@@ -74,7 +77,7 @@
         },
         computed:{
             ...mapGetters([
-                'currentPostId'
+                'currentPostId',
             ])
         },
         mounted(){

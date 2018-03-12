@@ -20,7 +20,13 @@ const {
 } = mutation_type
 export default {
     [RECEIVE_ALL_POSTS](state,postList){
-        state.all = postList
+        if(state.postSaved && state.postTitleSaved){
+            state.all = postList
+            if(postList.length === 0){
+                state.currentPostId = null
+                state.currentPostIndex = -1
+            }
+        }
     },
     [POST_CREATE](state,post){
         state.all.unshift(post)

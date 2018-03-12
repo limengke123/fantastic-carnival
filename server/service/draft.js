@@ -23,7 +23,9 @@ class DraftService {
             let searchParam = {}
             if(tag){
                 searchParam = {
-                    '$all':[tag]
+                    tags:{
+                        '$all':[tag]
+                    }
                 }
             }
             draftArr = await Draft.find(searchParam)

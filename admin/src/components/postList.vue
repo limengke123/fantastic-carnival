@@ -1,8 +1,8 @@
 <template lang="pug">
     ul.post-list.reset-list
-        li.post-list-item(v-for="(post,index) in postList",@click="focus(index)")
+        li.post-list-item(v-for="(post,index) in postList", @click="focus(index)")
             article.post-thumb(:class="[post['draftPublished']?'published':post['article']?'updated':'',{'active':post['id'] === currentPostId}]")
-                h3.post-title: a(href="javascript:void 0;") {{post['title']}}
+                h3.post-title: a(href="javascript:void(0);") {{post['title']}}
                 h6.post-time {{post['lastEditTime']}}
                 p.post-content(v-text="post['excerpt']")
 </template>

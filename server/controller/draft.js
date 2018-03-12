@@ -81,10 +81,10 @@ class ActionCreate extends BaseAop{
 
 class ActionList extends BaseAop{
     async [main](ctx,next){
-        const tag = ctx.query.tag
+        const tags = ctx.query.tags
         let result = []
         try{
-            result = await DraftService.find(tag)
+            result = await DraftService.find(tags)
         } catch(e){
             ctx.throw(500,errorList.storageError.name,{
                 message:errorList.storageError.message
@@ -194,6 +194,7 @@ class ActionDetail extends BaseAop{
             success:true,
             data:result
         }
+        return next()
     }
 }
 
