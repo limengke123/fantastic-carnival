@@ -5,7 +5,7 @@ joi.objectId = require('joi-objectid')(joi)
 const Koa = require('koa')
 const app = new Koa()
 const bodyParser = require('koa-bodyparser')
-const koaStatic = require('koa-static')
+const serve = require('koa-static')
 const config = require('./config/index')
 const apiRouter = require('koa-router')({
     prefix: config.app.apiPath
@@ -62,7 +62,7 @@ mongoose.Promise = global.Promise
     app.use(apiRouter.allowedMethods())
 
     //注入静态资源中间件
-    app.use(koaStatic(path.join(__dirname,staticPath)))
+    app.use(serve(path.join(__dirname,staticPath)))
 
 
     app.listen(config.app.port, () => {
