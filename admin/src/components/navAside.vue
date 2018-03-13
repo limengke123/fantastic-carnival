@@ -1,6 +1,6 @@
 <template lang="pug">
     aside.sidebar
-        img.sidebar-logo(src="../assets/img/logo.png")
+        img.sidebar-logo(src="../assets/img/logo.png",@click="goClient")
         nav.aside-nav
             ul.aside-nav-list
                 li.aside-nav-item(title="文章"): router-link.aside-nav-button(to="/posts"): i.fa.fa-file-text-o
@@ -13,6 +13,9 @@
         methods:{
             deleteToken(){
                this.$router.push('/')
+            },
+            goClient(){
+                window.location.assign('/client')
             }
         }
     }
