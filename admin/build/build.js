@@ -8,7 +8,7 @@ const config = require('./webpack.pro.config')
 const spinner = ora('building now !!!!')
 spinner.start()
 
-rm(path.join(__dirname, '../dist'), err => {
+rm(path.join(__dirname, '../../server/static/adminDist'), err => {
     if (err) throw err
     webpack(config, (err, stats) => {
         spinner.stop()
@@ -26,8 +26,5 @@ rm(path.join(__dirname, '../dist'), err => {
             process.exit(1)
         }
         process.stdout.write(chalk.cyan('build complete \n'))
-        process.stdout.write(chalk.yellow(
-            '  hahahh\n'
-        ))
     })
 })

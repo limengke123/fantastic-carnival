@@ -370,6 +370,9 @@
     .CodeMirror
         transition border 0.5s
         border-left 1px solid transparent
+        min-height 600px
+    .CodeMirror-scroll
+        min-height 600px
 
     .editor-active
         .CodeMirror
