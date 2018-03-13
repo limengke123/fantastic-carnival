@@ -5,7 +5,7 @@ const chalk = require('chalk')
 const webpack = require('webpack')
 const config = require('./webpack.pro.config')
 
-const spinner = ora('building now !!!!')
+const spinner = ora('client is building now !!!!')
 spinner.start()
 
 rm(path.join(__dirname, '../../server/static/adminDist'), err => {
