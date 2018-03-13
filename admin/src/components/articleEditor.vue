@@ -27,7 +27,7 @@
     import SimpleMDE from 'simplemde'
     import _ from 'lodash'
     import {marked} from '../util/marked'
-    import {mapActions, mapGetters} from 'vuex'
+    import {mapActions, mapGetters, mapMutations} from 'vuex'
     import {http} from '../util/http'
     let simpleMDE
     const updateTitleDebounce = _.debounce((context, title) => {
@@ -74,8 +74,19 @@
                 'publishPost',
                 'getAllTags',
             ]),
+            ...mapMutations([
+                'POST_TITLE_UPDATE'
+            ]),
             updateTitle(e) {
+                /**
+                 * 这里的debounce函数有点问题
+                 * 异步导致输入框输入有瑕疵
+                 * 所以先commit一次POST_TITLE_UPDATE
+                 * */
                 this.editPostTitle()
+                this.POST_TITLE_UPDATE(e.target.value)
+                console.log(e.target.value)
+                console.log(this.postTitle)
                 updateTitleDebounce(this, e.target.value)
             },
             addTag(){
@@ -88,15 +99,6 @@
                     .then(resp => {
                         this.tagsToAdd = resp.data
                     })
-                /*http.get('/api/tags',{
-                    params:{
-                       'start-with':val
-                    }
-                }).then(resp => {
-                    if(resp.status === 200){
-                        this.tagsToAdd = resp.data.data
-                    }
-                })*/
             },
             submitTag(val){
                 /**
@@ -242,10 +244,8 @@
 </script>
 
 <style lang="stylus" scoped>
-    //@import '../styl/code.styl'
     @import '../styl/list.styl'
     @import '../styl/variable.styl'
-    @import '../styl/syntax.styl'
     .title-active
         .big
             border 1px solid $yellow
@@ -359,27 +359,35 @@
             background-color $green
             border-color $green
             margin-left 20px
+</style>
 
+<style lang="stylus">
+    @import '../styl/variable.styl'
+    @import '../styl/syntax.styl'
     .editor-toolbar
         border-left 0
-
-    .editor-active .CodeMirror
-        border 1px solid $yellow
 
     .CodeMirror
         transition border 0.5s
         border-left 1px solid transparent
 
+    .editor-active
+        .CodeMirror
+            border 1px solid $yellow
+
     .CodeMirror-sided
         box-sizing border-box
-
     .editor-preview,
     .editor-preview-side
-        background white
+        background #fff
         padding: 0.2em 1.4em 0;
         font-family $body-font
         font-size $body-font-size
         -webkit-font-smoothing antialiased
         -moz-osx-font-smoothing grayscale
         color $medium
+</style>
+
+<style lang="stylus">
+    @import '../styl/code.styl'
 </style>

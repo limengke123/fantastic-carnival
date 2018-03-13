@@ -46,7 +46,7 @@ export default {
     },
     [POST_TITLE_EDIT](state){
         if(state.postTitleSaved){
-            state.all[state.currentPostIndex].draftPublished = false,
+            state.all[state.currentPostIndex].draftPublished = false
             state.postTitleSaved = false
         }
     },
