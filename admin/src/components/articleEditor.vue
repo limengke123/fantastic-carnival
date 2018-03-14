@@ -25,12 +25,13 @@
 
 <script>
     import SimpleMDE from 'simplemde'
-    import _ from 'lodash'
+    //按需引入debounce
+    import debounce from 'lodash/debounce'
     import {marked} from '../util/marked'
     import {mapActions, mapGetters, mapMutations} from 'vuex'
     import {http} from '../util/http'
     let simpleMDE
-    const updateTitleDebounce = _.debounce((context, title) => {
+    const updateTitleDebounce = debounce((context, title) => {
         context.submitPostTitle(title)
             .then(() => {
                 context.savePostTitle()
@@ -180,7 +181,7 @@
                 },
                 spellChecker: false
             })
-            let postDraft = _.debounce(() => {
+            let postDraft = debounce(() => {
                 this.modifyContent(simpleMDE.value())
             }, 1000)
 

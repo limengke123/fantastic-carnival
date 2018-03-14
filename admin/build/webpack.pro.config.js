@@ -10,7 +10,7 @@ const baseConfig = require('./webpack.base.config')
 
 const config = webpackMerge(baseConfig,{
     entry:{
-        vendor:['vue','vue-router','vuex'],
+        vendor:['vue','vue-router','vuex','axios','lodash'],
     },
     output:{
         filename:'js/[name].[chunkhash:8].js',
@@ -54,6 +54,7 @@ const config = webpackMerge(baseConfig,{
         ]
     },
     plugins:[
+        new webpack.optimize.ModuleConcatenationPlugin(),
         new webpack.DefinePlugin({
             'process.env':{
                 NODE_ENV:'"production"'
