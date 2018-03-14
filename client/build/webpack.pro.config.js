@@ -9,7 +9,7 @@ const baseConfig = require('./webpack.base.config')
 
 const config = webpackMerge(baseConfig,{
     entry:{
-        vendor:['react','react-dom','react-router']
+        vendor:['react','react-dom','react-router','axios']
     },
     output:{
         filename:'js/[name].[chunkhash:8].js',
@@ -38,6 +38,7 @@ const config = webpackMerge(baseConfig,{
         ]
     },
     plugins:[
+        new webpack.optimize.ModuleConcatenationPlugin(),
         new webpack.DefinePlugin({
             'process.env':{
                 NODE_ENV:'"production"'
@@ -52,7 +53,9 @@ const config = webpackMerge(baseConfig,{
         new ExtractPlugin('css/styles.[contentHash:8].css'),
         new webpack.optimize.UglifyJsPlugin({
             compress:{
-                warnings:false
+                warnings:false,
+                drop_debugger: true,
+                drop_console: true
             },
             sourceMap:true,
             output:{

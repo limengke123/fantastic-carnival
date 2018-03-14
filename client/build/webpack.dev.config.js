@@ -8,6 +8,25 @@ const config = webpackMerge(baseConfig,{
     output:{
         publicPath:'/'
     },
+    module:{
+        rules:[
+            {
+                test:/\.styl/,
+                use:[
+                    'style-loader',
+                    //modules 开启css modules
+                    'css-loader?modules&localIdentName=[name]__[local]-[hash:base64:5]',
+                    {
+                        loader:'postcss-loader',
+                        options:{
+                            sourceMap:true
+                        }
+                    },
+                    'stylus-loader'
+                ]
+            }
+        ]
+    },
     devtool:"#cheap-module-eval-source-map",
     devServer:{
         port:8001,

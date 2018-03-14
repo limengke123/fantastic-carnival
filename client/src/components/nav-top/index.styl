@@ -1,0 +1,22 @@
+@import '../../styl/variable.styl'
+@import '../../styl/list.styl'
+.wrapper
+  display flex
+  height 90px
+  padding 25px 0
+  justify-content space-around
+  .logo
+    background url('../../assets/img/logo.svg')
+    background-size contain
+    width 30px
+    height @width - 3px
+  .navLink
+    display flex
+    .navItem
+      margin-right 10px
+      color 16px
+      box-sizing border-box
+      cursor pointer
+      &:hover
+        transition $transition
+        border-bottom 2px solid $green
