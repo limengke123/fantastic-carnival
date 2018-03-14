@@ -6,9 +6,14 @@ import Vue from 'vue'
 import {http} from '../util/http'
 
 //引入自定义组件
-import login from '../page/login.vue'
-import posts from '../page/posts.vue'
-import tags from '../page/tags.vue'
+// import login from '../page/login.vue'
+// import posts from '../page/posts.vue'
+// import tags from '../page/tags.vue'
+
+//懒加载 首页登录效果明显
+const login = () => import(/* webpackChunkName: "login" */ '../page/login.vue')
+const posts = () => import(/* webpackChunkName: "posts" */ '../page/posts.vue')
+const tags = () => import(/* webpackChunkName: "tags" */ '../page/tags.vue')
 
 //注入
 Vue.use(Router)

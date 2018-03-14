@@ -18,11 +18,6 @@ module.exports = {
     module: {
         rules :[
             {
-                test : /\.js$/,
-                loader:'babel-loader',
-                include : join(__dirname , '../src')
-            },
-            {
                 test:/\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader:'url-loader',
                 options:{

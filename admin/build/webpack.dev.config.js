@@ -1,7 +1,7 @@
 /**
  * Created by li on 2018/1/31 17:26.
  */
-// const {join} = require('path')
+const {join} = require('path')
 const webpack = require('webpack')
 const webpackMerge = require('webpack-merge')
 
@@ -13,6 +13,11 @@ const config = webpackMerge(baseConfig,{
     },
     module:{
         rules:[
+            {
+                test : /\.js$/,
+                loader:'babel-loader',
+                include : join(__dirname , '../src')
+            },
             {
                 test : /\.vue$/,
                 loader:'vue-loader'

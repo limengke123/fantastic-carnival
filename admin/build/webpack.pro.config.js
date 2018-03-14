@@ -10,16 +10,24 @@ const baseConfig = require('./webpack.base.config')
 
 const config = webpackMerge(baseConfig,{
     entry:{
-        vendor:['vue'],
+        vendor:['vue','vue-router','vuex'],
     },
     output:{
         filename:'js/[name].[chunkhash:8].js',
-        chunkFilename:'js/[id].js',
+        chunkFilename:'chunk/[name].[chunkhash:8].js',
         path: path.join(__dirname, '../../server/static/adminDist'),
         publicPath:'./adminDist/',
     },
     module:{
         rules:[
+            {
+                test : /\.js$/,
+                loader:'babel-loader',
+                include : path.join(__dirname , '../src'),
+                options:{
+                    plugins:['syntax-dynamic-import']
+                }
+            },
             {
                 test : /\.vue$/,
                 loader:'vue-loader',
@@ -61,6 +69,9 @@ const config = webpackMerge(baseConfig,{
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false
+            },
+            output:{
+                comments:false,
             },
             sourceMap:true
         }),
