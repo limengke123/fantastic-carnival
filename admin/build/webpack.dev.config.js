@@ -16,7 +16,10 @@ const config = webpackMerge(baseConfig,{
             {
                 test : /\.js$/,
                 loader:'babel-loader',
-                include : join(__dirname , '../src')
+                include : join(__dirname , '../src'),
+                options:{
+                    plugins:['syntax-dynamic-import']
+                }
             },
             {
                 test : /\.vue$/,

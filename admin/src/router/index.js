@@ -11,9 +11,18 @@ import {http} from '../util/http'
 // import tags from '../page/tags.vue'
 
 //懒加载 首页登录效果明显
-const login = () => import(/* webpackChunkName: "login" */ '../page/login.vue')
-const posts = () => import(/* webpackChunkName: "posts" */ '../page/posts.vue')
-const tags = () => import(/* webpackChunkName: "tags" */ '../page/tags.vue')
+const login = () => {
+    document.title = "这里登录啦"
+    return import(/* webpackChunkName: "login" */ '../page/login.vue')
+}
+const posts = () => {
+    document.title= "这里写文章啦"
+    return import(/* webpackChunkName: "posts" */ '../page/posts.vue')
+}
+const tags = () => {
+    document.title = "这里整理标签啦"
+    return import(/* webpackChunkName: "tags" */ '../page/tags.vue')
+}
 
 //注入
 Vue.use(Router)

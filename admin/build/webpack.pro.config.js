@@ -68,7 +68,9 @@ const config = webpackMerge(baseConfig,{
         new ExtractPlugin('css/styles.[contentHash:8].css'),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
-                warnings: false
+                warnings: false,
+                drop_debugger: true,
+                drop_console: true
             },
             output:{
                 comments:false,
