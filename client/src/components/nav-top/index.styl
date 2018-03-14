@@ -2,21 +2,32 @@
 @import '../../styl/list.styl'
 .wrapper
   display flex
+  height w=40px
+  justify-content center
+  box-shadow 0 0 4px rgba(0,0,0,0.25)
   height 90px
-  padding 25px 0
-  justify-content space-around
-  .logo
-    background url('../../assets/img/logo.svg')
-    background-size contain
-    width 30px
-    height @width - 3px
-  .navLink
+  .header
     display flex
-    .navItem
-      margin-right 10px
-      color 16px
-      box-sizing border-box
-      cursor pointer
-      &:hover
-        transition $transition
-        border-bottom 2px solid $green
+    justify-content space-between
+    //max-width 850px
+    padding 25px 0
+    width 800px
+    .logo
+      background url('../../assets/img/logo.svg')
+      background-size contain
+      width 40px
+      height @width - 3px
+    .navLink
+      display flex
+      height w
+      .navItem
+        margin-right 0.6em
+        font-weight 600
+        height w
+        line-height @height
+        box-sizing border-box
+        cursor pointer
+        &:hover
+          border-bottom 2px solid $green
+      .activeNav
+          border-bottom 2px solid $green
