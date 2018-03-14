@@ -9,7 +9,7 @@ const {
 } = require('../util/aop')
 const path = require('path')
 const fs = require('fs')
-const htmlPath = path.resolve(__dirname,"../index.html")
+const htmlPath = path.resolve(__dirname,"../index.jsx.html")
 module.exports.init = router => {
    // router.get('/',a)
      router.get('/',new HomePage().getAOPMiddleWare())
