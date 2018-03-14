@@ -2,13 +2,12 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 
-import App from './app'
+import Routes from './router'
 
 const root = document.createElement('div')
-
 
 document.body.appendChild(root)
 
 ReactDom.render(
-    <App/>
+    <Routes/>
 ,root)

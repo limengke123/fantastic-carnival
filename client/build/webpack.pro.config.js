@@ -9,7 +9,7 @@ const baseConfig = require('./webpack.base.config')
 
 const config = webpackMerge(baseConfig,{
     entry:{
-        vendor:['react']
+        vendor:['react','react-dom','react-router']
     },
     output:{
         filename:'js/[name].[chunkhash:8].js',
@@ -52,9 +52,12 @@ const config = webpackMerge(baseConfig,{
         new ExtractPlugin('css/styles.[contentHash:8].css'),
         new webpack.optimize.UglifyJsPlugin({
             compress:{
-                //warning:false
+                warnings:false
             },
-            sourceMap:true
+            sourceMap:true,
+            output:{
+                comments:false
+            }
         }),
         new OptimizeCSSPlugin({
             cssProcessorOptions:{
