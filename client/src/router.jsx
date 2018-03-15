@@ -28,12 +28,21 @@ const getNoFoundPage = (location, callback) => {
     },'noFound')
 }
 
+const getTestPage = (location, callback) => {
+    require.ensure([], function(require){
+        const Test = require('./containers/test')
+        document.title = "测试页面"
+        callback(null, Test)
+    },'test')
+}
+
 const Routes = () => (
     <Router history={browserHistory}>
         <Route path='/' breadcrumbName="首页" component={App}>
             <IndexRoute name="home" getComponent={getHomePage}/>
             <Route name="home" path='home' getComponent={getHomePage}/>
             <Route name="tag" path='tag' breadcrumbName="标签" getComponent={getTagPage}/>
+            <Route name="test" path='test' breadcrumbName="测试" getComponent={getTestPage}/>
         </Route>
 
         {/** 这里是重定向 **/}

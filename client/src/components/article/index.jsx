@@ -8,7 +8,6 @@ export default class Article extends React.Component{
     }
     render(){
         const {infos} = this.props
-        console.log(infos)
         return (
             <article className={style.wrapper}>
                 <div className={style.main}>

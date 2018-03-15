@@ -6,12 +6,16 @@ class ArticStore{
     @observable articleList = [{
         title:"title",
         excerpt:"excerpt111",
-        lastEditTime:"2012.2.2"
+        lastEditTime:"2012.2.2",
+        tags:[{name:111}]
     }]
+    @observable testNum = 0
+
     @computed get articleLength(){
         return this.articleList.length
     }
-    @action getArticleList(){
+    @action("请求文章列表")
+    getArticleList(){
         axios.get('/api/articles')
             .then(resp => {
                 runInAction(() => {
@@ -23,6 +27,6 @@ class ArticStore{
     }
 }
 
-const store = new ArticStore()
+const articleStore = new ArticStore()
 
-export default store
+export default articleStore

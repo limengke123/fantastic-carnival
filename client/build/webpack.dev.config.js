@@ -51,7 +51,12 @@ const config = webpackMerge(baseConfig,{
     },
     plugins:[
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.DefinePlugin({
+            __ENV__:{
+                NODE_ENV:'"development"'
+            }
+        }),
     ]
 })
 

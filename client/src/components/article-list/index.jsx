@@ -1,31 +1,37 @@
 import React from 'react'
-import {observer} from 'mobx-react'
+import {inject, observer} from 'mobx-react'
 
 import style from './index.styl'
-
-import axios from '../../util/http'
 
 import Article from '../article/index'
 
 
-@observer class ArticleList extends React.Component {
+@inject('articleStore')@observer class ArticleList extends React.Component {
     constructor() {
         super(...arguments)
     }
 
     componentDidMount() {
-        console.log(1)
-        console.log(this.props)
-        console.log(2)
+        const {articleStore} = this.props
+        articleStore.getArticleList()
     }
 
     render() {
-        console.log(this.props)
+        const {articleStore} = this.props
+        const info = {
+            title:1,
+            excerpt:2,
+            lastEditTime:3,
+            tags:[{
+                name:444
+            }]
+        }
         return (
             <main className={style.wrapper}>
                 {
-                    this.props.articleList.map(info => {
-                        return <Article key={info.id} infos={info}/>
+                    articleStore.articleList.map((article,index) => {
+                        console.log(article)
+                        return <Article key={index} infos={article}/>
                     })
                 }
             </main>

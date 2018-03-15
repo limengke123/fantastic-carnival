@@ -40,7 +40,7 @@ const config = webpackMerge(baseConfig,{
     plugins:[
         new webpack.optimize.ModuleConcatenationPlugin(),
         new webpack.DefinePlugin({
-            'process.env':{
+            __ENV__:{
                 NODE_ENV:'"production"'
             }
         }),
