@@ -1,39 +1,81 @@
-# Creating a blog with koa & vue & react
+# 一个博客项目
 
-## server
+## 结构
 
-[http://reactnl.org](http://reactnl.org)
+暂时还是前端渲染的spa，server端返回一个Html,js去动态生成页面。  
 
-Slides:
-[http://unsoundscapes.com/slides/2016-10-13-creating-a-fun-game-with-elm](http://unsoundscapes.com/slides/2016-07-18-creating-a-fun-game-with-elm)
+client分成两块：  
+1. admin-page  
+    博客的后台录入页面，也是文章的管理页面  
+2. client-page  
+    博客的展示页面  
+
+开发采用webpack-dev-server开发，代理转发到本地起的localhost:3333/api下的REST接口
+生产模式打包后的文件，放置在server的static目录下
+## 要求
+server用到了async/await，node>=7.6  
+需要安装mongodb
+
+## how to start  
+* 开启Mongodb服务  
+* 安装依赖  
+    ```
+    npm i
+    ```
+* server  
+    ```
+    npm run dev-server
+    ```
+    访问localhost:3333
+* admin-page  
+    ```
+    npm run dev-admin
+    ```
+    访问localhost:8000  
+    打包：  
+    ```
+    npm run build-admin
+    ```
+* client-page  
+    ```
+    npm run dev-client
+    ```
+    访问localhost:8001  
+    打包：  
+    ```
+    npm run build-client
+    ```
+* 开发模式  
+    开启server，用webpack-dev-server开发，请求代理到server  
+* 生产模式
+    打包后，访问：  
+        1. admin-page:  
+            localhost:3333/admin  
+        2. client-page:  
+            localhost:3333/client
+## server 
+
+koa、koa-router、koa-static，mongoose驱动mongodb，参考用切面（aop）方式处理请求。
+
+server地址:
+[https://github.com/limengke123/fantastic-carnival/tree/master/server](https://github.com/limengke123/fantastic-carnival/tree/master/server)
 
 
-## Curry On
+## admin-page  
+vue全家桶：  
+vue、vue-router、vuex、axios
 
-[http://www.curry-on.org/2016/sessions/creating-a-fun-game-with-elm.html](http://www.curry-on.org/2016/sessions/creating-a-fun-game-with-elm.html)
+编辑器用simplemde,默认样式好看，功能丰富
 
-Video: [https://www.youtube.com/watch?v=En2BKs8unnQ](https://www.youtube.com/watch?v=En2BKs8unnQ)
-
-Slides: [http://unsoundscapes.com/slides/2016-07-18-creating-a-fun-game-with-elm](http://unsoundscapes.com/slides/2016-07-18-creating-a-fun-game-with-elm)
-
-
-## Abstract
-
-You are Joe, the courier. It is your job, to deliver all the fashion to all the customers. Sometimes, you have to pick up stuff and return it to the warehouse. However, customers keep ordering more and more — and your bicycle only has room for so many boxes… In this talk we want to tell you how the Elm Architecture empowered us to put the “Elm Street 404” game together. We will give you some insight into the algorithms at play and how we applied functional concepts to the domain of game programming. Some of the challenges we were facing include: implementing a path-finding solution, the random generation of the map and game objects, improving the performance and rendering with WebGL.
-
-## Bio (Andrey Kuzmin)
-
-[@unsoundscapes](https://twitter.com/unsoundscapes)
-
-Andrey Kuzmin is a frontend engineer. He has contributed to frontend tooling, most notably with his gulp-svgstore and gulp-postcss open source projects. Recently Andrey has been learning a functional reactive programming in Elm. Apart from work, he enjoys live music in Berlin and is a yoga newbie.
-
-## Bio (Kolja Wilcke)
-
-[@01k](https://twitter.com/01k)
-
-Kolja Wilcke has worked alternatingly as an illustrator and as a frontend developer, currently with Zalando STUPS. Of late, he took an interest in functional programming and ClojureScript. He also enjoys learning languages outside of the realm of programming.
+admin-page地址：
+[https://github.com/limengke123/fantastic-carnival/tree/master/admin](https://github.com/limengke123/fantastic-carnival/tree/master/admin)
 
 
-## Building the slides
 
-`elm make Main.elm --output assets/elm.js --yes && open index.html`
+## client-page
+react全家桶：  
+react、react-router、mobx、axios
+
+client-page地址：
+[https://github.com/limengke123/fantastic-carnival/tree/master/client](https://github.com/limengke123/fantastic-carnival/tree/master/client)
+
