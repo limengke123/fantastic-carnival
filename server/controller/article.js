@@ -116,9 +116,18 @@ class ActionList extends BaseAop {
 
     async [main](ctx, next) {
         const tag = ctx.query.tag
-        if (tag === void 0) {
-            ctx.body = {
-                data: "tag is required"
+        if (tag !== void 0) {
+            try {
+                let articleArr = await ArticleService.findWithTag(tag)
+                utils.print(articleArr)
+                ctx.body = {
+                    success: true,
+                    data: articleArr
+                }
+            } catch (e) {
+                ctx.throw(500, errorList.storageError.name, {
+                    message: errorList.storageError.message
+                })
             }
         } else {
             const limit = ~~ctx.query.limit || 10

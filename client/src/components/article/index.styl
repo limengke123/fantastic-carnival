@@ -1,0 +1,33 @@
+@import '../../styl/variable.styl'
+.wrapper
+  height 164px
+  margin-bottom 25px
+  box-shadow 0 0 5px #aaa
+  transition box-shadow .3s ease-in
+  &:hover
+    box-shadow 0 0 15px #888
+  .main
+    height 100%
+    box-sizing border-box
+    padding 18px 25px 25px
+    .title
+      line-height $line-height
+    .info
+      margin 8px 0
+      font-size 13px
+      color $greyFont
+    .excerpt
+      color #333
+      font-size 14px
+      height 40px
+      //多行省略
+      overflow:hidden
+      text-overflow ellipsis
+      display -webkit-box
+      -webkit-box-orient vertical
+      -webkit-line-clamp 2
+    .more
+      cursor pointer
+      color $green
+      font-size 12px
+      font-weight 700

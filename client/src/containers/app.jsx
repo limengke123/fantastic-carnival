@@ -7,7 +7,7 @@ import '../styl/reset.styl'
 
 export default (props) => {
     const style = {
-        width:"800px",
+        width:"1000px",
         margin:"0 auto"
     }
     return (

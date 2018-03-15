@@ -55,6 +55,26 @@ class ArticleService {
         return result
     }
 
+    async findWithTag(tag){
+        let result = null
+        try{
+            result  = await Article.find({
+                tags:{
+                    "$all":[tag]
+                }
+            })
+                .select('title createTime lastEditTime excerpt')
+                .sort({
+                    createTime: -1
+                })
+                .exec()
+        }catch (err){
+            logger.error(err)
+            throw err
+        }
+        return result && result.map(item => item.toObject())
+    }
+
     async update (id,modifyParam){
         let result = null
         try{
@@ -145,6 +165,7 @@ class ArticleService {
         }
         return result
     }
+
 }
 
 module.exports = new ArticleService()
