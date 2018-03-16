@@ -9,7 +9,6 @@ class ArticStore{
         lastEditTime:"2012.2.2",
         tags:[{name:111}]
     }]
-    @observable testNum = 0
 
     @computed get articleLength(){
         return this.articleList.length

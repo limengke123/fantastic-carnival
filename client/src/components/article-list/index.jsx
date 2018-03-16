@@ -22,9 +22,13 @@ import Article from '../article-item/index'
         return (
             <main className={style.wrapper}>
                 {
+                    articleListStore.articleLength > 0
+                        ?
                     articleListStore.articleList.map((article,index) => {
                         return <Article key={index} infos={article}/>
                     })
+                        :
+                        <div>there is no article !!!</div>
                 }
             </main>
         )

@@ -2,6 +2,10 @@ import React from 'react'
 import {inject, observer} from "mobx-react/index";
 import {withRouter} from 'react-router'
 import style from './index.styl'
+import markdown from '../../util/filter'
+
+import '../../styl/syntax.styl'
+import '../../styl/code.styl'
 
 @inject('articleDetailStore') @observer
 class ArticleDetail extends React.Component{
@@ -28,9 +32,7 @@ class ArticleDetail extends React.Component{
                         <span>tags: {article.tags.map(val => `${val.name} `)}</span>
                     </p>
                 </header>
-                <article>
-                    {article.content}
-                </article>
+                <article className="content" dangerouslySetInnerHTML={{__html:markdown(article.content)}}/>
             </div>
         )
     }
