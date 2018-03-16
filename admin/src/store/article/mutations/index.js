@@ -81,5 +81,21 @@ export default {
     },
     [POST_PUBLISH](state,id){
         state.articleId = id
+    },
+    [POST_DELETE](state){
+        if(state.postSaved && state.postTitleSaved){
+            state.all.splice(state.currentPostId,1)
+            if(state.all.length){
+                state.currentPostIndex = 0
+                state.currentPostId = state.all[0].id
+                state.title =state.all[0].title
+                state.articleId = state.all[0].article
+            } else {
+                state.currentPostId = null
+                state.currentPostIndex = -1
+                state.articleId = null
+                state.title = ''
+            }
+        }
     }
 }

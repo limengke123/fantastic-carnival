@@ -182,6 +182,7 @@
                 spellChecker: false
             })
             let postDraft = debounce(() => {
+                //this.modifyContent(simpleMDE.value())
                 this.modifyContent(simpleMDE.value())
             }, 1000)
 

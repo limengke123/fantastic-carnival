@@ -6,6 +6,7 @@ class ArticleService {
     async create (option){
         const article = new Article(option)
         let result = null
+        console.log('test article',article)
         try {
             result = await article.save()
         } catch (e) {
@@ -83,12 +84,17 @@ class ArticleService {
             result = await Article.findOneAndUpdate(id,{
                 $set:modifyParam
             },{
-                new :true
+                //返回更新后的新数据
+                new :true,
+                //没有就插入
+                //upsert:true
             }).exec()
         }catch (e){
+            console.log('article')
             logger.error(e)
             throw e
         }
+        console.log(result)
         return result && result.toObject()
     }
 

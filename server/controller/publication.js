@@ -50,7 +50,6 @@ class ActionCreate extends BaseAop{
         const draftId = ctx.request.body.draftId
 
         let draft = null
-
         try{
             draft = await DraftService.findOne(draftId)
         } catch (e){
@@ -98,7 +97,8 @@ class ActionCreate extends BaseAop{
         delete draft.id
 
         let article = null
-        if(draft.article !== null){
+        console.log(draft.article)
+        if(draft.article !== null && draft.article !== void 0){
             try{
                 [,article] =await Promise.all([
                     DraftService.update(id,draft),
@@ -114,7 +114,6 @@ class ActionCreate extends BaseAop{
             delete articleOption.lastEditTime
             articleOption.visits = 0
             articleOption.comments = []
-
             try{
                 article = await ArticleService.create(articleOption)
             } catch (e){

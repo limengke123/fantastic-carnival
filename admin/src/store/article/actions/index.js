@@ -63,13 +63,20 @@ export default {
         })
     },
     deletePost({commit,state}){
-        http.delete(`/api/drafts/${state.currentPostId}`).then(resp => {
-            if(resp.status === 200){
-                console.log(resp)
-            } else {
-                console.log('删除失败')
-            }
-        })
+        if(state.postSaved){
+            http.delete(`/api/drafts/${state.currentPostId}`).then(resp => {
+                if(resp.status === 200){
+                    console.log(resp)
+                    commit(POST_DELETE)
+                } else {
+                    console.log('删除失败')
+                }
+            })
+        } else {
+            let err = new Error()
+            err.errorMessage = "文章未保存，稍微重试"
+            return Promise.reject(err)
+        }
     },
     focusOnPost({commit},index){
         commit(POST_FOCUS,index)

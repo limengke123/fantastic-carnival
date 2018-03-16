@@ -55,7 +55,7 @@ class DraftService {
                 _id:id
             })
                 .populate('tags')
-                .select('title tags creteTime lastEditTime excerpt article-item draftPublished content')
+                .select('title tags createTime lastEditTime excerpt article draftPublished content')
                 .sort(sort)
                 .limit(limit)
                 .skip(skip)

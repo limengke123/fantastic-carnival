@@ -62,6 +62,7 @@ class ActionCreate extends BaseAop {
             comments = []
         } = ctx.request.body
         let result = null
+        console.log('-----')
         try {
             result = await ArticleService.create({
                 title,

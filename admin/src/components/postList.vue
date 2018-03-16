@@ -4,7 +4,8 @@
             article.post-thumb(:class="[post['draftPublished']?'published':post['article-item']?'updated':'',{'active':post['id'] === currentPostId}]")
                 h3.post-title: a(href="javascript:void(0);") {{post['title']}}
                 h6.post-time {{post['lastEditTime']}}
-                p.post-content(v-text="post['excerpt']")
+                <!--p.post-content(v-text="post['excerpt'] | md2Text")-->
+                p.post-content {{post['excerpt'] | md2Text}}
 </template>
 
 <script>

@@ -41,6 +41,7 @@ const draftSchema = new Schema({
 draftSchema
     .path('createTime')
     .get(function(v){
+        console.log(v)
         return utils.formatDate(new Date(v),'yyyy-MM-dd hh:mm:ss')
     })
 draftSchema
