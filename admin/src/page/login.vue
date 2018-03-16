@@ -26,7 +26,7 @@
         },
         methods:{
             login(){
-                this.$http.post('./api/tokens',{
+                this.$http.post('/api/tokens',{
                     username:this.username,
                     password:md5(this.password).toUpperCase()
                 }).then(resp => {

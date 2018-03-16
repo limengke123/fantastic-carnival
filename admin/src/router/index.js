@@ -23,7 +23,10 @@ const tags = () => {
     document.title = "这里整理标签啦"
     return import(/* webpackChunkName: "tags" */ '../page/tags.vue')
 }
-
+const noFound = () => {
+    document.title = "404 not found !!!"
+    return import(/* webpackChunkName: "no-found" */ '../page/noFound.vue')
+}
 //注入
 Vue.use(Router)
 
@@ -48,6 +51,15 @@ const routes = [
         meta:{
             requireAuth:true
         }
+    },
+    {
+        path:"/404",
+        component:noFound,
+        name:'noFound',
+    },
+    {
+        path:'*',
+        redirect:'/404'
     }
 ]
 
