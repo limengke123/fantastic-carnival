@@ -36,15 +36,25 @@ const getTestPage = (location, callback) => {
     },'test')
 }
 
+const getDetailPage = (location,callback) => {
+    require.ensure([], function(require){
+        const ArticleDetail = require('./containers/article')
+        document.title = "文章页面"
+        callback(null, ArticleDetail)
+    },'articleDetail')
+}
+
 const Routes = () => (
     <Router history={browserHistory}>
         <Route path='/' breadcrumbName="首页" component={App}>
             <IndexRoute name="home" getComponent={getHomePage}/>
             <Route name="home" path='home' getComponent={getHomePage}/>
             <Route name="tag" path='tag' breadcrumbName="标签" getComponent={getTagPage}/>
-            <Route name="test" path='test' breadcrumbName="测试" getComponent={getTestPage}/>
+            <Route name="detail" path='article/:id' breadcrumbName="文章" getComponent={getDetailPage} />
         </Route>
 
+        {/** 测试页面 **/}
+        <Route name="test" path='test' breadcrumbName="测试" getComponent={getTestPage}/>
         {/** 这里是重定向 **/}
         <Route path='/404' getComponent={getNoFoundPage}/>
         <Redirect path='*' to='/404'/>

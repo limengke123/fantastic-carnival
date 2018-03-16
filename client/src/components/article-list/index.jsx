@@ -6,31 +6,23 @@ import style from './index.styl'
 import Article from '../article-item/index'
 
 
-@inject('articleStore')@observer class ArticleList extends React.Component {
+@inject('articleListStore')@observer class ArticleList extends React.Component {
     constructor() {
         super(...arguments)
     }
 
     componentDidMount() {
-        const {articleStore} = this.props
-        articleStore.getArticleList()
+        console.log('test props' ,this.props)
+        const {articleListStore} = this.props
+        articleListStore.getArticleList()
     }
 
     render() {
-        const {articleStore} = this.props
-        const info = {
-            title:1,
-            excerpt:2,
-            lastEditTime:3,
-            tags:[{
-                name:444
-            }]
-        }
+        const {articleListStore} = this.props
         return (
             <main className={style.wrapper}>
                 {
-                    articleStore.articleList.map((article,index) => {
-                        console.log(article)
+                    articleListStore.articleList.map((article,index) => {
                         return <Article key={index} infos={article}/>
                     })
                 }

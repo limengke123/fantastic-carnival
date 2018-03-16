@@ -55,6 +55,7 @@
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^2.0.0",
     "postcss-loader": "^2.1.1",
+    "prop-types": "^15.6.1",
     "pug": "^2.0.0-rc.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
