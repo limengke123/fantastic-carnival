@@ -21,7 +21,7 @@ ReactDom.render(
     <Provider articleListStore={articleListStore} articleDetailStore={articleDetailStore}>
         <div>
             <Routes/>
-            {__ENV__.NODE_ENV === 'development' ? <DevTools/> : null}
+            {/*{__ENV__.NODE_ENV === 'development' ? <DevTools/> : null}*/}
         </div>
     </Provider>
 ,root)

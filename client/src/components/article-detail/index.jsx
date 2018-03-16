@@ -32,7 +32,7 @@ class ArticleDetail extends React.Component{
                         <span>tags: {article.tags.map(val => `${val.name} `)}</span>
                     </p>
                 </header>
-                <article className="content" dangerouslySetInnerHTML={{__html:markdown(article.content)}}/>
+                <article className="article-content" dangerouslySetInnerHTML={{__html:markdown(article.content)}}/>
             </div>
         )
     }
