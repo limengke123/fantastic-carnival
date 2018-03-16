@@ -30,7 +30,7 @@ const getNoFoundPage = (location, callback) => {
 
 const getTestPage = (location, callback) => {
     require.ensure([], function(require){
-        const Test = require('./containers/test')
+        const Test = require('./containers/test').default
         document.title = "测试页面"
         callback(null, Test)
     },'test')
@@ -38,7 +38,7 @@ const getTestPage = (location, callback) => {
 
 const getDetailPage = (location,callback) => {
     require.ensure([], function(require){
-        const ArticleDetail = require('./containers/article')
+        const ArticleDetail = require('./containers/article').default
         document.title = "文章页面"
         callback(null, ArticleDetail)
     },'articleDetail')
@@ -48,9 +48,9 @@ const Routes = () => (
     <Router history={browserHistory}>
         <Route path='/' breadcrumbName="首页" component={App}>
             <IndexRoute name="home" getComponent={getHomePage}/>
-            <Route name="home" path='home' getComponent={getHomePage}/>
-            <Route name="tag" path='tag' breadcrumbName="标签" getComponent={getTagPage}/>
-            <Route name="detail" path='article/:id' breadcrumbName="文章" getComponent={getDetailPage} />
+            <Route name="home" path='/home' getComponent={getHomePage}/>
+            <Route name="tag" path='/tag' breadcrumbName="标签" getComponent={getTagPage}/>
+            <Route name="articleDetail" path='article/:id' breadcrumbName="文章" getComponent={getDetailPage} />
         </Route>
 
         {/** 测试页面 **/}

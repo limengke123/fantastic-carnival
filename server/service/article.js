@@ -120,6 +120,9 @@ class ArticleService {
                     $gt:id
                 }
             },"title _id")
+                .sort({
+                    _id:1
+                })
                 .exec()
         } catch (e){
             logger.error(e)

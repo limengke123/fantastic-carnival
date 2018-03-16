@@ -10,13 +10,10 @@ class Article extends React.Component{
     constructor(){
         super(...arguments)
     }
-    componentDidMount(){
-        console.log(this.props)
-    }
 
-    jumpToDetail(){
-        const {router} = this.props
-        router.push(`/article/${this.props.infos.id}`)
+    jumpToDetail = () => {
+        const {router, infos} = this.props
+        router.push(`/article/${infos.id}`)
     }
 
     render(){
@@ -24,13 +21,13 @@ class Article extends React.Component{
         return (
             <article className={style.wrapper}>
                 <div className={style.main}>
-                    <h3 className={style.title}>{infos.title || "沒有title"}</h3>
+                    <h3 className={style.title} onClick={this.jumpToDetail}>{infos.title}</h3>
                     <p className={style.info}>
                         <span>{infos.lastEditTime} </span>
                         <span>标签：{infos.tags.map(val => `${val.name} `)}</span>
                     </p>
                     <p className={style.excerpt}>{infos.excerpt} ...</p>
-                    <span className={style.more} onClick={this.jumpToDetail.bind(this)}>阅读全文>></span>
+                    <span className={style.more} onClick={this.jumpToDetail}>阅读全文>></span>
                 </div>
             </article>
         )
