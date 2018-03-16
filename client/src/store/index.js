@@ -16,7 +16,11 @@ class ArticStore{
     }
     @action("请求文章列表")
     getArticleList(){
-        axios.get('/api/articles')
+        axios.get('/api/articles',{
+            params:{
+                sort:-1
+            }
+        })
             .then(resp => {
                 runInAction(() => {
                     this.articleList = resp.data.data.articles

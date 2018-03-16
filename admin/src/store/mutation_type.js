@@ -2,7 +2,7 @@
  * Created by li on 2018/3/1 13:05.
  */
 export default{
-    //article
+    //article-item
     RECEIVE_ALL_POSTS : 'RECEIVE_ALL_POSTS',
     POST_FOCUS : 'POST_FOCUS',
     POST_EDIT : 'POST_EDIT',

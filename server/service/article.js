@@ -21,7 +21,9 @@ class ArticleService {
             result = await Article.find()
                 .populate('tags')
                 .select('title visits tags createTime lastEditTime excerpt')
-                .sort(sort)
+                .sort({
+                    lastEditTime:sort
+                })
                 .limit(limit)
                 .skip(skip)
                 .exec()

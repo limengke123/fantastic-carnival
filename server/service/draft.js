@@ -30,7 +30,7 @@ class DraftService {
             }
             draftArr = await Draft.find(searchParam)
                 .populate('tags')
-                .select('title tags createTime lastEditTime excerpt article draftPublished')
+                .select('title tags createTime lastEditTime excerpt article-item draftPublished')
                 .sort({
                     lastEditTime:-1
                 })
@@ -55,7 +55,7 @@ class DraftService {
                 _id:id
             })
                 .populate('tags')
-                .select('title tags creteTime lastEditTime excerpt article draftPublished content')
+                .select('title tags creteTime lastEditTime excerpt article-item draftPublished content')
                 .sort(sort)
                 .limit(limit)
                 .skip(skip)

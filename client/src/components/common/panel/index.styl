@@ -1,8 +1,11 @@
 @import '../../../styl/variable.styl'
 .wrapper
-  box-shadow 0 0 6px $black
+  box-shadow $box-shadow-light
   box-sizing border-box
   width 250px
+  transition $transition
+  &:hover
+    box-shadow $box-shadow-weight
   .title
     padding 10px 15px
     color $black

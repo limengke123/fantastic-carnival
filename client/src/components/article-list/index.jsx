@@ -3,7 +3,7 @@ import {inject, observer} from 'mobx-react'
 
 import style from './index.styl'
 
-import Article from '../article/index'
+import Article from '../article-item/index'
 
 
 @inject('articleStore')@observer class ArticleList extends React.Component {

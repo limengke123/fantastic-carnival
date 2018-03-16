@@ -92,6 +92,7 @@ class ActionList extends BaseAop {
     static schema = joi.object().keys({
         tag: joi.string().optional(),
         limit: joi.number().optional(),
+        sort: joi.number().optional(),
         page: joi.number().optional()
     }).without('tag', 'page')
 
@@ -101,7 +102,8 @@ class ActionList extends BaseAop {
             tag: query.tag,
             //少见的去小数的方法
             limit: ~~query.limit,
-            page: query.page
+            page: query.page,
+            sort: query.sort
         }, this.constructor.schema)
         if (error) {
             const reason = error.details.map(val => val.message).join(';')
@@ -132,11 +134,12 @@ class ActionList extends BaseAop {
         } else {
             const limit = ~~ctx.query.limit || 10
             const page = ~~ctx.query.page
+            const sort = ctx.query.sort || -1
             let skip
             skip = page === 0 ? 0 : limit * (page - 1)
             try {
                 const [articleArr, totalNumber] = await Promise.all([
-                    ArticleService.find({}, limit, skip),
+                    ArticleService.find(sort, limit, skip),
                     ArticleService.count()
                 ])
                 ctx.status = 200
