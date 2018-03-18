@@ -1,9 +1,44 @@
 @import './variable.styl'
+:global
+
+  .markdown-body
+    a
+      /**连接重写*/
+      color $green
+      border-bottom: 1px solid rgba(0,154,97,0.25);
+      padding-bottom: 1px;
+      border-bottom 1px dashed $green
+      transition color ease 0.2s
+      &:hover
+        text-decoration none
+        color #115621
+    blockquote
+      /**引用重写*/
+      border-left: 0.25em solid $green;
+      background-color #f6f6f6
+      padding 10px 20px
+      margin 21px 0
+    /**列表重写*/
+    ul
+      li
+        list-style disc
+    ol
+      li
+        list-style decimal
+
+
   .gutter pre
     color #999
-
+  code
+    padding: 2px 4px;
+    font-size: 0.93em
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
   pre
     color: #525252
+    code
+      color inherit
     .function .keyword,
     .constant
       color: #0092db

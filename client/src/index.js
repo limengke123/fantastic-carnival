@@ -11,7 +11,6 @@ const {
     articleListStore
 } = store
 
-console.log(articleListStore)
 
 const root = document.createElement('div')
 
