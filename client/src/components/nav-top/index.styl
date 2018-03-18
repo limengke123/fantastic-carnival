@@ -2,32 +2,40 @@
 @import '../../styl/list.styl'
 .wrapper
   display flex
-  height w=40px
   justify-content center
-  box-shadow 0 0 4px rgba(0,0,0,0.25)
-  height 90px
+  box-shadow 0 2px 10px 0 rgba(0,0,0,0.1), 0 1px rgba(0,0,0,0.1);
+  height 64px
   .header
     display flex
     justify-content space-between
+    align-items center
     //max-width 850px
-    padding 25px 0
+    //padding 10px 0
     width 800px
     .logo
-      background url('../../assets/img/logo.svg')
+      background url('../../assets/img/logo-b.svg') no-repeat left center
       background-size contain
-      width 40px
+      width 150px
       height @width - 3px
     .navLink
       display flex
-      height w
+      height w=34px
       .navItem
-        margin-right 0.6em
-        font-weight 600
+        margin-right 1.2em
         height w
         line-height @height
         box-sizing border-box
         cursor pointer
+        display inline-block
+        color #757575
+        font-weight 500
         &:hover
           border-bottom 2px solid $green
       .activeNav
-          border-bottom 2px solid $green
+        font-weight 600
+        color #009a61
+        a
+          color #009a61
+      .activeLink
+        color black
+

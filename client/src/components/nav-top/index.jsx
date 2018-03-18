@@ -5,6 +5,25 @@ import style from './index.styl'
 class NavTop extends React.Component {
     constructor(){
         super(...arguments)
+        this.state = {
+            navTag:[
+                {
+                    name:"首页",
+                    link:'/',
+                    isActive:true
+                },
+                {
+                    name:'标签页',
+                    link:'/tag',
+                    isActive:false,
+                },
+                {
+                    name:'暂无',
+                    link:'/',
+                    isActive:false
+                }
+            ]
+        }
     }
     jumpHome = () => {
         this.props.router.push('/')
@@ -16,8 +35,8 @@ class NavTop extends React.Component {
                 <div className={style.header}>
                     <div className={style.logo} onClick={this.jumpHome}/>
                     <ul className={style.navLink}>
-                        {[1, 2, 3].map((val, index) => (
-                            <li key={index} className={style.navItem}><Link to="/tag">{`test${val}`}</Link></li>
+                        {this.state.navTag.map((val, index) => (
+                            <li key={val.name} className={`${style.navItem}`}><Link activeClassName={style.activeNav} to={val.link}>{val.name}</Link></li>
                         ))}
                     </ul>
                 </div>
