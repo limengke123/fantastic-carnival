@@ -8,7 +8,8 @@ import store from './store/index'
 
 const {
     articleDetailStore,
-    articleListStore
+    articleListStore,
+    tagStore,
 } = store
 
 
@@ -17,7 +18,7 @@ const root = document.createElement('div')
 document.body.appendChild(root)
 
 ReactDom.render(
-    <Provider articleListStore={articleListStore} articleDetailStore={articleDetailStore}>
+    <Provider tagStore={tagStore} articleListStore={articleListStore} articleDetailStore={articleDetailStore}>
         <div>
             <Routes/>
             {/*{__ENV__.NODE_ENV === 'development' ? <DevTools/> : null}*/}

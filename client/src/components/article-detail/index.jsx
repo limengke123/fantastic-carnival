@@ -8,14 +8,32 @@ import ArticleNav from '../article-nav/index'
 
 // import '../../styl/code.styl'
 
-@inject('articleDetailStore') @observer
+@inject('articleDetailStore') @observer @withRouter
 class ArticleDetail extends React.Component{
     constructor(){
         super(...arguments)
     }
     componentDidMount(){
+        console.log(this.props)
         const {articleDetailStore, router, params} = this.props
-        articleDetailStore.getDetail(params.id, router)
+        articleDetailStore.getDetail(params.id)
+            .catch(err => {
+                console.log(err)
+                router.push('/')
+            })
+    }
+
+    componentWillReceiveProps(nextProps){
+        const { articleDetailStore, params, router, location} = nextProps
+        if(location.pathname != this.props.location.pathname){
+            articleDetailStore.getDetail(params.id)
+                .catch(err => {
+                    console.log(err)
+                    router.push('/')
+                })
+            console.log(params.id)
+            window.scrollTo(0,0)
+        }
     }
 
     render(){
@@ -40,4 +58,5 @@ class ArticleDetail extends React.Component{
     }
 }
 
-export default withRouter(ArticleDetail)
+// export default withRouter(ArticleDetail)
+export default ArticleDetail

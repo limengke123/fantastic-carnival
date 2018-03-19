@@ -14,7 +14,8 @@ export default class BackTop extends React.Component{
     }
 
     componentDidMount(){
-        if(window.pageYOffset > 300){
+        const offsetHeight = this.props.offsetHeight || 300
+        if(window.pageYOffset > offsetHeight){
             this.setState({
                 customStyle:{
                     display:'block'
@@ -23,7 +24,7 @@ export default class BackTop extends React.Component{
         }
         let self = this.self
         const onScroll = () => {
-            if (window.pageYOffset > 300) {
+            if (window.pageYOffset > offsetHeight) {
                 self.style.display = 'block'
             } else {
                 self.style.display = 'none'

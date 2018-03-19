@@ -10,7 +10,7 @@ class NavTop extends React.Component {
                 {
                     name:"首页",
                     link:'/',
-                    isActive:true
+                    isActive:false
                 },
                 {
                     name:'标签页',
@@ -19,7 +19,7 @@ class NavTop extends React.Component {
                 },
                 {
                     name:'暂无',
-                    link:'/',
+                    link:'/404',
                     isActive:false
                 }
             ]

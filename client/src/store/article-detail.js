@@ -20,20 +20,23 @@ class ArticleDetail {
         },
     }
     @action("请求单个文章页面数据")
-    getDetail(id,routerContext){
-        axios.get(`/api/articles/${id}`)
-            .then(resp => {
-                if(resp.status === 200){
-                    runInAction(() => {
-                        this.article = resp.data.data
-                    })
-                } else {
-                    console.log("请求出错")
-                    routerContext.push('/')
-                }
-            }).catch(err => {
+    getDetail(id){
+        return new Promise((resolve,reject) => {
+            axios.get(`/api/articles/${id}`)
+                .then(resp => {
+                    if(resp.status === 200){
+                        runInAction(() => {
+                            this.article = resp.data.data
+                            resolve(resp)
+                        })
+                    } else {
+                        console.log("请求出错")
+                        reject(resp)
+                    }
+                }).catch(err => {
                 console.log(err)
-                routerContext.push('/')
+                reject(err)
+            })
         })
     }
 }

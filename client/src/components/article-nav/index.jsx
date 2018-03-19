@@ -2,7 +2,7 @@ import React from 'react'
 import style from './index.styl'
 import {withRouter} from 'react-router'
 
-
+@withRouter
 class ArticleNav extends React.Component {
     constructor() {
         super(...arguments)
@@ -43,4 +43,5 @@ class ArticleNav extends React.Component {
     }
 }
 
-export default withRouter(ArticleNav)
+export default ArticleNav
+// export default withRouter(ArticleNav)
