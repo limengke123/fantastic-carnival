@@ -4,6 +4,7 @@ import NavTop from '../components/nav-top'
 import Footer from '../components/footer'
 
 import '../styl/reset.styl'
+// import '../styl/github-markdown.css'
 
 export default (props) => {
     const style = {

@@ -1,0 +1,23 @@
+@import '../../../styl/variable.styl'
+.wrapper
+  position fixed
+  right 100px
+  bottom 150px
+  height h=40px
+  width w=40px
+  .btn
+    display inline-block
+    width w
+    height h
+    text-align center
+    cursor pointer
+    border-radius 50%
+    transition all ease-in 0.2s
+    line-height 3
+    &:hover
+      background $green
+      i
+        color #fff
+    i
+      font-size 30px
+      color $green
