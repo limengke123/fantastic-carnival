@@ -1,27 +1,28 @@
-html,body
-  margin 0
-  padding 0
-html,body
-  height 100%
-ul,li,ol
-  //list-style none
-a
-  text-decoration none
-  color #000
-  /** 修改滚动条的样式 **/
-*::-webkit-scrollbar {
-  display: block;
-  width: 5px;
-  height: 5px;
-  background: #FAFAFA;
-}
-*::-webkit-scrollbar-thumb {
-  border-radius: 5px;
-  background: #E0E0E0;
-}
-*::-webkit-scrollbar-thumb:hover {
-  background: #BDBDBD;
-}
+:global
+  html,body
+    margin 0
+    padding 0
+  html,body
+    height 100%
+  ul,li,ol
+    //list-style none
+  a
+    text-decoration none
+    color #000
+    /** 修改滚动条的样式 **/
+  *::-webkit-scrollbar
+    display block
+    width 8px
+    height 8px
+    background #FAFAFA
+
+  *::-webkit-scrollbar-thumb
+    border-radius 5px
+    background #E0E0E0
+
+  *::-webkit-scrollbar-thumb:hover
+    background #BDBDBD
+
 
 
 
