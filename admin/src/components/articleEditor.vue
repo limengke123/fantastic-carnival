@@ -179,7 +179,11 @@
                 previewRender: function (plainText) {
                     return marked(plainText)
                 },
-                spellChecker: false
+                spellChecker: false,
+                shortcuts: {
+                    "drawTable": "Cmd-Alt-T", //表格
+                    "drawHorizontalRule": "Cmd-Alt-H",  //水平线
+                },
             })
             let postDraft = debounce(() => {
                 //this.modifyContent(simpleMDE.value())

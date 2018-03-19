@@ -7,8 +7,10 @@ import '../styl/reset.styl'
 
 export default (props) => {
     const style = {
-        width:"1000px",
-        margin:"0 auto"
+        maxWidth:"1200px",
+        margin:"0 auto",
+        display:"flex",
+        justifyContent:"center"
     }
     return (
         <div>
