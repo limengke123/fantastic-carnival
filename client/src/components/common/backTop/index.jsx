@@ -8,7 +8,7 @@ export default class BackTop extends React.Component{
         super(...arguments)
         this.state = {
             customStyle:{
-                visibility:'hidden',
+                display:'none',
             }
         }
     }
@@ -17,16 +17,16 @@ export default class BackTop extends React.Component{
         if(window.pageYOffset > 300){
             this.setState({
                 customStyle:{
-                    visibility:'visible'
+                    display:'block'
                 }
             })
         }
         let self = this.self
         const onScroll = () => {
             if (window.pageYOffset > 300) {
-                self.style.visibility = 'visible'
+                self.style.display = 'block'
             } else {
-                self.style.visibility = 'hidden'
+                self.style.display = 'none'
             }
         }
         window.addEventListener('scroll',throttle(onScroll,500,1000),false)

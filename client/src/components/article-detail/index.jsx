@@ -4,7 +4,8 @@ import {withRouter} from 'react-router'
 import style from './index.styl'
 import markdown from '../../util/filter'
 
-import '../../styl/syntax.styl'
+import ArticleNav from '../article-nav/index'
+
 // import '../../styl/code.styl'
 
 @inject('articleDetailStore') @observer
@@ -33,6 +34,7 @@ class ArticleDetail extends React.Component{
                     </p>
                 </header>
                 <article className="markdown-body" dangerouslySetInnerHTML={{__html:markdown(article.content)}}/>
+                <ArticleNav prevArticle={article.prevArticle} nextArticle={article.nextArticle}/>
             </div>
         )
     }

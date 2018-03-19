@@ -10,6 +10,14 @@ class ArticleDetail {
         tags:[{
             name:''
         }],
+        prevArticle:{
+            title:"",
+            id:""
+        },
+        nextArticle:{
+            title:"",
+            id:""
+        },
     }
     @action("请求单个文章页面数据")
     getDetail(id,routerContext){

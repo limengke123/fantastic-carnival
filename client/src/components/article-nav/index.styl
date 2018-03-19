@@ -1,0 +1,30 @@
+@import '../../styl/variable.styl'
+.wrapper
+  display flex
+  //justify-content center
+  padding-top 5px
+  margin-top 15px
+  border-top 1px solid $green
+  //height 50px
+  //line-height @height
+  align-items center
+  .item
+    width 50%
+    color $green
+    transition all ease 0.3s
+    span
+      line-height 30px
+      cursor pointer
+    i
+      font-size 30px
+      padding-top 3px
+      transform translateY(4px)
+      cursor pointer
+    &:hover
+      color #017e66
+  .next
+    span
+      margin-right 15px
+  .prev
+    span
+      margin-left 15px
