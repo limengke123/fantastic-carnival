@@ -7,6 +7,7 @@ import SidePanel from '../components/side-panel'
 
 //回到顶部
 import BackTop from '../components/common/backTop'
+import ArticleSort from '../components/article-sort/index'
 
 import style from './article.styl'
 
@@ -25,7 +26,7 @@ class Article extends React.Component{
                     <ArticleDetail/>
                     <div className={style.panelWrapper}>
                         <SidePanel/>
-                        <SidePanel/>
+                        <ArticleSort/>
                     </div>
                     <BackTop/>
                 </div>

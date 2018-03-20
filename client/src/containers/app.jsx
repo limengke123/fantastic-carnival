@@ -3,24 +3,19 @@ import React from 'react'
 import NavTop from '../components/nav-top'
 import Footer from '../components/footer'
 
+import style from './app.styl'
+
 import '../styl/reset.styl'
 import '../styl/syntax.styl'
-// import '../styl/github-markdown.css'
 
 export default (props) => {
-    const style = {
-        maxWidth:"1200px",
-        margin:"0 auto",
-        display:"flex",
-        justifyContent:"center"
-    }
     return (
-        <div>
+        <div className={style.wrapper}>
             <NavTop/>
-            <div style={style}>
+            <div className={style.main}>
                 {props.children}
             </div>
             <Footer/>
         </div>
-        )
+    )
 }

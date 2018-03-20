@@ -9,7 +9,6 @@ import style from './index.styl'
 export default class ArticleSort extends React.Component{
 
     componentDidMount(){
-        console.log(this.props)
         this.props.tagStore.getTag()
     }
 

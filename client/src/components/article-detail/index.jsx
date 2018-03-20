@@ -6,31 +6,24 @@ import markdown from '../../util/filter'
 
 import ArticleNav from '../article-nav/index'
 
-// import '../../styl/code.styl'
+import {withLoading} from '../../hoc/index'
 
-@inject('articleDetailStore') @observer @withRouter
+console.log(withLoading,"loading")
+
+@inject('articleDetailStore') @observer @withLoading
 class ArticleDetail extends React.Component{
     constructor(){
         super(...arguments)
     }
     componentDidMount(){
-        console.log(this.props)
         const {articleDetailStore, router, params} = this.props
         articleDetailStore.getDetail(params.id)
-            .catch(err => {
-                console.log(err)
-                router.push('/')
-            })
     }
 
     componentWillReceiveProps(nextProps){
         const { articleDetailStore, params, router, location} = nextProps
-        if(location.pathname != this.props.location.pathname){
+        if(location.pathname !== this.props.location.pathname){
             articleDetailStore.getDetail(params.id)
-                .catch(err => {
-                    console.log(err)
-                    router.push('/')
-                })
             console.log(params.id)
             window.scrollTo(0,0)
         }
@@ -58,5 +51,5 @@ class ArticleDetail extends React.Component{
     }
 }
 
-// export default withRouter(ArticleDetail)
-export default ArticleDetail
+ export default withRouter(ArticleDetail)
+//export default ArticleDetail

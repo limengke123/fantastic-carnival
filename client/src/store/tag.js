@@ -10,7 +10,6 @@ class Tag{
             .then(resp => {
                 runInAction(() => {
                     this.tags = resp.data.data
-                    console.log(resp.data)
                 })
             }).catch(err => {
                 console.log(err)

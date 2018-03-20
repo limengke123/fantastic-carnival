@@ -1,6 +1,8 @@
 import React from 'react'
 import style from './index.styl'
 
+import {control} from '../../hoc/index'
+
 export default () => (
     <footer className={style.footer}>
         <p>Copyright © 2011-2018 SegmentFault. 当前呈现版本 17.06.16</p>

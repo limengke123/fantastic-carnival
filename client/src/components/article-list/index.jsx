@@ -6,7 +6,8 @@ import style from './index.styl'
 import Article from '../article-item/index'
 
 
-@inject('articleListStore')@observer class ArticleList extends React.Component {
+@inject('articleListStore')@observer
+class ArticleList extends React.Component {
     constructor() {
         super(...arguments)
     }

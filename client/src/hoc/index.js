@@ -1,14 +1,32 @@
-const withLoading = BaseComponent => ({isLoading, ...otherProps}) => (
-    isLoading
+import React from 'react'
+
+const withLoading = BaseComponent => (props) => (
+    props.articleDetailStore.isLoading
         ?
         <div>加载中。。。</div>
         :
-        <BaseComponent {otherProps}/>
+        <BaseComponent {...props}/>
 )
+
 
 const flatten = propKey => BaseComponent => props => <BaseComponent {...props} {...props[propKey]}/>
 
-exports = {
+const control = BaseComponent => {
+    return class Hoc extends React.Component{
+        render(){
+            let props = {
+                ...this.props,
+                message:"hehehhe"
+            }
+            return (
+                <BaseComponent {...props}/>
+            )
+        }
+    }
+}
+
+export {
     withLoading,
-    flatten
+    flatten,
+    control
 }

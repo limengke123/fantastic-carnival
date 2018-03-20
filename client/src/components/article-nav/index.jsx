@@ -26,7 +26,10 @@ class ArticleNav extends React.Component {
                             <span onClick={() => this.linkToArticle(prevArticle.id)}>上一篇：{prevArticle.title}</span>
                         </aside>
                         :
-                        null
+                        <aside className={`${style.item} ${style.prev} ${style.none}`}>
+                            <i className="fa fa-arrow-left"/>
+                            <span>上一篇：无</span>
+                        </aside>
                 }
                 {
                     nextArticle
@@ -36,7 +39,10 @@ class ArticleNav extends React.Component {
                             <i className="fa fa-arrow-right" onClick={() => this.linkToArticle(nextArticle.id)}/>
                         </aside>
                         :
-                        null
+                        <aside className={`${style.item} ${style.next} ${style.none}`}>
+                            <span>下一篇：无</span>
+                            <i className="fa fa-arrow-right"/>
+                        </aside>
                 }
             </div>
         )
