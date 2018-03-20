@@ -15,7 +15,7 @@ const config = webpackMerge(baseConfig,{
         filename:'js/[name].[chunkhash:8].js',
         chunkFilename:'js/[id].js',
         path:path.join(__dirname,'../../server/static/clientDist'),
-        publicPath:'./clientDist/'
+        publicPath:'/clientDist/'
     },
     module:{
         rules:[

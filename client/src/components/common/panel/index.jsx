@@ -10,7 +10,7 @@ export default class Card extends React.Component{
         return (
             <aside className={style.wrapper}>
                 {props.title ? <header className={style.title}>{props.title}</header> : null}
-                <main className={style.main}>{props.children}</main>
+                <main className={style.main} style={props.customStyle}>{props.children}</main>
             </aside>
         )
     }

@@ -12,10 +12,7 @@ export default () => (
     <div className={style.wrapper}>
         <main className={style.main}>
             <ArticleList/>
-            <div>
-                <SidePanel/>
-                <ArticleSort/>
-            </div>
+            <SidePanel/>
         </main>
         <BackTop offsetHeight={100}/>
     </div>

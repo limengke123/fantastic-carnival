@@ -26,10 +26,7 @@ class Article extends React.Component{
             <div className={style.wrapper}>
                 <div className={style.main}>
                     <ArticleDetail/>
-                    <div className={style.panelWrapper}>
-                        <SidePanel/>
-                        <ArticleSort/>
-                    </div>
+                    <SidePanel/>
                     <BackTop/>
                 </div>
             </div>
