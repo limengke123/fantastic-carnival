@@ -94,7 +94,6 @@ class ArticleService {
             logger.error(e)
             throw e
         }
-        console.log(result)
         return result && result.toObject()
     }
 
@@ -107,7 +106,7 @@ class ArticleService {
                 }
             },"title _id")
                 .sort({
-                    _id:1
+                    _id:-1
                 })
                 .exec()
         } catch (e){
@@ -126,9 +125,9 @@ class ArticleService {
                     $gt:id
                 }
             },"title _id")
-                .sort({
-                    _id:1
-                })
+                // .sort({
+                //     _id:1
+                // })
                 .exec()
         } catch (e){
             logger.error(e)
