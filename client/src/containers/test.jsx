@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Mask from '../components/common/mask/index'
+import Loading from '../components/common/loading/index'
 
 const Hoc = BaseComponent => (props) => {
     let newProps = {
@@ -22,7 +24,7 @@ const withLoading = BaseComponent => ({isLoading, ...otherProps}) => {
     )
 }
 
-@Hoc @withLoading
+
 class TestItem extends React.Component {
     constructor() {
         super(...arguments)
@@ -49,6 +51,7 @@ class Test extends React.Component {
         return (
             <div>
                 <TestItem customProps={"i m customProps"} isLoading={false}/>
+                <Loading mask/>
             </div>
         )
     }

@@ -21,7 +21,7 @@ class ArticleDetail {
         },
     }
 
-    @observable isLoading = true
+    @observable isLoading = false
 
     @action("请求单个文章页面数据")
     getDetail(id) {
@@ -39,6 +39,27 @@ class ArticleDetail {
             }).catch(err => {
             console.log(err)
         })
+    }
+    @action("清空之前保留的数据")
+    deleteDetail(){
+        this.article = {
+            title: '',
+            content: '',
+            excerpt: '',
+            lastEditTime: '',
+            createTime: '',
+            tags: [{
+                name: ''
+            }],
+            prevArticle: {
+                title: "",
+                id: ""
+            },
+            nextArticle: {
+                title: "",
+                id: ""
+            },
+        }
     }
 }
 

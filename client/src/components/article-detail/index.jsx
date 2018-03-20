@@ -6,30 +6,36 @@ import markdown from '../../util/filter'
 
 import ArticleNav from '../article-nav/index'
 
-import {withLoading} from '../../hoc/index'
+//import {withLoading} from '../../hoc/index'
 
-console.log(withLoading,"loading")
+import Loading from '../common/loading/index'
 
-@inject('articleDetailStore') @observer @withLoading
-class ArticleDetail extends React.Component{
-    constructor(){
+@inject('articleDetailStore') @observer
+class ArticleDetail extends React.Component {
+    constructor() {
         super(...arguments)
     }
-    componentDidMount(){
-        const {articleDetailStore, router, params} = this.props
+
+    componentDidMount() {
+        const {articleDetailStore, params} = this.props
         articleDetailStore.getDetail(params.id)
     }
 
-    componentWillReceiveProps(nextProps){
-        const { articleDetailStore, params, router, location} = nextProps
-        if(location.pathname !== this.props.location.pathname){
+    componentWillUnmount() {
+        const {articleDetailStore} = this.props
+        articleDetailStore.deleteDetail()
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const {articleDetailStore, params, location} = nextProps
+        if (location.pathname !== this.props.location.pathname) {
+            //articleDetailStore.deleteDetail()
             articleDetailStore.getDetail(params.id)
-            console.log(params.id)
-            window.scrollTo(0,0)
+            window.scrollTo(0, 0)
         }
     }
 
-    render(){
+    render() {
         const {articleDetailStore} = this.props
         const {article} = articleDetailStore
         return (
@@ -41,15 +47,23 @@ class ArticleDetail extends React.Component{
                     <p className={style.info}>
                         <span>发布时间：{article.lastEditTime} </span>
                         <span> | </span>
-                        <span>{article.tags.map(val => <span key={val.name} className={style.tagItem}>{val.name}</span>)}</span>
+                        <span>{article.tags.map(val => <span key={val.name}
+                                                             className={style.tagItem}>{val.name}</span>)}</span>
                     </p>
                 </header>
-                <article className="markdown-body" dangerouslySetInnerHTML={{__html:markdown(article.content)}}/>
+                <article className="markdown-body" dangerouslySetInnerHTML={{__html: markdown(article.content)}}/>
                 <ArticleNav prevArticle={article.prevArticle} nextArticle={article.nextArticle}/>
+                {
+                    articleDetailStore.isLoading
+                        ?
+                        <Loading mask/>
+                        :
+                        null
+                }
             </div>
         )
     }
 }
 
- export default withRouter(ArticleDetail)
+export default withRouter(ArticleDetail)
 //export default ArticleDetail

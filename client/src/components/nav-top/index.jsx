@@ -35,8 +35,8 @@ class NavTop extends React.Component {
                 <div className={style.header}>
                     <div className={style.logo} onClick={this.jumpHome}/>
                     <ul className={style.navLink}>
-                        {this.state.navTag.map((val, index) => (
-                            <li key={val.name} className={`${style.navItem}`}><Link activeClassName={style.activeNav} to={val.link}>{val.name}</Link></li>
+                        {this.state.navTag.map(val => (
+                            <li key={val.name} className={`${style.navItem}`}><Link onlyActiveOnIndex activeClassName={style.activeNav} to={val.link}>{val.name}</Link></li>
                         ))}
                     </ul>
                 </div>
