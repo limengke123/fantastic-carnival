@@ -1,10 +1,14 @@
+<docs>
+    #post['draftPublished']?'published':post['article-item']?'updated':'' , {'active':post['id'] === currentPostId}
+    #这里的article-item 有点问题
+    #判断是否是更新
+</docs>
 <template lang="pug">
     ul.post-list.reset-list
         li.post-list-item(v-for="(post,index) in postList", @click="focus(index)")
-            article.post-thumb(:class="[post['draftPublished']?'published':post['article-item']?'updated':'',{'active':post['id'] === currentPostId}]")
+            article.post-thumb(:class="[post['draftPublished']?'published':post['article']?'updated':'',{'active':post['id'] === currentPostId}]")
                 h3.post-title: a(href="javascript:void(0);") {{post['title']}}
                 h6.post-time {{post['lastEditTime']}}
-                <!--p.post-content(v-text="post['excerpt'] | md2Text")-->
                 p.post-content {{post['excerpt'] | md2Text}}
 </template>
 

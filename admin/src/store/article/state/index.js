@@ -6,7 +6,7 @@ export default{
     tags:[],
     currentPostId:null,
     currentPostIndex:-1,
-    articleId:null,
+    article:null,
     title:"",
     content:'',
     postSaved:true,

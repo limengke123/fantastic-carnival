@@ -81,7 +81,7 @@ class ArticleService {
     async update (id,modifyParam){
         let result = null
         try{
-            result = await Article.findOneAndUpdate(id,{
+            result = await Article.findByIdAndUpdate(id,{
                 $set:modifyParam
             },{
                 //返回更新后的新数据
@@ -90,7 +90,6 @@ class ArticleService {
                 //upsert:true
             }).exec()
         }catch (e){
-            console.log('article')
             logger.error(e)
             throw e
         }

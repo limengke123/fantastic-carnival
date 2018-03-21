@@ -97,8 +97,9 @@ class ActionCreate extends BaseAop{
         delete draft.id
 
         let article = null
-        console.log(draft.article)
         if(draft.article !== null && draft.article !== void 0){
+            console.log('draft',id)
+            console.log('article',draft.article)
             try{
                 [,article] =await Promise.all([
                     DraftService.update(id,draft),

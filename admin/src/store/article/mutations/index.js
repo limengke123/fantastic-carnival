@@ -33,14 +33,14 @@ export default {
         state.currentPostIndex = 0;
         state.currentPostId = state.all[0].id
         state.title = state.all[0].title
-        state.articleId = state.all[0].article
+        state.article = state.all[0].article
     },
     [POST_FOCUS](state,index){
         if(state.postSaved && state.postTitleSaved){
             state.currentPostIndex = index
             state.currentPostId = state.all[index].id
             state.excerpt = state.all[index].excerpt
-            state.articleId = state.all[index].article
+            state.article = state.all[index].article
             state.title = state.all[index].title
         }
     },
@@ -80,7 +80,9 @@ export default {
         state.all[state.currentPostIndex].draftPublished = false
     },
     [POST_PUBLISH](state,id){
-        state.articleId = id
+        state.article = id
+        state.all[state.currentPostIndex].article = id
+        state.all[state.currentPostIndex].draftPublished = true
     },
     [POST_DELETE](state){
         if(state.postSaved && state.postTitleSaved){
@@ -89,11 +91,11 @@ export default {
                 state.currentPostIndex = 0
                 state.currentPostId = state.all[0].id
                 state.title =state.all[0].title
-                state.articleId = state.all[0].article
+                state.article = state.all[0].article
             } else {
                 state.currentPostId = null
                 state.currentPostIndex = -1
-                state.articleId = null
+                state.article = null
                 state.title = ''
             }
         }
