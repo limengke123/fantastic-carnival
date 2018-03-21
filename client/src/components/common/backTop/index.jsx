@@ -8,7 +8,7 @@ export default class BackTop extends React.Component{
         super(...arguments)
         this.state = {
             customStyle:{
-                display:'none',
+                visibility:"hidden",
             }
         }
     }
@@ -18,16 +18,24 @@ export default class BackTop extends React.Component{
         if(window.pageYOffset > offsetHeight){
             this.setState({
                 customStyle:{
-                    display:'block'
+                    visibility:'visible'
                 }
             })
         }
-        let self = this.self
+        //let self = this.self
         const onScroll = () => {
             if (window.pageYOffset > offsetHeight) {
-                self.style.display = 'block'
+                this.setState({
+                    customStyle:{
+                        visibility:'visible'
+                    }
+                })
             } else {
-                self.style.display = 'none'
+                this.setState({
+                    customStyle:{
+                        visibility:'hidden'
+                    }
+                })
             }
         }
         window.addEventListener('scroll',throttle(onScroll,500,1000),false)
@@ -43,8 +51,9 @@ export default class BackTop extends React.Component{
     }
 
     render(){
+        const {customStyle} = this.state
         return (
-            <div className={style.wrapper} style={this.state.customStyle} ref={ref => this.self = ref}>
+            <div className={style.wrapper} style={customStyle} ref={ref => this.self = ref}>
                 <span className={style.btn} onClick={this.back} title="回到顶部"><i className="fa fa-arrow-up"/></span>
             </div>
         )

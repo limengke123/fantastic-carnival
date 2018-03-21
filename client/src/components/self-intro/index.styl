@@ -1,3 +1,4 @@
+@import '../../styl/variable.styl'
 .main
   position relative
   .bg
@@ -6,19 +7,37 @@
     background url('../../assets/img/star.jpg') no-repeat
     background-size cover
   .text
-    padding 90px 15px 10px 15px
-    h3
+    padding 60px 15px 10px 15px
+    .name
       text-align center
       line-height 32px
+      //display inline-block
+      margin 0 auto
+      cursor default
+      span
+        color $medium
+        display inline-block
+        border-bottom 2px solid $light
+    .info
+      margin-top 10px
+      line-height 24px
+      text-align center
+      color $medium
+      font-size 14px
+      cursor default
   .avater
-    background url('../../assets/img/selfportrait.jpg') no-repeat center 30%
+    background url('../../assets/img/selfportrait.jpg') no-repeat 60% 28%
     //background-size contain
+    background-size 190% 190%
     position absolute
-    top 0
+    top 25%
     left 0
     right 0
-    bottom 0
+    //bottom 0
     margin auto
     width 120px
-    height 120px
+    height @width
     border-radius 50%
+    transition transform ease-in-out 1s
+    &:hover
+      transform  rotate(360deg)
