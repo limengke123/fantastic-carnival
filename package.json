@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-server": "cross-env NODE_ENV=development DEBUG=li-blog nodemon ./server/register.js",
-    "server": "cross-env NODE_ENV=production DEBUG=li-blog node ./server/register.js",
+    "server": "cross-env NODE_ENV=production DEBUG=li-blog pm2 ./server/register.js",
     "log": "./node_modules/.bin/bunyan -L --color",
     "dev-admin": "cross-env NODE_ENV=development webpack-dev-server --config ./admin/build/webpack.dev.config.js",
     "dev-client": "cross-env NODE_ENV=development webpack-dev-server --config ./client/build/webpack.dev.config.js",
