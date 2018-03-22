@@ -55,9 +55,9 @@ const Routes = () => (
 
         {/** 测试页面 **/}
         <Route name="test" path='test' breadcrumbName="测试" getComponent={getTestPage}/>
-        {/** 这里是重定向 **/}
-        <Route path='/404' getComponent={getNoFoundPage}/>
-        <Redirect path='/*' to='/404'/>
+        {/*/!** 这里是重定向 **!/*/}
+        {/*<Route path='/404' getComponent={getNoFoundPage}/>*/}
+        {/*<Redirect path='/*' to='/404'/>*/}
     </Router>
 )
 

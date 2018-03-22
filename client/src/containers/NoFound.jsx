@@ -1,7 +1,11 @@
 import React from 'react'
-
-export default () => (
-    <div>
-        no found page!
-    </div>
-)
+import {Link} from 'react-router'
+export default class NoFound extends React.Component{
+    render(){
+        return (
+            <div>
+                you got wrong place~ click <Link to="/">me</Link> to the page!!
+            </div>
+        )
+    }
+}

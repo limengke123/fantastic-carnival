@@ -19,6 +19,8 @@ class ArticleDetail extends React.Component {
     componentDidMount() {
         const {articleDetailStore, params} = this.props
         articleDetailStore.getDetail(params.id)
+        window.title = articleDetailStore.article.title
+        // window.title = articleDetailStore.article.title
     }
 
     componentWillUnmount() {
@@ -32,6 +34,7 @@ class ArticleDetail extends React.Component {
             //articleDetailStore.deleteDetail()
             articleDetailStore.getDetail(params.id)
             window.scrollTo(0, 0)
+            window.title = articleDetailStore.article.title
         }
     }
 
