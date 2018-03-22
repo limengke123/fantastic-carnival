@@ -13,3 +13,4 @@ client/config/private.js
 admin/config/private.js
 prod.json
 .idea
+log
