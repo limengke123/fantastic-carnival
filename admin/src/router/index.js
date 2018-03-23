@@ -64,7 +64,8 @@ const routes = [
 ]
 
 const router = new Router({
-    mode:'history',
+    //先用hashHistory，后面解决这个问题
+    // mode:'history',
     routes
 })
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Router, Route, IndexRoute, browserHistory, Redirect} from 'react-router'
+import {Router, Route, IndexRoute, browserHistory, Redirect, hashHistory} from 'react-router'
 
 import App from './containers/app'
 
@@ -45,7 +45,7 @@ const getDetailPage = (location,callback) => {
 }
 
 const Routes = () => (
-    <Router history={browserHistory}>
+    <Router history={hashHistory}>
         <Route path='/' breadcrumbName="首页" component={App}>
             <IndexRoute name="home" getComponent={getHomePage}/>
             <Route name="home" path='/home' getComponent={getHomePage}/>
