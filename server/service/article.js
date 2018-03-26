@@ -16,6 +16,18 @@ class ArticleService {
         return result
     }
 
+    async delete(id){
+        let result = null
+        try{
+            result = await Article.remove({
+                _id:id
+            }).exec()
+        } catch (e){
+            logger.error(e)
+        }
+        return result
+    }
+
     async find(sort = null, limit = null, skip = null) {
         let result
         try {
@@ -43,7 +55,7 @@ class ArticleService {
         try{
             result = await Article.findOne(searchParam)
                 .populate('tags')
-                .select('title visits tags createTime lastEditTime excerpt content')
+                .select('title visits tags createTime lastEditTime excerpt content draft')
                 .sort({
                     createTime:-1,
                     ...sort

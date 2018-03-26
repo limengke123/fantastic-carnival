@@ -17,13 +17,16 @@ const errorList = require('../error')
 const {
     articles: ROUTER_NAME
 } = require('../config').routerName
+
 const ArticleService = require('../service/article')
+const DraftService = require('../service/draft')
+
 module.exports.init = async router => {
     router.get(`/${ROUTER_NAME}`, new ActionList().getAOPMiddleWare())
     router.get(`/${ROUTER_NAME}/:id`, new ActionDetail().getAOPMiddleWare())
     router.post(`/${ROUTER_NAME}`, mw.verifyToken,new ActionCreate().getAOPMiddleWare())
     router.patch(`/${ROUTER_NAME}/:id`, new ActionModify().getAOPMiddleWare())
-    router.post('/test', new Test().getAOPMiddleWare())
+    router.delete(`/${ROUTER_NAME}/:id`, new ActionDelete().getAOPMiddleWare())
     console.log(chalk.blue(`router of ${ROUTER_NAME} has been injected` ))
 }
 
@@ -100,7 +103,7 @@ class ActionList extends BaseAop {
     async [__before](ctx, next) {
         const query = ctx.query
         const {error} = joi.validate({
-            tag: query.tag,
+            tag: query.tag || " ",
             //少见的去小数的方法
             limit: ~~query.limit,
             page: query.page,
@@ -118,8 +121,8 @@ class ActionList extends BaseAop {
     }
 
     async [main](ctx, next) {
-        const tag = ctx.query.tag
-        if (tag !== void 0) {
+        const tag = ctx.query.tag || " "
+        if (tag !== void 0 && tag !== " ") {
             try {
                 let articleArr = await ArticleService.findWithTag(tag)
                 utils.print(articleArr)
@@ -283,19 +286,83 @@ class ActionModify extends BaseAop {
     }
 }
 
-class Test extends BaseAop {
-    async[main](ctx, next) {
-        if (ctx.request.body) {
-            ctx.body = {
-                data: ctx.request.body,
-                fk: 123
-            }
-        } else {
-            ctx.body = {
-                data: ctx.request,
-                fk: 456
-            }
+class ActionDelete extends BaseAop {
+    static schema = joi.object().keys({
+        id:joi.objectId()
+    })
+
+    async [__before](ctx, next){
+        const id = ctx.params.id
+
+        const {error} = joi.validate({
+            id
+        }, this.constructor.schema)
+
+        if(error){
+            const reason = error.details.map(val => val.message.join(';'))
+            return ctx.throw(400, errorList.validationError.name,{
+                message:errorList.validationError.message,
+                'parameter-name':errorList.validationError.message,
+                reason
+            })
+        }
+        return next()
+    }
+
+    async [main](ctx, next){
+        const id = ctx.params.id
+        let article = null
+        try{
+            article = await ArticleService.findOne(id)
+        } catch (e){
+            ctx.throw(500,errorList.storageError.name,{
+                message:errorList.storageError.message
+            })
         }
 
+        if(article === null){
+            ctx.throw(400, errorList.idNotExistError.name,{
+                message: errorList.idNotExistError.message
+            })
+        }
+
+        const draftId = article.draft
+
+        if(!draftId){
+            ctx.throw(400, errorList.idNotExistError.name,{
+                message:errorList.idNotExistError.message
+            })
+        }
+
+        let draft = null
+
+        try{
+            draft = await DraftService.findOne(draftId)
+        } catch (e){
+            ctx.throw(500, errorList.storageError.name,{
+                message:errorList.storageError.message
+            })
+        }
+
+        if(draft === null){
+            ctx.throw(400, errorList.idNotExistError.name, {
+                message: errorList.idNotExistError.message
+            })
+        }
+
+        try{
+            await Promise.all([ArticleService.delete(id),DraftService.delete(draftId)])
+        } catch (e){
+            ctx.throw(500,errorList.storageError.name,{
+                message:errorList.storageError.message
+            })
+        }
+
+        ctx.status = 200
+        ctx.body = {
+            success:true
+        }
+        return next()
     }
 }
+

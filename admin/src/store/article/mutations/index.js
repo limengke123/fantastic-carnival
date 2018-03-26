@@ -10,6 +10,7 @@ const {
     POST_SAVE,
     POST_TITLE_SAVE,
     POST_DELETE,
+    ARTICLE_DELETE,
     POST_PUBLISH,
     POST_TITLE_UPDATE,
     POST_CONTENT_UPDATE,
@@ -97,6 +98,22 @@ export default {
                 state.currentPostIndex = -1
                 state.article = null
                 state.title = ''
+            }
+        }
+    },
+    [ARTICLE_DELETE](state){
+        if(state.postSaved && state.postTitleSaved){
+            state.all.splice(state.currentPostId , 1)
+            if(state.all.length){
+                state.currentPostIndex = 0
+                state.currentPostId = state.all[0].id
+                state.title = state.all[0].title
+                state.article = state.all[0].article
+            } else {
+                state.currentPostId = null
+                state.currentPostIndex = -1
+                state.article = null
+                state.title = ""
             }
         }
     }

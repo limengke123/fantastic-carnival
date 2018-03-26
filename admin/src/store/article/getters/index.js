@@ -21,6 +21,6 @@ export default{
         return state.currentPostIndex
     },
     articleIdOfPost(state){
-        return state.articleId
+        return state.article
     }
 }

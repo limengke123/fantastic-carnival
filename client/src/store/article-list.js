@@ -2,25 +2,25 @@ import {observable, computed, action, runInAction} from 'mobx'
 
 import axios from '../util/http'
 
-class ArticStore{
+class ArticleStore{
     @observable articleList = [{
         title:"title",
         excerpt:"excerpt111",
         lastEditTime:"2012.2.2",
         tags:[{name:111}]
     }]
-
     @computed get articleLength(){
-        return this.articleList.length
+        console.log(this)
+        return this.articleList.length || 0
     }
-    @action("请求文章列表")
-    getArticleList(){
+    @action("根据tag请求文章列表")
+    getArticleList(tag = ""){
         axios.get('/api/articles',{
             params:{
-                sort:-1
+                sort:-1,
+                tag
             }
-        })
-            .then(resp => {
+        }).then(resp => {
                 runInAction(() => {
                     this.articleList = resp.data.data.articles
                 })
@@ -30,6 +30,6 @@ class ArticStore{
     }
 }
 
-const articleListStore = new ArticStore()
+const articleListStore = new ArticleStore()
 
 export default articleListStore

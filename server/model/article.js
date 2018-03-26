@@ -26,6 +26,10 @@ const articleSchema = new Schema({
     },
     excerpt:String,
     content:String,
+    draft:{
+      type:Schema.Types.ObjectId,
+      ref:"draft"
+    },
     comments:[{
         type:Schema.Types.ObjectId,
         ref:'comment'

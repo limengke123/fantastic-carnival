@@ -21,7 +21,7 @@ export default class Timer extends React.Component {
         setInterval(func, 1000)
     }
 
-    paddingZero(num) {
+    static paddingZero(num) {
         num = parseInt(num)
         return num < 10 ? `0${num}` : num
     }
@@ -29,12 +29,12 @@ export default class Timer extends React.Component {
     render() {
         const {date} = this.state
         const [year, month, day, hour, minutes, seconds] = [
-            this.paddingZero(date.getFullYear()),
-            this.paddingZero(date.getMonth() + 1),
-            this.paddingZero(date.getDate()),
-            this.paddingZero(date.getHours()),
-            this.paddingZero(date.getMinutes()),
-            this.paddingZero(date.getSeconds())
+            Timer.paddingZero(date.getFullYear()),
+            Timer.paddingZero(date.getMonth() + 1),
+            Timer.paddingZero(date.getDate()),
+            Timer.paddingZero(date.getHours()),
+            Timer.paddingZero(date.getMinutes()),
+            Timer.paddingZero(date.getSeconds())
         ]
         return (
             <Panel>

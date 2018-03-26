@@ -96,6 +96,8 @@ class ActionCreate extends BaseAop{
         delete draft._id
         delete draft.id
 
+        articleOption.draft = id
+
         let article = null
         if(draft.article !== null && draft.article !== void 0){
             console.log('draft',id)

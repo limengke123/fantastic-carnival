@@ -13,7 +13,6 @@ class ArticleList extends React.Component {
     }
 
     componentDidMount() {
-        console.log('test props' ,this.props)
         const {articleListStore} = this.props
         articleListStore.getArticleList()
     }

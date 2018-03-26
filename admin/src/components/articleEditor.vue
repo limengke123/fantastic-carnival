@@ -19,6 +19,7 @@
                         li.search-item(v-for="tag in tagsToAdd", @click="submitTag(tag['name'])") {{tag['name']}}
             .half-container.btn-group
                 button.btn.btn-border(@click="deletePost", v-show="!articleIdOfPost") 删除草稿
+                button.btn.btn-border.btn-delete(@click="deleteArticle", v-show="articleIdOfPost") 删除文章
                 button.btn.btn-save(@click="publish") 发布文章
         textarea#editor(style="opacity:0")
 </template>
@@ -62,6 +63,7 @@
         methods: {
             ...mapActions([
                 'deletePost',
+                'deleteArticle',
                 'editPostTitle',
                 'submitPostTitle',
                 'savePostTitle',
@@ -227,7 +229,7 @@
         beforeDestroy(){
             simpleMDE.toTextArea()
             let editor = document.getElementById('editor')
-            editor.outerHTML = editor.outerHTML
+            //editor.outerHTML = editor.outerHTML
         },
         watch:{
             currentPostId(val,oldVal){
@@ -358,6 +360,8 @@
             text-align center
             outline 0
             background #fff
+        .btn-border
+            transition border-color ease 0.3s
         .btn-border:hover
             border-color $green
         .btn-save
@@ -365,6 +369,8 @@
             background-color $green
             border-color $green
             margin-left 20px
+        .btn-delete:hover
+            border-color $red
 </style>
 
 <style lang="stylus">

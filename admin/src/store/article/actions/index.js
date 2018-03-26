@@ -11,6 +11,7 @@ const {
     POST_SAVE,
     POST_TITLE_SAVE,
     POST_DELETE,
+    ARTICLE_DELETE,
     POST_PUBLISH,
     POST_TITLE_UPDATE,
     POST_CONTENT_UPDATE,
@@ -76,6 +77,18 @@ export default {
             let err = new Error()
             err.errorMessage = "文章未保存，稍微重试"
             return Promise.reject(err)
+        }
+    },
+    deleteArticle({state,commit}){
+        if(state.postSaved){
+            http.delete(`/api/articles/${state.article}`).then(resp => {
+                if(resp.status === 200 ){
+                    console.log(resp)
+                    commit(ARTICLE_DELETE)
+                } else {
+                    console.log('删除失败')
+                }
+            })
         }
     },
     focusOnPost({commit},index){
@@ -188,6 +201,7 @@ export default {
     },
     deleteTag({},id){
         return new Promise((resolve,reject) => {
+            console.log(1)
             http.delete(`/api/tags/${id}`).then(resp => {
                 if(resp.status === 200){
                     resolve(resp.data)
