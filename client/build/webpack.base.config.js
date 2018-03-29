@@ -51,5 +51,9 @@ module.exports = {
                 removeAttributeQuotes:true
             }
         })
-    ]
+    ],
+    externals: {
+        //用外链 vendor 少了18kb 能少一点是一点 ，highlight.js不好用外链
+        "react":"React",
+    }
 }

@@ -85,6 +85,7 @@
     "nodemon": "^1.14.8",
     "vue-router": "^3.0.1",
     "webpack": "^3.11.0",
+    "webpack-bundle-analyzer": "^2.11.1",
     "webpack-cli": "^2.0.9",
     "webpack-dev-server": "^3.0.0",
     "webpack-merge": "^4.1.2"

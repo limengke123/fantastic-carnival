@@ -88,8 +88,6 @@
                  * */
                 this.editPostTitle()
                 this.POST_TITLE_UPDATE(e.target.value)
-                console.log(e.target.value)
-                console.log(this.postTitle)
                 updateTitleDebounce(this, e.target.value)
             },
             addTag(){

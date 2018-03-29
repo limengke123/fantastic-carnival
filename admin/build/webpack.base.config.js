@@ -5,7 +5,7 @@ const { join } = require('path')
 const htmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
     entry: {
-        app: join(__dirname, '../src/main.js')
+        app: join(__dirname, '../src/main.js'),
     },
     output: {
         filename: "js/[name].js",

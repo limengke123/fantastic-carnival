@@ -201,7 +201,6 @@ export default {
     },
     deleteTag({},id){
         return new Promise((resolve,reject) => {
-            console.log(1)
             http.delete(`/api/tags/${id}`).then(resp => {
                 if(resp.status === 200){
                     resolve(resp.data)

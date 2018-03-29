@@ -30,17 +30,18 @@
                     username:this.username,
                     password:md5(this.password).toUpperCase()
                 }).then(resp => {
-                    console.log(resp)
                     if(resp.status === 200){
                         this.$message({
                             message:"登录成功",
                             type:"success"
                         })
                         //保存session到本地sessionStorage
-                        console.log(this)
-                        console.log(resp.data.data.token)
                         this.$freshSession(resp.data.data.token)
-                        this.$router.push('/posts')
+                        if (this.$route.query.redirect) {
+                            this.$router.push(this.$route.query.redirect)
+                        } else {
+                            this.$router.push('/posts')
+                        }
                     }
                 }).catch(e => {
                     console.log(e)

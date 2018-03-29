@@ -4,6 +4,8 @@ const webpack = require('webpack')
 const webpackMerge = require('webpack-merge')
 const ExtractPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+//打包分析
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const baseConfig = require('./webpack.base.config')
 
@@ -66,7 +68,9 @@ const config = webpackMerge(baseConfig,{
             cssProcessorOptions:{
                 safe:true
             }
-        })
+        }),
+        //打包分析
+        new BundleAnalyzerPlugin()
     ]
 })
 
