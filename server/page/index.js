@@ -8,6 +8,11 @@ module.exports.init = router => {
         ctx.body = fs.createReadStream(adminPath)
         return next()
     })
+    // router.get(`/admin/*`,function(ctx,next){
+    //     ctx.type = 'text/html'
+    //     ctx.body = fs.createReadStream(adminPath)
+    //     // return next()
+    // })
     router.get(`/client`,function(ctx,next){
         ctx.type = 'text/html'
         ctx.body = fs.createReadStream(clientPath)

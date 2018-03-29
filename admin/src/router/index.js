@@ -55,14 +55,14 @@ const routes = [
         }
     },
     {
-        path:'*',
+        path:'/admin/*',
         redirect:'/404'
     }
 ]
 
 const router = new Router({
     //先用hashHistory，后面解决这个问题
-    // mode:'history',
+    //mode:'history',
     routes
 })
 

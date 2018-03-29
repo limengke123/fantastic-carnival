@@ -70,7 +70,7 @@ const config = webpackMerge(baseConfig,{
             }
         }),
         //打包分析
-        new BundleAnalyzerPlugin()
+        //new BundleAnalyzerPlugin()
     ]
 })
 
