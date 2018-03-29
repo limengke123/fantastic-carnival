@@ -11,22 +11,11 @@ import {http} from '../util/http'
 // import tags from '../page/tags.vue'
 
 //懒加载 首页登录效果明显
-const login = () => {
-    document.title = "这里登录啦"
-    return import(/* webpackChunkName: "login" */ '../page/login.vue')
-}
-const posts = () => {
-    document.title= "这里写文章啦"
-    return import(/* webpackChunkName: "posts" */ '../page/posts.vue')
-}
-const tags = () => {
-    document.title = "这里整理标签啦"
-    return import(/* webpackChunkName: "tags" */ '../page/tags.vue')
-}
-const noFound = () => {
-    document.title = "404 not found !!!"
-    return import(/* webpackChunkName: "no-found" */ '../page/noFound.vue')
-}
+const login = () => import(/* webpackChunkName: "login" */ '../page/login.vue')
+const posts = () => import(/* webpackChunkName: "posts" */ '../page/posts.vue')
+const tags = () => import(/* webpackChunkName: "tags" */ '../page/tags.vue')
+const noFound = () => import(/* webpackChunkName: "no-found" */ '../page/noFound.vue')
+
 //注入
 Vue.use(Router)
 
@@ -34,14 +23,18 @@ const routes = [
     {
         path:"/",
         name:"login",
-        component:login
+        component:login,
+        meta:{
+            title:"这里登录啦"
+        }
     },
     {
         path:'/posts',
         component:posts,
         name:"posts",
         meta:{
-            requireAuth:true
+            requireAuth:true,
+            title:"这里写文章啦"
         }
     },
     {
@@ -49,13 +42,17 @@ const routes = [
         component:tags,
         name:"tags",
         meta:{
-            requireAuth:true
+            requireAuth:true,
+            title:"这里整理标签啦"
         }
     },
     {
         path:"/404",
         component:noFound,
         name:'noFound',
+        meta:{
+            title:"404 not found !!!"
+        }
     },
     {
         path:'*',
@@ -70,6 +67,9 @@ const router = new Router({
 })
 
 router.beforeEach((to,from,next) => {
+    if (to.meta.title) {
+      document.title = to.meta.title
+    }
     if(to.matched.some(record => record.meta.requireAuth)){
         http.get('/api/tokens/check')
             .then(resp => {
