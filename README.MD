@@ -60,8 +60,8 @@
 server地址:
 [https://github.com/limengke123/fantastic-carnival/tree/master/server](https://github.com/limengke123/fantastic-carnival/tree/master/server)
 
-项目总结：
-[]()
+server项目总结：
+[https://github.com/limengke123/fantastic-carnival/blob/master/server/summary.md](https://github.com/limengke123/fantastic-carnival/blob/master/server/summary.md)
 
 ## admin-page  
 `vue`全家桶：  
@@ -72,7 +72,8 @@ server地址:
 admin-page地址：
 [https://github.com/limengke123/fantastic-carnival/tree/master/admin](https://github.com/limengke123/fantastic-carnival/tree/master/admin)
 
-
+admin项目总结：
+[https://github.com/limengke123/fantastic-carnival/blob/master/admin/summary.md](https://github.com/limengke123/fantastic-carnival/blob/master/admin/summary.md)
 
 ## client-page
 `react`全家桶：  
@@ -81,3 +82,5 @@ admin-page地址：
 client-page地址：
 [https://github.com/limengke123/fantastic-carnival/tree/master/client](https://github.com/limengke123/fantastic-carnival/tree/master/client)
 
+client项目总结：
+[https://github.com/limengke123/fantastic-carnival/blob/master/client/summary.md](https://github.com/limengke123/fantastic-carnival/blob/master/client/summary.md)
