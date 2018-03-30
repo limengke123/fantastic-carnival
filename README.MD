@@ -60,6 +60,8 @@
 server地址:
 [https://github.com/limengke123/fantastic-carnival/tree/master/server](https://github.com/limengke123/fantastic-carnival/tree/master/server)
 
+项目总结：
+[]()
 
 ## admin-page  
 `vue`全家桶：  
