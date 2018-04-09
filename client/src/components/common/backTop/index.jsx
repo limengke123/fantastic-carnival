@@ -38,7 +38,7 @@ export default class BackTop extends React.Component{
                 })
             }
         }
-        window.addEventListener('scroll',throttle(onScroll,500,1000),false)
+        window.addEventListener('scroll',throttle(onScroll,500,1000),{passive:true})
     }
 
     back = () =>{
