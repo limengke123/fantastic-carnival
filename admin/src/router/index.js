@@ -94,7 +94,6 @@ router.beforeEach((to,from,next) => {
             .then(resp => {
                 console.log(resp)
                 if(resp.data.success === true){
-                    Vue.prototype.$loading.finish()
                     next()
                 } else {
                     console.log(to)
@@ -108,14 +107,22 @@ router.beforeEach((to,from,next) => {
                             redirect:to.path
                         }
                     })
-                    Vue.prototype.$loading.error()
                 }
             })
     } else {
-        Vue.prototype.$loading.finish()
         next()
     }
 })
+
+router.afterEach(route => {
+    console.log(route)
+    if(route.query.redirect){
+        //redirect有值表明此时错误跳转
+        Vue.prototype.$loading.error()
+    } else {
+        Vue.prototype.$loading.finish();
+    }
+});
 
 
 export default router
