@@ -10,6 +10,6 @@ document.body.appendChild(root)
 
 ReactDom.render(
     <Provider {...store}>
-        <Routes/>
-    </Provider>
+<Routes/>
+</Provider>
 , root)

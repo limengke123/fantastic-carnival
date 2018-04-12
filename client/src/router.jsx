@@ -2,7 +2,14 @@ import React from 'react'
 
 import {Router, Route, IndexRoute, browserHistory, Redirect, hashHistory} from 'react-router'
 
+import createHistory from 'history/createHashHistory'
+
+import $loading from './components/common/loading-bar'
+
 import App from './containers/app'
+
+const history = createHistory()
+
 
 const getHomePage = (location,callback) => {
     require.ensure([],function(require){
@@ -60,5 +67,11 @@ const Routes = () => (
         {/*<Redirect path='/*' to='/404'/>*/}
     </Router>
 )
+
+// history 监听事件
+
+const unlisten = history.listen((location,action) => {
+    console.log(location,action)
+})
 
 export default Routes

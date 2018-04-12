@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-server": "cross-env NODE_ENV=development DEBUG=li-blog nodemon ./server/register.js",
-    "server": "cross-env NODE_ENV=production DEBUG=li-blog pm2 start ./server/register.js",
+    "start": "cross-env NODE_ENV=production DEBUG=li-blog pm2 start ./server/register.js",
     "log": "./node_modules/.bin/bunyan -L --color",
     "dev-admin": "cross-env NODE_ENV=development webpack-dev-server --config ./admin/build/webpack.dev.config.js",
     "dev-client": "cross-env NODE_ENV=development webpack-dev-server --config ./client/build/webpack.dev.config.js",
@@ -81,6 +81,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "history": "^4.7.2",
     "lodash": "^4.17.5",
     "nodemon": "^1.14.8",
     "vue-router": "^3.0.1",

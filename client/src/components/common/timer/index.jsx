@@ -7,10 +7,15 @@ import style from './index.styl'
 export default class Timer extends React.Component {
     constructor() {
         super(...arguments)
+        const initDate = new Date()
         this.state = {
-            date: new Date(),
+            date: initDate,
         }
     }
+
+    //计时器需要清除
+    static timer
+
 
     componentDidMount() {
         const func = () => {
@@ -18,7 +23,12 @@ export default class Timer extends React.Component {
                 date: new Date()
             })
         }
-        setInterval(func, 1000)
+        this.timer = setInterval(func, 1000)
+    }
+
+
+    componentWillUnmount(){
+        clearInterval(this.timer)
     }
 
     static paddingZero(num) {
