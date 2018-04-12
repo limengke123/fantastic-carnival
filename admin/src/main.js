@@ -18,6 +18,11 @@ import filters from './util/filter'
 //注入自定义组件
 Vue.use(installComponent)
 
+// 自定义加载条样式配置成和主体一致的绿色
+Vue.prototype.$loading.config({
+    color:"#42b983"
+})
+
 //注入自定义session处理
 Vue.use(session)
 

@@ -1,8 +1,3 @@
-<docs>
-    #post['draftPublished']?'published':post['article-item']?'updated':'' , {'active':post['id'] === currentPostId}
-    #这里的article-item 有点问题
-    #判断是否是更新
-</docs>
 <template lang="pug">
     ul.post-list.reset-list
         li.post-list-item(v-for="(post,index) in postList", @click="focus(index)")
@@ -31,7 +26,10 @@
                     return false
                 }
                 if (index !== this.currentPostIndex){
+                    this.$loading.start()
                     this.focusOnPost(index)
+                    // 这里是同步切换，
+                    this.$loading.delayFinish()
                 }
             }
         },

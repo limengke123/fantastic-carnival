@@ -22,7 +22,7 @@
             }
         },
         created(){
-          //console.log(this)
+          console.log(this)
         },
         methods:{
             login(){

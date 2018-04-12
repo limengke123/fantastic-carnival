@@ -83,7 +83,11 @@ const router = new Router({
     routes
 })
 
+const vueinstance = new Vue()
+
 router.beforeEach((to,from,next) => {
+    //console.log(Vue)
+    Vue.prototype.$loading.start()
     if (to.meta.title) {
       document.title = to.meta.title
     }
@@ -97,6 +101,10 @@ router.beforeEach((to,from,next) => {
     } else {
         next()
     }
+})
+
+router.afterEach(() => {
+    Vue.prototype.$loading.finish()
 })
 
 
