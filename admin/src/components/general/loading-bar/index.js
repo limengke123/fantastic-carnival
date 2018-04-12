@@ -75,7 +75,8 @@ export default {
         })
         _hide()
     },
-    delayFinish(){
+    delayFinish(delayTime = 200){
+        //针对近乎同步的操作提供的一种加载条
         _clearTimer()
       setTimeout(() => {
           _update({
@@ -83,7 +84,7 @@ export default {
               status:'success'
           })
           _hide()
-      },200)
+      },delayTime)
     },
     error(){
         _clearTimer()
