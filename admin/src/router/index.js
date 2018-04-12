@@ -83,8 +83,6 @@ const router = new Router({
     routes
 })
 
-const vueinstance = new Vue()
-
 router.beforeEach((to,from,next) => {
     //console.log(Vue)
     Vue.prototype.$loading.start()
@@ -94,19 +92,30 @@ router.beforeEach((to,from,next) => {
     if(to.matched.some(record => record.meta.requireAuth)){
         http.get('/api/tokens/check')
             .then(resp => {
-                if(resp.statusText === "OK"){
+                console.log(resp)
+                if(resp.data.success === true){
+                    Vue.prototype.$loading.finish()
                     next()
+                } else {
+                    console.log(to)
+                    Vue.prototype.$message({
+                        type:'error',
+                        message:resp.data.message
+                    })
+                    next({
+                        path:'/',
+                        query:{
+                            redirect:to.path
+                        }
+                    })
+                    Vue.prototype.$loading.error()
                 }
             })
     } else {
+        Vue.prototype.$loading.finish()
         next()
     }
 })
-
-router.afterEach(() => {
-    Vue.prototype.$loading.finish()
-})
-
 
 
 export default router

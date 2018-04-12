@@ -2,12 +2,12 @@
     .login(@keyup.enter="login")
         .top
             img.logo(:src="logo")
-            span Ant Design
-        h4.desc Ant Design 是西湖区最具影响力的 Web 设计规范
+            span Mark Blog
+        h4.desc Mark Blog 并没有什么有点的一个博客系统
         .body
-            Input(v-model="username" ,:clearIcon="true" ,:autoFocus="true" ,placeholder="输入账号",icon="user")
-            Input(v-model="password" type="password" ,:clearIcon="true" ,placeholder="输入密码",icon="key")
-            Button(text="登 录" ,type="normal" ,:handler="login")
+            Input(v-model="username" , :clearIcon="true" , :autoFocus="true" ,placeholder="输入账号", icon="user")
+            Input(v-model="password" type="password" , :clearIcon="true" , placeholder="输入密码", icon="key")
+            Button(text="登 录", type="normal" , :handler="login")
 </template>
 
 <script>
@@ -26,6 +26,7 @@
         },
         methods:{
             login(){
+                this.$loading.start()
                 this.$http.post('/api/tokens',{
                     username:this.username,
                     password:md5(this.password).toUpperCase()
@@ -45,6 +46,7 @@
                     }
                 }).catch(e => {
                     console.log(e)
+                    this.$loading.error()
                     if(e.response){
                         this.$message({
                             type:'error',

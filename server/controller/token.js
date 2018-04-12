@@ -10,6 +10,10 @@ const chalk = require('chalk')
 const mw = require('../middleware/index')
 const md5 = require('md5')
 
+const util = require('util')
+const verify = util.promisify(jwt.verify)
+
+
 const cert = configs.jwt.cert
 const UserService = require('../service/user')
 
@@ -30,7 +34,9 @@ const {
 module.exports.init = async router => {
     await seed()
     router.post(`/${ROUTER_NAME}`,new ActionCreate().getAOPMiddleWare())
-    router.get(`/${ROUTER_NAME}/check`,mw.verifyToken,check)
+    //这个验证token的接口不应该校验是否有合理的token
+    // router.get(`/${ROUTER_NAME}/check`,mw.verifyToken,check)
+    router.get(`/${ROUTER_NAME}/check`,check)
     console.log(chalk.blue(`router of ${ROUTER_NAME} has been injected` ))
 }
 async function seed() {
@@ -118,11 +124,36 @@ class ActionCreate extends BaseAop{
     }
 }
 async function check (ctx,next){
-    ctx.status = 200
+    const authorization = ctx.get('Authorization')
+    if(authorization === "") {
+        return ctx.body = {
+            success:false,
+            message:errorList.noneTokenError.message
+        }
+    }
+    const token = authorization.split(' ')[1]
+    let tokenContent = null
+    try{
+        tokenContent = await verify(token,configs.jwt.cert)
+    } catch (e){
+        if(e.name === "TokenExpiredError"){
+            return ctx.body = {
+                success:false,
+                message:errorList.tokenExpiredError.message
+            }
+        }
+        return ctx.body = {
+            success:false,
+            message:errorList.invalidTokenError.message
+        }
+    }
+
     ctx.body = {
         success:true,
-        message:'验证通过'
+        message:'验证通过',
+        token:tokenContent
     }
+    return next()
 }
 
 

@@ -3,6 +3,7 @@
  */
 import axios from 'axios'
 import router from '../router/index'
+import Vue from 'vue'
 
 const http = axios.create({
     timeout:10000
@@ -33,12 +34,17 @@ http.interceptors.response.use(response => {
         console.log(err)
         switch (err.response.status){
             case 401:
-                router.replace({
-                    path:'/',
-                    query:{
+                //Vue.prototype.error()
+                //console.log(from)
+                let option = {
+                    path:'/'
+                }
+                if(window.location.pathname !== "/"){
+                    option.query = {
                         redirect:router.currentRoute.fullPath
                     }
-                })
+                }
+                router.replace(option)
                 console.log('force return to login-page')
                 break;
         }
