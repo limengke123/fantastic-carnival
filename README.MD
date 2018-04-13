@@ -12,11 +12,13 @@
 
 博客的后台录入页面，也是文章的管理页面，有登录权限控制。
     
-!(登录)[image/admin/login.png]
+![登录](image/admin/login.png)
 
 <details><summary>其他截图</summary><br>
+<p>编辑页面</p>   
 <img width="100%" src="/image/admin/edit.png" alt="编辑页面" />
 <br>
+<p>标签页面</p>
 <img width="100%" src="/image/admin/post.png" alt="tag页面" />
 <br>
 </details>
