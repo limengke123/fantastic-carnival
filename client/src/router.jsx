@@ -68,7 +68,7 @@ const Routes = () => (
             <IndexRoute name="home" getComponent={getHomePage}/>
             <Route name="home" path='/home' getComponent={getHomePage}/>
             <Route name="tag" path='/tag' breadcrumbName="标签" getComponent={getTagPage}/>
-            <Route name="articleDetail" path='article/:id' breadcrumbName="文章"/>
+            <Route name="articleDetail" path='article/:id' breadcrumbName="文章" getComponent={getDetailPage}/>
         </Route>
 
         {/** 测试页面 **/}
