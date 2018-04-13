@@ -15,7 +15,7 @@
 ![登录](image/admin/login.png)
 
 <details><summary>其他截图</summary><br>
-<p>编辑页面</p>   
+<p style="font-weight:600;text-indent:2em;">编辑页面</p>   
 <img width="100%" src="/image/admin/edit.png" alt="编辑页面" />
 <br>
 <p>标签页面</p>
