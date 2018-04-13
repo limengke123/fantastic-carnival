@@ -10,10 +10,16 @@ import $loading from './components/common/loading-bar/index'
 
 import App from './containers/app'
 
-const history = createHistory()
+// const history = createHistory()
 
-Router = withEachRouter(Router)
-IndexRoute = withEachRouter(IndexRoute)
+// console.log(Route)
+
+// let Route1 = Object.assign(Route,{})
+
+//Route1 = withEachRouter(Route1)
+
+// console.log(Route1)
+//IndexRoute = withEachRouter(IndexRoute)
 
 
 const getHomePage = (location,callback) => {
@@ -62,7 +68,7 @@ const Routes = () => (
             <IndexRoute name="home" getComponent={getHomePage}/>
             <Route name="home" path='/home' getComponent={getHomePage}/>
             <Route name="tag" path='/tag' breadcrumbName="标签" getComponent={getTagPage}/>
-            <Route name="articleDetail" path='article/:id' breadcrumbName="文章" getComponent={getDetailPage} />
+            <Route name="articleDetail" path='article/:id' breadcrumbName="文章"/>
         </Route>
 
         {/** 测试页面 **/}
@@ -72,15 +78,5 @@ const Routes = () => (
         {/*<Redirect path='/*' to='/404'/>*/}
     </Router>
 )
-
-// history 监听事件
-
-window.a = $loading
-
-// const unlisten = history.listen((location,action) => {
-//     console.log(location,action)
-//     console.log($loading)
-//     $loading.delayFinish()
-// })
 
 export default Routes

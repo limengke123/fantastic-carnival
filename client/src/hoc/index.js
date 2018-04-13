@@ -27,6 +27,7 @@ const control = BaseComponent => {
 }
 
 const routerEnterHandle = (nextState, replace) => {
+    console.log(111)
     $loading.start()
 }
 
