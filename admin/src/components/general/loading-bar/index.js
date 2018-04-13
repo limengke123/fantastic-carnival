@@ -71,7 +71,8 @@ export default {
         _clearTimer()
         _update({
             percent:100,
-            status:'success'
+            status:'success',
+            show:true
         })
         _hide()
     },
@@ -81,7 +82,8 @@ export default {
       setTimeout(() => {
           _update({
               percent:100,
-              status:'success'
+              status:'success',
+              show:true
           })
           _hide()
       },delayTime)
@@ -95,8 +97,7 @@ export default {
         })
         _hide()
     },
-    config(options){
-        if(!options) throw(`loading-bar.config is need options`)
+    config(options = {}){
         options.color && (defaultSetting.color = options.color)
         options.failedColor && (defaultSetting.failedColor = options.failedColor)
         options.height && (defaultSetting.height = options.height)

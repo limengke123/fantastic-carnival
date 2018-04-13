@@ -15,6 +15,9 @@
               status:'success'
           }
         },
+        mounted(){
+            console.log(this.innerClass)
+        },
         computed:{
             prefixClass(){
               return prefix

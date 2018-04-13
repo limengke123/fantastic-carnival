@@ -4,7 +4,7 @@ import {Router, Route, IndexRoute, browserHistory, Redirect, hashHistory} from '
 
 import createHistory from 'history/createHashHistory'
 
-import $loading from './components/common/loading-bar'
+import $loading from './components/common/loading-bar/index'
 
 import App from './containers/app'
 
@@ -70,8 +70,12 @@ const Routes = () => (
 
 // history 监听事件
 
-const unlisten = history.listen((location,action) => {
-    console.log(location,action)
-})
+window.a = $loading
+
+// const unlisten = history.listen((location,action) => {
+//     console.log(location,action)
+//     console.log($loading)
+//     $loading.delayFinish()
+// })
 
 export default Routes

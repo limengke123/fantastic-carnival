@@ -16,7 +16,7 @@ LoadingBar.newInstance = options => {
     })
 
     const component = instance.$mount()
-
+    // console.log(component)
     document.body.appendChild(component.$el)
     const loading_bar = instance.$children[0]
 
