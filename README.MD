@@ -2,7 +2,7 @@
 
 ## 结构
 
-暂时还是前端渲染的`spa`，`server`端返回一个`Html`,`js`去动态生成页面。
+暂时还是前端渲染的`spa`，`server`端返回一个`Html`,`js`去动态生成页面,后期可能会考虑用`next.js`去重构`react`项目以及用`nuxt.js`重构`vue`项目。
 
 `client`分成两块：
 
