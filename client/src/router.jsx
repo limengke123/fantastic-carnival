@@ -4,11 +4,16 @@ import {Router, Route, IndexRoute, browserHistory, Redirect, hashHistory} from '
 
 import createHistory from 'history/createHashHistory'
 
+import {withEachRouter} from './hoc/index'
+
 import $loading from './components/common/loading-bar/index'
 
 import App from './containers/app'
 
 const history = createHistory()
+
+Router = withEachRouter(Router)
+IndexRoute = withEachRouter(IndexRoute)
 
 
 const getHomePage = (location,callback) => {
