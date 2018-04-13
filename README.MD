@@ -10,7 +10,16 @@
 
 1. admin-page
 
-    博客的后台录入页面，也是文章的管理页面，有登录权限控制。
+博客的后台录入页面，也是文章的管理页面，有登录权限控制。
+    
+!(登录)[image/admin/login.png]
+
+<details><summary>其他截图</summary><br>
+<img width="100%" src="/image/admin/edit.png" alt="编辑页面" />
+<br>
+<img width="100%" src="/image/admin/post.png" alt="tag页面" />
+<br>
+</details>
 
 2. client-page
 
@@ -41,7 +50,8 @@ npm run dev-server
 
 访问`localhost:3333`
 
-<detail><sumary>admin-page</sumary><br>
+* admin-page
+
 ```bash
 npm run dev-admin
 ```
@@ -65,9 +75,6 @@ npm run dev-client
 ```bash
 npm run build-client
 ```
-</detail> 
-
-
 
 * 开发模式
 

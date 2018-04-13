@@ -2,8 +2,8 @@
     .login(@keyup.enter="login")
         .top
             img.logo(:src="logo")
-            span Mark Blog
-        h4.desc Mark Blog 并没有什么有点的一个博客系统
+            span fantastic-carnival
+        h4.desc fantastic carnival 奇妙之狂欢会
         .body
             Input(v-model="username" , :clearIcon="true" , :autoFocus="true" ,placeholder="输入账号", icon="user")
             Input(v-model="password" type="password" , :clearIcon="true" , placeholder="输入密码", icon="key")
