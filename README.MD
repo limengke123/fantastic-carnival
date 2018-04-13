@@ -1,14 +1,16 @@
-# 一个博客项目
+# fantastic-carnival
+
+一个后端`koa@2`、前端`react`和`vue`完成的一整套博客系统。
 
 ## 结构
 
-暂时还是前端渲染的`spa`，`server`端返回一个`Html`,`js`去动态生成页面,后期可能会考虑用`next.js`去重构`react`项目以及用`nuxt.js`重构`vue`项目。
+暂时还是前端渲染的`spa`，`server`端返回一个`Html`,`js`去动态生成页面，后期可能会考虑用`next.js`去重构`react`项目以及用`nuxt.js`重构`vue`项目。
 
 `client`分成两块：
 
 1. admin-page
 
-    博客的后台录入页面，也是文章的管理页面
+    博客的后台录入页面，也是文章的管理页面，有登录权限控制。
 
 2. client-page
 
@@ -22,7 +24,7 @@
 `server`用到了`async/await`，`node>=7.6`
 需要安装`mongodb`
 
-## how to start
+## 启动
 
 * 开启`Mongodb`服务
 * 安装依赖
@@ -39,8 +41,7 @@ npm run dev-server
 
 访问`localhost:3333`
 
-* admin-page
-
+<detail><sumary>admin-page</sumary><br>
 ```bash
 npm run dev-admin
 ```
@@ -64,6 +65,9 @@ npm run dev-client
 ```bash
 npm run build-client
 ```
+</detail> 
+
+
 
 * 开发模式
 
