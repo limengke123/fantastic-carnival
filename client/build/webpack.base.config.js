@@ -44,7 +44,7 @@ module.exports = {
             template:join(__dirname,'../src/template.html'),
             filename:'index.html',
             inject:'true',
-            favicon:join(__dirname,'../src/assets/img/fav.ico'),
+            favicon:join(__dirname,'../src/assets/img/new_favicon.ico'),
             minify:{
                 removeCommnets:true,
                 collapseWhitespace:true,
