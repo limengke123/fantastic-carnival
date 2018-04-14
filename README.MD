@@ -1,12 +1,11 @@
 <br>
 <p align="center">
-  <img width="140px" src="image/logo-b.svg" alt="fantastic-carnival" />
+  <img width="500px" src="image/logo-b.svg" alt="fantastic-carnival" />
 </p>
 <br>
 
-# fantastic-carnival
 
-一个后端`koa@2`、前端`react`和`vue`完成的一整套博客系统。
+这是一个后端`koa@2`、前端分别是`react`和`vue`完成的一整套博客系统，包含后台管理录入页面和展示页面。
 
 ## 结构
 
@@ -14,7 +13,7 @@
 
 `client`分成两块：
 
-1. admin-page
+### 1. admin-page
 
 博客的后台录入页面，也是文章的管理页面，有登录权限控制。
     
@@ -29,7 +28,7 @@
 <br>
 </details>
 
-2. client-page
+### 2. client-page
 
 博客的展示页面
 
