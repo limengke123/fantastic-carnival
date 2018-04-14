@@ -1,3 +1,9 @@
+<br>
+<p align="center">
+  <img width="140px" src="image/logo-b.svg" alt="fantastic-carnival" />
+</p>
+<br>
+
 # fantastic-carnival
 
 一个后端`koa@2`、前端`react`和`vue`完成的一整套博客系统。
@@ -15,7 +21,7 @@
 ![登录](image/admin/login.png)
 
 <details><summary>其他截图</summary><br>
-<p style="font-weight:600;text-indent:2em;">编辑页面</p>   
+<p>编辑页面</p>   
 <img width="100%" src="/image/admin/edit.png" alt="编辑页面" />
 <br>
 <p>标签页面</p>
@@ -25,7 +31,14 @@
 
 2. client-page
 
-    博客的展示页面
+博客的展示页面
+
+![首页](image/client/home.png)
+
+<details><summary>其他截图</summary><br>
+<img width="100%" src="/image/client/article.png" alt="tag页面" />
+<br>
+</details>
 
 开发采用`webpack-dev-server`开发，代理转发到本地起的`localhost:3333/api`下的`REST`接口
 生产模式打包后的文件，放置在`server`的`static`目录下
