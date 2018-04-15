@@ -1,6 +1,8 @@
 import LoadingBar from './loading-bar.vue'
 import Vue from 'vue'
 
+console.log(LoadingBar)
+
 LoadingBar.newInstance = options => {
     const _props = options || {}
 

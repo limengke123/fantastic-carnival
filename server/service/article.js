@@ -35,7 +35,7 @@ class ArticleService {
                 .populate('tags')
                 .select('title visits tags createTime lastEditTime excerpt')
                 .sort({
-                    lastEditTime:sort
+                    createTime:sort
                 })
                 .limit(limit)
                 .skip(skip)
@@ -108,7 +108,7 @@ class ArticleService {
         return result && result.toObject()
     }
 
-    async findPrev(id){
+    async findNext(id){
         let result = null
         try{
             result = Article.findOne({
@@ -128,7 +128,7 @@ class ArticleService {
         return result
     }
 
-    async findNext (id){
+    async findPrev(id){
         let result = null
         try{
             result = Article.findOne({

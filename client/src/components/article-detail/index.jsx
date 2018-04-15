@@ -16,7 +16,7 @@ class ArticleDetail extends React.Component {
         super(...arguments)
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const {articleDetailStore, params} = this.props
         articleDetailStore.getDetail(params.id)
         window.title = articleDetailStore.article.title

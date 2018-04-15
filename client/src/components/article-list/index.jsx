@@ -12,7 +12,7 @@ class ArticleList extends React.Component {
         super(...arguments)
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const {articleListStore} = this.props
         articleListStore.getArticleList()
     }
