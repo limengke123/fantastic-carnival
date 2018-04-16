@@ -5,7 +5,7 @@
             h3.page-title
                 i.fa.fa-file-text-o
                 |  文章列表
-                i.fa.fa-plus.post-add(@click="createPost")
+                i.fa.fa-plus.post-add(@click="createPost", title="添加文章")
             post-list
         .post-edit
             article-editor
@@ -58,6 +58,7 @@
                     margin-top 2px
                     &:hover
                         color $green
+                        transform rotate(90deg)
         .post-edit
             height 100%
             flex-grow 1
