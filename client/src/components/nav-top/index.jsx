@@ -7,21 +7,21 @@ class NavTop extends React.Component {
         super(...arguments)
         this.state = {
             navTag:[
-                {
-                    name:"首页",
-                    link:'/',
-                    isActive:false
-                },
-                {
-                    name:'标签页',
-                    link:'/tag',
-                    isActive:false,
-                },
-                {
-                    name:'暂无',
-                    link:'/404',
-                    isActive:false
-                }
+                // {
+                //     name:"首页",
+                //     link:'/',
+                //     isActive:false
+                // },
+                // {
+                //     name:'标签页',
+                //     link:'/tag',
+                //     isActive:false,
+                // },
+                // {
+                //     name:'暂无',
+                //     link:'/404',
+                //     isActive:false
+                // }
             ]
         }
     }
