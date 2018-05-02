@@ -58,6 +58,12 @@ router.get(`/admin`,function(ctx,next){
 
 里面的`controller`全部采用[ES6](http://es6.ruanyifeng.com/)的[class](http://es6.ruanyifeng.com/#docs/class)语法来管理`controller`，同时继承了一个`AOP`的基本类，使得处理请求的代码变得一致，更好地维护。
 
+#### joi
+
+用了`joi`这个库，方便对前端传入的参数进行校验，避免出现每次都是重复去校验参数，同时也能让代码风格趋于统一，方便维护。
+
+#### AOP
+
 > `AOP`指这种在运行时，动态地将代码切入到类的指定方法、指定位置上的编程思想就是面向切面的编程。
 
 `AOP`在`java`的`spring`中用到，这里借用到了`node`项目中，让项目变得更加清楚。一个请求进来的时候，分成三个部分：
