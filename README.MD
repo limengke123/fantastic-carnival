@@ -125,7 +125,7 @@ admin-page地址：
 [https://github.com/limengke123/fantastic-carnival/tree/master/admin](https://github.com/limengke123/fantastic-carnival/tree/master/admin)
 
 admin项目总结：
-[https://github.com/limengke123/fantastic-carnival/blob/master/admin/summary.md](https://github.com/limengke123/fantastic-carnival/blob/master/admin/summary.md)
+[https://github.com/limengke123/fantastic-carnival/blob/master/admin/README.md](https://github.com/limengke123/fantastic-carnival/blob/master/admin/README.md)
 
 ## client-page
 
