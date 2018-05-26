@@ -2,7 +2,16 @@ import LoadingBar from './loading-bar.jsx'
 import React from 'react'
 import ReactDom from 'react-dom'
 
+window.react = React
+window.reactDom= ReactDom
+window.LoadingBar = LoadingBar
 
+const div1 = document.createElement('section')
+div1.setAttribute('id',"test1")
+
+document.body.appendChild(div1)
+
+window.div1 = div1
 
 LoadingBar.newInstance = ( props = {}) => {
     const section = document.createElement('section')

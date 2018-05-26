@@ -8,6 +8,10 @@ import SidePanel from '../components/side-panel/index'
 // import ArticleSort from '../components/article-sort/index'
 import BackTop from '../components/common/backTop/index'
 
+import LoadingBar from '../components/common/loading-bar'
+
+// console.log(LoadingBar)
+
 export default () => (
     <div className={style.wrapper}>
         <main className={style.main}>

@@ -4,19 +4,24 @@
 </p>
 <br>
 
-
 这是一个后端`koa@2`、前端分别是`react`和`vue`完成的一整套博客系统，包含后台管理录入页面和展示页面。
 
 ## 结构
 
 暂时还是前端渲染的`spa`，`server`端返回一个`Html`,`js`去动态生成页面，后期可能会考虑用`next.js`去重构`react`项目以及用`nuxt.js`重构`vue`项目。
 
+项目总结：
+
+1. [后端]((https://github.com/limengke123/fantastic-carnival/blob/master/server/README.md)
+2. [client](https://github.com/limengke123/fantastic-carnival/blob/master/client/README.md)
+3. [admin](https://github.com/limengke123/fantastic-carnival/blob/master/admin/README.md)
+
 `client`分成两块：
 
 ### 1. admin-page
 
 博客的后台录入页面，也是文章的管理页面，有登录权限控制。
-    
+
 ![登录](image/admin/login.png)
 
 <details><summary>其他截图</summary><br>
@@ -111,7 +116,7 @@ server地址:
 [https://github.com/limengke123/fantastic-carnival/tree/master/server](https://github.com/limengke123/fantastic-carnival/tree/master/server)
 
 server项目总结：
-[https://github.com/limengke123/fantastic-carnival/blob/master/server/summary.md](https://github.com/limengke123/fantastic-carnival/blob/master/server/summary.md)
+[https://github.com/limengke123/fantastic-carnival/blob/master/server/README.md](https://github.com/limengke123/fantastic-carnival/blob/master/server/README.md)
 
 ## admin-page
 
@@ -125,7 +130,7 @@ admin-page地址：
 [https://github.com/limengke123/fantastic-carnival/tree/master/admin](https://github.com/limengke123/fantastic-carnival/tree/master/admin)
 
 admin项目总结：
-[https://github.com/limengke123/fantastic-carnival/blob/master/admin/summary.md](https://github.com/limengke123/fantastic-carnival/blob/master/admin/summary.md)
+[https://github.com/limengke123/fantastic-carnival/blob/master/admin/README.md](https://github.com/limengke123/fantastic-carnival/blob/master/admin/README.md)
 
 ## client-page
 
@@ -137,4 +142,4 @@ client-page地址：
 [https://github.com/limengke123/fantastic-carnival/tree/master/client](https://github.com/limengke123/fantastic-carnival/tree/master/client)
 
 client项目总结：
-[https://github.com/limengke123/fantastic-carnival/blob/master/client/summary.md](https://github.com/limengke123/fantastic-carnival/blob/master/client/summary.md)
+[https://github.com/limengke123/fantastic-carnival/blob/master/client/README.md](https://github.com/limengke123/fantastic-carnival/blob/master/client/README.md)

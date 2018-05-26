@@ -10,7 +10,6 @@ class ArticleStore{
         tags:[{name:111}]
     }]
     @computed get articleLength(){
-        console.log(this)
         return this.articleList.length || 0
     }
     @action("根据tag请求文章列表")
