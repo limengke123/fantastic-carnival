@@ -13,7 +13,7 @@
 项目总结：
 
 1. [后端](https://github.com/limengke123/fantastic-carnival/blob/master/server/README.md)
-2. [client](https://github.com/limengke123/fantastic-carnival/blob/master/client/README.md)
+2. [client](https://github.com/limengke123/fantastic-carnival/blob/master/client/readme.md)
 3. [admin](https://github.com/limengke123/fantastic-carnival/blob/master/admin/README.md)
 
 `client`分成两块：
@@ -142,4 +142,4 @@ client-page地址：
 [https://github.com/limengke123/fantastic-carnival/tree/master/client](https://github.com/limengke123/fantastic-carnival/tree/master/client)
 
 client项目总结：
-[https://github.com/limengke123/fantastic-carnival/blob/master/client/README.md](https://github.com/limengke123/fantastic-carnival/blob/master/client/README.md)
+[https://github.com/limengke123/fantastic-carnival/blob/master/client/readme.md](https://github.com/limengke123/fantastic-carnival/blob/master/client/readme.md)
