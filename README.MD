@@ -12,7 +12,7 @@
 
 项目总结：
 
-1. [后端]((https://github.com/limengke123/fantastic-carnival/blob/master/server/README.md)
+1. [后端](https://github.com/limengke123/fantastic-carnival/blob/master/server/README.md)
 2. [client](https://github.com/limengke123/fantastic-carnival/blob/master/client/README.md)
 3. [admin](https://github.com/limengke123/fantastic-carnival/blob/master/admin/README.md)
 
